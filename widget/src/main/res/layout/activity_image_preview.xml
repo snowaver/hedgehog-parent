@@ -1,0 +1,6 @@
+<?xml  version="1.0"  encoding="utf-8"?>
+<RelativeLayout  android:id="@+id/view_picture_layout"  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:layout_width="match_parent"  android:layout_height="match_parent">
+
+    <me.relex.photodraweeview.PhotoDraweeView  android:id="@+id/picture"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:background="@color/black"  app:actualImageScaleType="centerCrop"/>
+
+</RelativeLayout>

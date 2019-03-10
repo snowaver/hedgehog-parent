@@ -1,0 +1,10 @@
+<?xml  version="1.0"  encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:background="@color/white">
+
+    <com.aries.ui.view.radius.RadiusRelativeLayout  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="40dp"  android:background="@color/white"  app:rv_radiusHalfHeightEnable="true"  app:rv_strokeWidth="2dp"  app:rv_strokeColor="@color/lightgray">
+
+        <EditText  android:id="@+id/edit_inputor"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:layout_centerInParent="true"  android:textAlignment="center"  android:textColor="@color/black"  android:textSize="18dp"  android:background="@null"/>
+
+    </com.aries.ui.view.radius.RadiusRelativeLayout>
+
+</LinearLayout>

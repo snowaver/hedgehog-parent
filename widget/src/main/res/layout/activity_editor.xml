@@ -1,0 +1,16 @@
+<?xml  version="1.0"  encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:layout_width="match_parent"  android:layout_height="match_parent">
+
+    <cc.mashroom.crazyboy.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/back"></cc.mashroom.crazyboy.widget.HeaderBar>
+
+    <RelativeLayout  android:id="@+id/edit_layout"  android:layout_width="match_parent"  android:layout_height="50dp"  android:paddingLeft="10dp"   android:layout_below="@id/header_bar">
+
+        <EditText  android:id="@+id/edit"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:background="@null"  android:hint="@string/edit_content"  android:textSize="18dp"  android:textColor="@color/black"  android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/lightgray"  android:layout_below="@id/edit_layout"></RelativeLayout>
+
+    <Button  android:id="@+id/ok_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/limegreen"  android:text="@string/ok"  android:textSize="18dp"  android:textColor="@color/white"  android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<resources>
+    <string  name="app_name">widget</string>
+    <string  name="back">返回</string>
+    <string  name="ok">确定</string>
+    <string  name="switch_camera">切换摄像头</string>
+    <string  name="edit_content">编辑内容</string>
+    <string  name="photo">照片</string>
+    <string  name="video">视频</string>
+    <string  name="photo_and_video">照片和视频</string>
+    <string  name="finish">完成</string>
+    <string  name="select">选择</string>
+    <string  name="image_cropping">图片裁剪</string>
+    <string  name="cropping_error">裁剪错误</string>
+    <string  name="selecting_photo">图片选择</string>
+    <string  name="taking_photo">拍照</string>
+    <string  name="recording_video">视频</string>
+    <string  name="taking_photo_or_recording_video">照片或视频</string>
+    <string  name="edit">编辑</string>
+    <string  name="content_blank_error">内容不能为空</string>
+    <string  name="notice">提示</string>
+    <string  name="close">关闭</string>
+    <string  name="multichoice_limitation_error">选择项已超过最大限制</string>
+    <string  name="camcorder_permission_check">需要摄像头以及录音权限</string>
+    <string  name="album_permission_check">需要读取您的相册</string>
+    <string  name="filter">筛选</string>
+    <string  name="permission_grant_error">权限不足</string>
+    <string  name="file_not_found">文件未找到</string>
+    <string  name="network_or_internal_server_error">网络错误</string>
+</resources>
