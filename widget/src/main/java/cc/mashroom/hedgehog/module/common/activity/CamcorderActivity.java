@@ -62,7 +62,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		super.findViewById(R.id.header_bar).setLayoutParams(layoutParams);
 
-		Sneaky.click( ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class),(v)->camera.switchOrientation() );
+		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (view) -> {try{ camera.switchOrientation(); }catch(Exception  e){ e.printStackTrace(); }} );
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.taking_photo).addEntry(2,R.string.recording_video).addEntry( 3,R.string.taking_photo_or_recording_video );
