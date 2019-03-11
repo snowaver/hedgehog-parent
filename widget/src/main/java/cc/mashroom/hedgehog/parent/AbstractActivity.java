@@ -35,6 +35,11 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 		context.finish( );
 	}
 
+	public  Application   application()
+	{
+		return  ObjectUtils.cast( super.getApplication() );
+	}
+
 	protected  void  onDestroy()
 	{
 		super.onDestroy();
@@ -47,21 +52,15 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 		e.printStackTrace( );
 	}
 
+
 	public  Sneaker  setSneakerView( Sneaker  sneaker, int  icon, int  title, int  titleColor )
 	{
-		View  sneakerAttatchedView = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView(),false );
+		View  sneakerView = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView(),false );
 
-		ObjectUtils.cast(sneakerAttatchedView.findViewById(R.id.icon),ImageView.class).setImageResource(   icon );
+		ObjectUtils.cast(sneakerView.findViewById(R.id.icon),ImageView.class).setImageResource(   icon );
 
-		ObjectUtils.cast(sneakerAttatchedView.findViewById(R.id.title),TextView.class).setText( title );
+		ObjectUtils.cast(sneakerView.findViewById(R.id.title),TextView.class).setText( title );
 
-		ObjectUtils.cast(sneakerAttatchedView.findViewById(R.id.title),TextView.class).setTextColor( titleColor );
-
-		return       sneaker;
-	}
-
-	public  Application   application()
-	{
-		return  ObjectUtils.cast( super.getApplication() );
+		ObjectUtils.cast(sneakerView.findViewById(R.id.title),TextView.class).setTextColor( titleColor );  sneaker.sneakCustom( sneakerView );  return  sneaker;
 	}
 }
