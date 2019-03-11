@@ -8,7 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner  "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath = true
@@ -32,8 +32,8 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.6'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'cc.mashroom:mashroom-util:v1.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'cc.mashroom:mashroom-util:v1.0.1'
     implementation 'com.facebook.fresco:fresco:1.13.0'
     implementation 'com.steelkiwi:cropiwa:1.0.3'
     implementation 'com.github.grenderg:toasty:1.4.0'
