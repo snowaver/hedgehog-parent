@@ -1,7 +1,7 @@
 <?xml  version="1.0"  encoding="utf-8"?>
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:orientation="vertical"  android:fitsSystemWindows="true">
 
-    <cc.mashroom.crazyboy.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/steelblue"  android:title="@string/image_cropping"  app:backText="@string/back"  app:additionalText="@string/finish"  app:immersive="true"></cc.mashroom.crazyboy.widget.HeaderBar>
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/steelblue"  android:title="@string/image_cropping"  app:backText="@string/back"  app:additionalText="@string/finish"  app:immersive="true"></cc.mashroom.hedgehog.widget.HeaderBar>
 
     <com.steelkiwi.cropiwa.CropIwaView  android:id="@+id/crop_view"  android:layout_width="match_parent"  android:layout_height="match_parent"  app:ci_aspect_ratio_w="1"  app:ci_aspect_ratio_h="1"  app:ci_translation_enabled="true"  app:ci_crop_shape="rectangle"  app:ci_dynamic_aspect_ratio="false"  app:ci_draw_grid="true"  app:ci_border_width="2dp"/>
 

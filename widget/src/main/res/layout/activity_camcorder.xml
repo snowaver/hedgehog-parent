@@ -1,7 +1,7 @@
 <?xml  version="1.0"  encoding="utf-8"?>
 <RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:layout_width="match_parent"  android:layout_height="match_parent">
 
-    <cc.mashroom.crazyboy.widget.ViewSwitcher  android:id="@+id/preview_switcher"  android:layout_width="match_parent"  android:layout_height="match_parent">
+    <cc.mashroom.hedgehog.widget.ViewSwitcher  android:id="@+id/preview_switcher"  android:layout_width="match_parent"  android:layout_height="match_parent">
 
         <TextureView  android:id="@+id/texture_view"  android:layout_width="match_parent"  android:layout_height="match_parent"/>
 
@@ -9,11 +9,11 @@
 
         <SurfaceView  android:id="@+id/video_viewer"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:visibility="gone"/>
 
-    </cc.mashroom.crazyboy.widget.ViewSwitcher>
+    </cc.mashroom.hedgehog.widget.ViewSwitcher>
 
-    <cc.mashroom.crazyboy.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/back"  app:additionalText="@string/switch_camera"  android:background="@color/halftransparentwhite"></cc.mashroom.crazyboy.widget.HeaderBar>
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/back"  app:additionalText="@string/switch_camera"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
 
-    <cc.mashroom.crazyboy.widget.ViewSwitcher  android:id="@+id/control_switcher"  android:layout_width="match_parent" android:layout_height="150dp"  android:background="@color/transparent"  android:layout_alignParentBottom="true">
+    <cc.mashroom.hedgehog.widget.ViewSwitcher  android:id="@+id/control_switcher"  android:layout_width="match_parent" android:layout_height="150dp"  android:background="@color/transparent"  android:layout_alignParentBottom="true">
 
         <com.facebook.drawee.view.SimpleDraweeView  android:id="@+id/take_picture_or_record_video_button"  android:layout_width="60dp"  android:layout_height="60dp"  android:layout_centerInParent="true"  app:roundAsCircle="true"  app:roundingBorderWidth="5dp"  app:roundingBorderColor="@color/white"/>
 
@@ -25,6 +25,6 @@
 
         </RelativeLayout>
 
-    </cc.mashroom.crazyboy.widget.ViewSwitcher>
+    </cc.mashroom.hedgehog.widget.ViewSwitcher>
 
 </RelativeLayout>
