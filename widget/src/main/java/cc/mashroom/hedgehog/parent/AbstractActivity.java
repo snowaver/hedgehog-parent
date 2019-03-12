@@ -21,7 +21,7 @@ import  cc.mashroom.util.ObjectUtils;
 
 public  abstract  class  AbstractActivity  extends  AppCompatActivity
 {
-	public  final  static  LinkedList<Activity>  STACK  = new  LinkedList<Activity>();
+	public  final  static  LinkedList<Activity>  STACK = new  LinkedList<Activity>();
 
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -70,7 +70,7 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 
 		layoutParams.height = ContextUtils.getStatusBarHeight(this );
 
-		sneakerView.setLayoutParams(layoutParams );
+        sneakerView.findViewById(R.id.head_content).setLayoutParams(  layoutParams );
 
 		sneakerView.setBackgroundColor( super.getResources().getColor( backgroundColorResId ) );  sneaker.sneakCustom( sneakerView );
 	}
