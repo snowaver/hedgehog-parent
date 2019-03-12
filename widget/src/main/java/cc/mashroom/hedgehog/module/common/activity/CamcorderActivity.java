@@ -12,6 +12,7 @@ import  android.widget.TextView;
 
 import  com.aries.ui.widget.alert.UIAlertDialog;
 import  com.facebook.drawee.view.SimpleDraweeView;
+import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.device.camera.Camera;
@@ -127,7 +128,20 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 	public  void  checkPermissions()
 	{
 		//  lollipop  camera  (camera2)  do  not  work  well  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )  but  no  way  to  resolve  it,  so  use  eclair  camera  (camera1)  instead.
-		this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),captureFlag) );
+		try
+		{
+			this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),captureFlag) );
+		}
+		catch(   IllegalStateException  ise )
+		{
+			super.error(ise);
+
+			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_grant_error, R.color.white, R.color.red );
+
+			super.finish(  );
+
+			return;
+		}
 
 		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setOnTouchListener( camcorderListener );
 
