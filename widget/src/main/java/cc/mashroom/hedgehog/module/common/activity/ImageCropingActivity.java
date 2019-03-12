@@ -16,7 +16,6 @@ import  java.net.URI;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
-import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
@@ -39,7 +38,7 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 
 		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setCropSaveCompleteListener(this );
 
-		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> setSneakerView(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white).autoHide(true).setDuration(3000).setHeight(DensityUtils.dp(this,ContextUtils.getStatusBarHeight(this))+50).sneakError() );
+		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white,R.color.red) );
 
 		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.fromFile(new  File(super.getIntent().getStringExtra("PATH"))) );
 	}
@@ -54,7 +53,7 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 		{
 			super.error( e );
 
-			setSneakerView(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white).autoHide(true).setDuration(3000).setHeight(DensityUtils.dp(this,ContextUtils.getStatusBarHeight(this))+50).sneakError();
+			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white,R.color.red );
 		}
 	}
 }
