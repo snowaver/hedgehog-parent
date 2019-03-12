@@ -26,7 +26,7 @@ public  class  Application   extends  android.app.Application
 	{
 		super.onCreate();
 
-		this.setCacheDir( FileUtils.createDirectoryIfAbsent( super.getDir(    ".hedgehog" , Context.MODE_PRIVATE ) ) );
+		this.setCacheDir( FileUtils.createDirectoryIfAbsent( super.getDir( ".hedgehog" , Context.MODE_PRIVATE ) ) );
 	}
 
 	@Setter
@@ -46,18 +46,18 @@ public  class  Application   extends  android.app.Application
 	@SneakyThrows
 	public  File  cache( int  imageId,byte[]  cachingFileBytes,int  contentType )
 	{
-		Bitmap  bitmap=null;
+		Bitmap  bmp  = null;
 
 		File  cachedFile = FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+new  String(Hex.encodeHex(DigestUtils.md5(cachingFileBytes))).toUpperCase()),cachingFileBytes );
 
 		if( contentType==3 )
 		{
-			bitmap = ThumbnailUtils.createVideoThumbnail( cachedFile.getPath(),MediaStore.Video.Thumbnails.MINI_KIND );
+            bmp = ThumbnailUtils.createVideoThumbnail( cachedFile.getPath(),MediaStore.Video.Thumbnails.MINI_KIND );
 		}
 		else
 		if( contentType==1 )
 		{
-			bitmap = imageId != -1 ? MediaStore.Images.Thumbnails.getThumbnail(super.getContentResolver(),imageId,MediaStore.Images.Thumbnails.MINI_KIND,null) : BitmapFactory.decodeByteArray( cachingFileBytes,0,cachingFileBytes.length );
+            bmp = imageId != -1 ? MediaStore.Images.Thumbnails.getThumbnail(super.getContentResolver(),imageId,MediaStore.Images.Thumbnails.MINI_KIND,null) : BitmapFactory.decodeByteArray( cachingFileBytes,0,cachingFileBytes.length );
 		}
 		else
 		if( contentType==2 )
@@ -69,6 +69,6 @@ public  class  Application   extends  android.app.Application
 			throw  new  IllegalArgumentException( String.format("SQUIRREL-CLIENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported.",contentType) );
 		}
 
-		FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+cachedFile.getName()+"$TMB").getPath(),ImageUtils.readBitmapToByteArray(bitmap  /*ThumbnailUtils.extractThumbnail(bitmap,(int)  (((double)  bitmap.getWidth()/bitmap.getHeight())*DensityUtils.px(this,90)),DensityUtils.px(this,90))*/) );  return  cachedFile;
+		FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+cachedFile.getName()+"$TMB").getPath(),ImageUtils.readBitmapToByteArray(bmp  /*ThumbnailUtils.extractThumbnail(bitmap,(int)  (((double)  bitmap.getWidth()/bitmap.getHeight())*DensityUtils.px(this,90)),DensityUtils.px(this,90))*/) );  return  cachedFile;
 	}
 }
