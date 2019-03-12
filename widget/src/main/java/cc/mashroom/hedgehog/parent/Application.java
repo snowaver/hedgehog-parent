@@ -8,6 +8,8 @@ import  android.os.Handler;
 import  android.os.Looper;
 import  android.provider.MediaStore;
 
+import  org.apache.commons.codec.binary.Hex;
+
 import  java.io.File;
 
 import  cc.mashroom.hedgehog.util.ImageUtils;
@@ -46,7 +48,7 @@ public  class  Application   extends  android.app.Application
 	{
 		Bitmap  bitmap=null;
 
-		File  cachedFile = FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+DigestUtils.md5Hex(cachingFileBytes).toUpperCase()),cachingFileBytes );
+		File  cachedFile = FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+new  String(Hex.encodeHex(DigestUtils.md5(cachingFileBytes))).toUpperCase()),cachingFileBytes );
 
 		if( contentType==3 )
 		{
@@ -64,7 +66,7 @@ public  class  Application   extends  android.app.Application
 		}
 		else
 		{
-			throw  new  IllegalArgumentException( String.format("SQUIRREL-CLIENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported  for  caching.",contentType) );
+			throw  new  IllegalArgumentException( String.format("SQUIRREL-CLIENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported.",contentType) );
 		}
 
 		FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+cachedFile.getName()+"$TMB").getPath(),ImageUtils.readBitmapToByteArray(bitmap  /*ThumbnailUtils.extractThumbnail(bitmap,(int)  (((double)  bitmap.getWidth()/bitmap.getHeight())*DensityUtils.px(this,90)),DensityUtils.px(this,90))*/) );  return  cachedFile;
