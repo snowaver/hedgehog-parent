@@ -18,6 +18,7 @@ import  cc.mashroom.util.FileUtils;
 import  lombok.Getter;
 import  lombok.Setter;
 import  lombok.SneakyThrows;
+import  retrofit2.Retrofit;
 
 public  class  Application   extends  android.app.Application
 {
@@ -31,6 +32,8 @@ public  class  Application   extends  android.app.Application
 	@Setter
 	@Getter
 	private  File  cacheDir;
+	@Getter
+	private  Retrofit defaultRetrofit = new  Retrofit.Builder().baseUrl("https://mashroom.cc/").build();
 	@Getter
 	private  Handler  mainLooperHandler = new  Handler( Looper.getMainLooper() );
 
