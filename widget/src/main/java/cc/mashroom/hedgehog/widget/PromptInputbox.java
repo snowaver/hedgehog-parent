@@ -3,6 +3,7 @@ package cc.mashroom.hedgehog.widget;
 import  android.content.Context;
 import  android.content.res.TypedArray;
 import  android.graphics.Color;
+import  androidx.core.content.res.ResourcesCompat;
 import  android.text.Editable;
 import  android.text.InputType;
 import  android.util.AttributeSet;
@@ -73,6 +74,8 @@ public  class  PromptInputbox  extends  RelativeLayout
 		}
 
 		ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class).setTextColor( typedArray.getColor(R.styleable.PromptInputbox_android_textColor,Color.BLACK) );
+
+		ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class).setTypeface(  ResourcesCompat.getFont( super.getContext() , R.font.monospace ) );
 
 		super.findViewById(R.id.top_border).setVisibility( typedArray.getBoolean(R.styleable.PromptInputbox_enableTopBorder,false) ? View.VISIBLE : View.GONE );
 
