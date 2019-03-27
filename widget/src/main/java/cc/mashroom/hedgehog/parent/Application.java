@@ -26,7 +26,7 @@ public  class  Application   extends  android.app.Application
 	{
 		super.onCreate();
 
-		this.setCacheDir( FileUtils.createDirectoryIfAbsent(super.getDir(".hedgehog/cache",Context.MODE_PRIVATE)) );
+		this.setCacheDir( FileUtils.createDirectoryIfAbsent( super.getDir( ".hedgehog" , Context.MODE_PRIVATE ) ) );
 	}
 
 	@Setter
