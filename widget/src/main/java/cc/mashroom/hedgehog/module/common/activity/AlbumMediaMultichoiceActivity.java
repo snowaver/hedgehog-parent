@@ -37,29 +37,29 @@ import  java.util.List;
 
 public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  implements  UIActionSheetDialog.OnItemClickListener,CompoundButton.OnCheckedChangeListener
 {
-	@NeedsPermission( Manifest.permission.READ_EXTERNAL_STORAGE )
-	@SneakyThrows
-	public  void  checkPermissions()
-	{
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString( titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3)) ) );
-
-		findViewById(R.id.additional_text).setVisibility(super.getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
-
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter(this,super.getIntent().getIntExtra("CAPTURE_FLAG",3),3,super.getIntent().getIntExtra("LIMITATION",3),this) );
-	}
-
-	@OnShowRationale( Manifest.permission.READ_EXTERNAL_STORAGE )
+	@OnShowRationale( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 
 	public  void  showPermissionRationale(   PermissionRequest  permissionRequest )
 	{
 		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_permission_check).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog, which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show();
 	}
 
-	protected  void  onCreate(Bundle  savedInstanceState )
+	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
+	@SneakyThrows
+	public  void  checkPermissions()
+	{
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString( titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3)) ) );
+
+		super.findViewById(R.id.additional_text).setVisibility( getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
+
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter(this,super.getIntent().getIntExtra("CAPTURE_FLAG",3),3,super.getIntent().getIntExtra("LIMITATION",3),this) );
+	}
+
+	protected  void  onCreate( Bundle  savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
 
-		super.setContentView( R.layout.activity_album_media_multichoice );
+		super.setContentView(R.layout.activity_album_media_multichoice );
 
 		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.photo_and_video).setItemsTextSize(18).setCancel(R.string.cancel).setCancelTextColor(Color.RED).setCancelTextSize(18).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
 
@@ -68,25 +68,25 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 		AlbumMediaMultichoiceActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck( this );
 	}
 
-	public  void  onRequestPermissionsResult( int  requestCode, @NonNull  String[]  permissions,@NonNull  int[]  grantedResults )
+	public  void  onRequestPermissionsResult( int  requestCode, @NonNull  String[]  permissions, @NonNull  int[]  grantedResults )
 	{
 		super.onRequestPermissionsResult( requestCode,permissions,grantedResults );
 
 		AlbumMediaMultichoiceActivityPermissionsDispatcher.onRequestPermissionsResult( this,requestCode,grantedResults );
 
-		if( ! PermissionUtils.verifyPermissions(grantedResults) )  ContextUtils.finish( this );
+		if( !PermissionUtils.verifyPermissions(grantedResults) )ContextUtils.finish( this );
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3,R.string.photo_and_video );
 
-	public  void  onClick(  BasisDialog  dialog,View  view,int  position )
+	public  void  onClick( BasisDialog  dialog,View  view,int  position )
 	{
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(super.getString(titles.get(position+1)) );
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(titles.get(position+1)) );
 
 		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter(this,position+1,3,super.getIntent().getIntExtra("LIMITATION",3),this) );
 	}
 
-	public  void  onCheckedChanged(CompoundButton compoundButton,boolean  checked )
+	public  void  onCheckedChanged( CompoundButton compoundButton,boolean checked )
 	{
 		List<Media>  choosedMedias = ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list) , ListView.class).getAdapter(), AlbumMediaMultichoiceListviewAdapter.class ).getChoosedMedias();
 

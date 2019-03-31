@@ -46,15 +46,23 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 
 		if( !isChecked )
 		{
-			choicesMapper.remove( checkedObject );
+			this.choicesMapper.remove(  checkedObject );
 		}
 		else
 		{
+			//  replace  the  previous  choice  if  the  max  count  is  one,  so  it  is  not  necessary  that  deselect  the  previous  choice  manually  if  select  one  but  want  a  new  choice.
+			if( this.maxCount == 1 )
+			{
+				this.choicesMapper.clear();
+
+				this.choicesMapper.add( checkedObject );
+			}
+			else
 			if( !choicesMapper.contains(checkedObject) )
 			{
 				smoothCheckBox.setChecked( choicesMapper.size() <= maxCount-1 && choicesMapper.add(checkedObject),true );
 
-				if( isChecked != smoothCheckBox.isChecked() )
+				if( isChecked   != smoothCheckBox.isChecked() )
 				{
 					Toasty.warning(smoothCheckBox.getContext(),smoothCheckBox.getContext().getString(R.string.multichoice_limitation_error),Toast.LENGTH_LONG,false).show();
 				}
