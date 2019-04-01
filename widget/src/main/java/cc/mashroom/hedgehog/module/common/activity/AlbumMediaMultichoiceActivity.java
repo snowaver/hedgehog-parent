@@ -6,7 +6,7 @@ import  android.graphics.Color;
 import  android.os.Bundle;
 import  androidx.annotation.NonNull;
 import  android.view.View;
-import android.view.ViewGroup;
+import  android.view.ViewGroup;
 import  android.widget.CompoundButton;
 import  android.widget.ListView;
 import  android.widget.TextView;
@@ -94,13 +94,17 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		List<Media>  choosedMedias = ObjectUtils.cast(listview.getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias();
 
-		if( getIntent().getIntExtra("LIMITATION", 3) == 1 )
+		if( super.getIntent().getIntExtra("LIMITATION",3)==1 && checked )
 		{
-			for( int  position = listview.getFirstVisiblePosition();position <= listview.getLastVisiblePosition();position = position + 1 )
+			int  firstVisiblePosition=listview.getFirstVisiblePosition();
+
+			for( int  position = firstVisiblePosition;      position <= listview.getLastVisiblePosition();  position= position+1 )
 			{
-				for( int  childPosition = 0;         childPosition <= ObjectUtils.cast(listview.getChildAt(position),ViewGroup.class).getChildCount()-1;childPosition = childPosition+ 1 )
+				ViewGroup line = ObjectUtils.cast( listview.getChildAt(position-firstVisiblePosition), ViewGroup.class );
+
+				for(      int  childPosition = 0;childPosition <= line.getChildCount()-1;childPosition++ )
 				{
-					View  childView = ObjectUtils.cast(listview.getChildAt(position),ViewGroup.class).getChildAt( childPosition );
+					View  childView   = line.getChildAt( childPosition );
 
 					if( ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).isChecked() && !choosedMedias.contains(ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).getTag()) )
 					{
@@ -112,6 +116,6 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		super.findViewById(R.id.ok_button).setEnabled( ! choosedMedias.isEmpty() );
 
-		ObjectUtils.cast(super.findViewById(R.id.ok_button),TextView.class).setTextColor( super.getResources().getColor(choosedMedias.isEmpty() ? R.color.darkgray : R.color.limegreen) );
+		ObjectUtils.cast(super.findViewById(R.id.ok_button),TextView.class).setTextColor( super.getResources().getColor(choosedMedias.isEmpty() ? R.color.darkgray : R.color.limegreen/* color  drakgray  for  disabled  but  limegreen  for  enabled */) );
 	}
 }
