@@ -1,7 +1,6 @@
 package cc.mashroom.hedgehog.module.common.listener;
 
 import  android.widget.BaseAdapter;
-import  android.widget.CompoundButton;
 
 import  java.util.concurrent.atomic.AtomicReference;
 
@@ -13,7 +12,7 @@ import  lombok.experimental.Accessors;
 
 public  class  SinglechoiceListener<T>  implements  SmoothCheckBox.OnCheckedChangeListener
 {
-	public  SinglechoiceListener(   BaseAdapter  adapter , CompoundButton.OnCheckedChangeListener  checkedChangeListener )
+	public  SinglechoiceListener(   BaseAdapter  adapter , SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
 	{
 		this.setAdapter(adapter).setCheckedChangeListenerCallback(checkedChangeListener );
 	}
@@ -27,7 +26,7 @@ public  class  SinglechoiceListener<T>  implements  SmoothCheckBox.OnCheckedChan
 	protected  AtomicReference<T>  checked = new  AtomicReference<T>();
 	@Accessors( chain =true )
 	@Setter
-	protected  CompoundButton.OnCheckedChangeListener  checkedChangeListenerCallback;
+	protected  SmoothCheckBox.OnCheckedChangeListener  checkedChangeListenerCallback;
 
 	public  void  onCheckedChanged(    SmoothCheckBox  smoothCheckBox,boolean  isChecked )
 	{
@@ -47,6 +46,6 @@ public  class  SinglechoiceListener<T>  implements  SmoothCheckBox.OnCheckedChan
 
 		this.adapter.notifyDataSetChanged();
 
-		checkedChangeListenerCallback.onCheckedChanged((CompoundButton)  null,isChecked );
+		this.checkedChangeListenerCallback.onCheckedChanged( smoothCheckBox , isChecked );
 	}
 }
