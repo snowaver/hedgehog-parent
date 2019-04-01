@@ -31,9 +31,14 @@ public  abstract  class  BaseMulticolumnAdapter<I>  extends  android.widget.Base
 	@Accessors(chain=true )
 	protected  int  parentLayoutId;
 
-	public  List<I>  getItem(int  position )
+	public  long  getItemId( int  position )
 	{
-		return  items.subList( position*3,(position+1)*3 > items.size()-1 ? items.size()-1 : (position+1)*3 );
+		return    position;
+	}
+
+	public  List<I> getItem( int  position )
+	{
+		return  this.items.subList(  position*3 , (position+1)*3 > items.size()-1 ? items.size()-1 : (position+1)*3 );
 	}
 
 	public  int  getCount()
@@ -41,15 +46,13 @@ public  abstract  class  BaseMulticolumnAdapter<I>  extends  android.widget.Base
 		return  items.size()%columnSize== 0 ? items.size()/columnSize : items.size()/columnSize+1;
 	}
 
-	public  long  getItemId( int  position )  { return  position; }
-
-	public  View  getView( int  position,View  convertView,ViewGroup  parent )
+	public  View  getView(      int  position , View  convertView , ViewGroup  parent )
 	{
 		if( convertView == null )  convertView = LayoutInflater.from(context).inflate( parentLayoutId,parent, false );
 
-		if( ObjectUtils.cast(convertView,ViewGroup.class).getChildCount()!=columnSize )
+		if( ObjectUtils.cast(convertView,ViewGroup.class).getChildCount()     != this.columnSize )
 		{
-			throw  new  IllegalArgumentException( "MASHROOM-WIDGET:  ** BASE  MULTI-COLUMN  ADAPTER **  row  child  view  count  should  be  equal  to  column  size" );
+			throw  new  IllegalArgumentException( "MASHROOM-WIDGET:  ** BASE  MULTI-COLUMN  ADAPTER **  row  child  view  count  should  be  equal  to  column  size." );
 		}
 
 		List<I>  items= getItem( position );

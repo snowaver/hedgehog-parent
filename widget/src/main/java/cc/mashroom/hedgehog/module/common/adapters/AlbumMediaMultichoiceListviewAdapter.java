@@ -34,7 +34,7 @@ public  class  AlbumMediaMultichoiceListviewAdapter      extends  BaseMulticolum
 {
 	private  final  static  Map<Integer,Uri[]>  CAPTURE_FLAGS = new  HashMap<Integer,Uri[]>().addEntry(1,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI}).addEntry(2,new  Uri[]{android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI}).addEntry(3,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI});
 
-	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  captureFlag,int  columnSize,int  limitation,CompoundButton.OnCheckedChangeListener  checkedChangeListener )
+	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  captureFlag,int  columnSize,int  limitation,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
 	{
 		super( context, MediaStore.get( context,CAPTURE_FLAGS.get(captureFlag)), columnSize, R.layout.activity_album_media_multichoice_line );
 

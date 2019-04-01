@@ -17,7 +17,7 @@ import  lombok.experimental.Accessors;
 
 public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChangeListener
 {
-	public  MultichoicesListener( BaseAdapter  adapter,int  maxCount,CompoundButton.OnCheckedChangeListener  checkedChangeListenerCallback )
+	public  MultichoicesListener( BaseAdapter  adapter,int  maxCount,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListenerCallback )
 	{
 		this.setAdapter(adapter).setMaxCount(maxCount).setCheckedChangeListenerCallback( checkedChangeListenerCallback );
 	}
@@ -33,7 +33,7 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 	protected  int  maxCount;
 	@Accessors( chain =true )
 	@Setter
-	protected  CompoundButton.OnCheckedChangeListener  checkedChangeListenerCallback;
+	protected  SmoothCheckBox.OnCheckedChangeListener  checkedChangeListenerCallback;
 
 	public  void  onCheckedChanged(    SmoothCheckBox  smoothCheckBox,boolean  isChecked )
 	{
@@ -50,14 +50,12 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 		}
 		else
 		{
-			//  replace  the  previous  choice  if  the  max  count  is  one,  so  it  is  not  necessary  that  deselect  the  previous  choice  manually  if  select  one  but  want  a  new  choice.
+			//  replace  the  previous  choice  if  the  max  count  is  one,  so  it  is  not  necessary  that  deselect  the  previous  choice  manually  if  select  one  but  want  a  new  choice.  notify  data  set  changed  event  may  lead  to  coruscating,  so  remove  it  and  need  a  manually  state  switching.
 			if( this.maxCount == 1 )
 			{
 				this.choicesMapper.clear();
 
 				this.choicesMapper.add( checkedObject );
-
-				this.adapter.notifyDataSetChanged();
 			}
 			else
 			if( !choicesMapper.contains(checkedObject) )
@@ -71,6 +69,6 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 			}
 		}
 
-		checkedChangeListenerCallback.onCheckedChanged((CompoundButton)  null,isChecked );
+		this.checkedChangeListenerCallback.onCheckedChanged( smoothCheckBox , isChecked );
 	}
 }
