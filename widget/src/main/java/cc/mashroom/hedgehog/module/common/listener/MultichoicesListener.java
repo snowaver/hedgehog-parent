@@ -56,6 +56,8 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 				this.choicesMapper.clear();
 
 				this.choicesMapper.add( checkedObject );
+
+				this.adapter.notifyDataSetChanged();
 			}
 			else
 			if( !choicesMapper.contains(checkedObject) )
