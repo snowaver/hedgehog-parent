@@ -67,7 +67,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		super.findViewById(R.id.additional_text).setVisibility( getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
 
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter(this,super.getIntent().getIntExtra("CAPTURE_FLAG",3),3,super.getIntent().getIntExtra("LIMITATION",3),this) );
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this, super.getIntent().getIntExtra("CAPTURE_FLAG",3), 3, super.getIntent().getIntExtra("LIMITATION",3), this ) );
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3,R.string.photo_and_video );
@@ -102,7 +102,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 				{
 					View  childView = ObjectUtils.cast(listview.getChildAt(position),ViewGroup.class).getChildAt( childPosition );
 
-					if( ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).isChecked() && choosedMedias.contains(ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).getTag()))
+					if( ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).isChecked() && !choosedMedias.contains(ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).getTag()) )
 					{
 						ObjectUtils.cast(childView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setChecked( false,false );
 					}
