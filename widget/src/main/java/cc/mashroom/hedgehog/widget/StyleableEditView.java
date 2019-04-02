@@ -4,9 +4,9 @@ import  android.content.Context;
 import  android.content.res.TypedArray;
 import  android.graphics.Color;
 import  androidx.core.content.res.ResourcesCompat;
+
 import  android.text.Editable;
 import  android.text.InputType;
-import android.text.method.KeyListener;
 import  android.util.AttributeSet;
 import  android.view.LayoutInflater;
 import  android.view.View;
@@ -16,9 +16,9 @@ import  android.widget.TextView;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.util.ObjectUtils;
-import lombok.AccessLevel;
-import lombok.Setter;
-import lombok.experimental.Accessors;
+import  lombok.AccessLevel;
+import  lombok.Setter;
+import  lombok.experimental.Accessors;
 
 public  class  StyleableEditView  extends  RelativeLayout
 {
@@ -86,6 +86,8 @@ public  class  StyleableEditView  extends  RelativeLayout
 		}
 
 		inputor.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,Color.BLACK) );
+
+		inputor.setTypeface( ResourcesCompat.getFont( super.getContext() , R.font.droid_sans_mono) );
 
 		super.findViewById(R.id.top_border).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_enableTopBorder,false)?View.VISIBLE: View.GONE );
 
