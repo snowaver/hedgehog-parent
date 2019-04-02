@@ -22,17 +22,9 @@ This product includes/uses software(s) developed by 'Aries Hoo' (https://github.
 - UIWidget
 This product includes/uses software(s) developed by 'Shintaro Katafuchi, Marcel Schnelle, Yoshinori Isogai' (https://github.com/permissions-dispatcher/PermissionsDispatcher/) and licensed under Apache Licence 2.0
 - PermissionsDispatcher
+This product includes/uses software(s) developed by 'leibnik' (https://github.com/nyakokishi/JustifyTextView/) and licensed under MIT license
+- JustifyTextView
 This product includes/uses software(s) developed by 'andy' ( https://github.com/andyxialm/SmoothCheckBox/) and licensed under Apache Licence 2.0
 - SmoothCheckBox
 This product includes/uses software(s) developed by 'Irozon, Inc.' (https://github.com/hamadakram/) and licensed under Apache Licence 2.0
 - Sneaker
-
-
-
-
-
-
-
-
-
-

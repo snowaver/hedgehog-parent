@@ -18,6 +18,7 @@ import  java.util.LinkedList;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.util.ObjectUtils;
+import io.github.leibnik.justifytextview.JustifyTextView;
 
 public  abstract  class  AbstractActivity  extends  AppCompatActivity
 {
@@ -54,15 +55,15 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 		e.printStackTrace( );
 	}
 
-	public  void  showSneakerWindow( Sneaker  sneaker,int  iconResId,int  titleResId,int  titleColorResId,int  backgroundColorResId )
+	public  void  showSneakerWindow( Sneaker  sneaker, int  iconResId, int  titleResId, int  titleColorResId, int  backgroundColorResId )
 	{
-		View  sneakerView  = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView(),false );
+		View  sneakerView  = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView() , false );
 
 		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon),ImageView.class).setImageResource( iconResId );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),TextView.class).setText( titleResId );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifyTextView.class).setText(  titleResId );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),TextView.class).setTextColor( super.getResources().getColor(titleColorResId) );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifyTextView.class).setTextColor( super.getResources().getColor(titleColorResId) );
 
 		sneaker.autoHide(true).setDuration( 3000 );
 
@@ -72,6 +73,6 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 
         sneakerView.findViewById(R.id.head_content).setLayoutParams(  layoutParams );
 
-		sneakerView.setBackgroundColor( super.getResources().getColor( backgroundColorResId ) );  sneaker.sneakCustom( sneakerView );
+		sneakerView.setBackgroundColor( super.getResources().getColor( backgroundColorResId ) );      sneaker.sneakCustom( sneakerView );
 	}
 }
