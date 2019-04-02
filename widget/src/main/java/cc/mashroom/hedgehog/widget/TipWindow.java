@@ -5,8 +5,6 @@ import  android.view.LayoutInflater;
 import  android.view.ViewGroup;
 import  android.widget.PopupWindow;
 
-import  cc.mashroom.hedgehog.R;
-
 public  class  TipWindow  extends  PopupWindow
 {
     public  TipWindow( Context  context,int  layout,boolean  outsideTouchable )
@@ -17,6 +15,6 @@ public  class  TipWindow  extends  PopupWindow
 
         super.setOutsideTouchable( outsideTouchable );
 
-//        super.setBackgroundDrawable( context.getResources().getDrawable(R.color.black) );
+//      super.setBackgroundDrawable( context.getResources().getDrawable(R.color.black) );
     }
 }

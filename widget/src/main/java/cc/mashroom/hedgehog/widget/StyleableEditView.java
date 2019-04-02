@@ -5,6 +5,7 @@ import  android.content.res.TypedArray;
 import  android.graphics.Color;
 import  androidx.core.content.res.ResourcesCompat;
 
+import android.graphics.Typeface;
 import  android.text.Editable;
 import  android.text.InputType;
 import  android.util.AttributeSet;
@@ -87,7 +88,7 @@ public  class  StyleableEditView  extends  RelativeLayout
 
 		inputor.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,Color.BLACK) );
 
-		inputor.setTypeface( ResourcesCompat.getFont( super.getContext() , R.font.droid_sans_mono) );
+		inputor.setTypeface( Typeface.createFromAsset(super.getResources().getAssets(),typedArray.hasValue(R.styleable.StyleableEditView_textTypefacePath) ? typedArray.getString(R.styleable.StyleableEditView_textTypefacePath) : "font/droid_sans_mono.ttf") );
 
 		super.findViewById(R.id.top_border).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_enableTopBorder,false)?View.VISIBLE: View.GONE );
 
