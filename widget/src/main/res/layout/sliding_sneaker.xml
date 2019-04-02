@@ -7,7 +7,7 @@
 
         <ImageView  android:id="@+id/icon"  android:layout_width="22dp"  android:layout_height="22dp"  android:layout_gravity="center_vertical"/>
 
-        <io.github.leibnik.justifytextview.JustifyTextView  android:id="@+id/title"  android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:layout_marginLeft="10dp"  android:layout_gravity="center_vertical"  android:textSize="14dp"  app:line_space="0dp"  app:character_space="0dp"/>
+        <com.bluejamesbond.text.DocumentView  android:id="@+id/title"  android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:layout_marginLeft="10dp"  android:layout_gravity="center_vertical"  app:documentView_textSize="14dp"  app:documentView_textAlignment="justified"/>
 
     </LinearLayout>
 

@@ -7,8 +7,8 @@ import  android.view.LayoutInflater;
 import  android.view.View;
 import  android.view.ViewGroup;
 import  android.widget.ImageView;
-import  android.widget.TextView;
 
+import  com.bluejamesbond.text.DocumentView;
 import  com.irozon.sneaker.Sneaker;
 
 import  androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,6 @@ import  java.util.LinkedList;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.util.ObjectUtils;
-import io.github.leibnik.justifytextview.JustifyTextView;
 
 public  abstract  class  AbstractActivity  extends  AppCompatActivity
 {
@@ -59,11 +58,11 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 	{
 		View  sneakerView  = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView() , false );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon),ImageView.class).setImageResource( iconResId );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon ),ImageView.class).setImageResource( iconResId );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifyTextView.class).setText(  titleResId );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),DocumentView.class).setText( super.getResources().getString(titleResId) );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifyTextView.class).setTextColor( super.getResources().getColor(titleColorResId) );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),DocumentView.class).getDocumentLayoutParams().setTextColor( super.getResources().getColor(titleColorResId) );
 
 		sneaker.autoHide(true).setDuration( 3000 );
 
