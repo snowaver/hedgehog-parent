@@ -1,0 +1,29 @@
+<resources>
+    <string  name="app_name">widget</string>
+    <string  name="back">BACK</string>
+    <string  name="ok">OK</string>
+    <string  name="switch_camera">SWITCH CAMERA</string>
+    <string  name="edit_content">EDIT CONTENT</string>
+    <string  name="photo">PHOTO</string>
+    <string  name="video">VIDEO</string>
+    <string  name="photo_and_video">PHOTO AND VIDEO</string>
+    <string  name="finish">FINISH</string>
+    <string  name="select">SELECT</string>
+    <string  name="image_cropping">IMAGE CROPING</string>
+    <string  name="cropping_error">CROPING ERROR</string>
+    <string  name="selecting_photo">SELECT PHOTO</string>
+    <string  name="taking_photo">TAKE PHOTO</string>
+    <string  name="recording_video">RECORD VIDEO</string>
+    <string  name="taking_photo_or_recording_video">PHOTO OR VIDEO</string>
+    <string  name="edit">EDIT</string>
+    <string  name="content_blank_error">CONTENT CAN NOT BE EMPTY</string>
+    <string  name="notice">NOTICE</string>
+    <string  name="close">CLOSE</string>
+    <string  name="multichoice_limitation_error">OUT OF THE LIMITATION</string>
+    <string  name="camcorder_permission_check">CAMERA AND AUDIO PERMISSION REQUIRED</string>
+    <string  name="album_permission_check">ALBUM PERMISSION REQUIRED</string>
+    <string  name="filter">FILTER</string>
+    <string  name="permission_grant_error">PERMISSION GRANT ERROR</string>
+    <string  name="file_not_found">FILE NOT FOUND</string>
+    <string  name="network_or_internal_server_error">NETWORK OR INTERNAL SERVER ERROR</string>
+</resources>
