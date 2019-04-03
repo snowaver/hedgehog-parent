@@ -2,13 +2,14 @@ package cc.mashroom.hedgehog.parent;
 
 import  android.app.Activity;
 import  android.content.Intent;
+import  android.graphics.Typeface;
 import  android.os.Bundle;
 import  android.view.LayoutInflater;
 import  android.view.View;
 import  android.view.ViewGroup;
 import  android.widget.ImageView;
 
-import  com.bluejamesbond.text.DocumentView;
+import  com.codesgood.views.JustifiedTextView;
 import  com.irozon.sneaker.Sneaker;
 
 import  androidx.appcompat.app.AppCompatActivity;
@@ -60,9 +61,11 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 
 		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon ),ImageView.class).setImageResource( iconResId );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),DocumentView.class).setText( super.getResources().getString(titleResId) );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifiedTextView.class).setText( super.getResources().getString(titleResId) );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),DocumentView.class).getDocumentLayoutParams().setTextColor( super.getResources().getColor(titleColorResId) );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifiedTextView.class).setTextColor( super.getResources().getColor(titleColorResId) );
+
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifiedTextView.class).setTypeface( Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf") );
 
 		sneaker.autoHide(true).setDuration( 3000 );
 

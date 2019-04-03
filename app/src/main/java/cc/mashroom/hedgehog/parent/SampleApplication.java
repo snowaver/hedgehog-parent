@@ -1,4 +1,4 @@
-package cc.mashroom.hedgehog.sample.parent;
+package cc.mashroom.hedgehog.parent;
 
 import  android.content.Context;
 import  android.content.res.Configuration;
@@ -8,7 +8,7 @@ import  com.facebook.drawee.backends.pipeline.Fresco;
 
 import  java.util.Locale;
 
-public  class  Application    extends  cc.mashroom.hedgehog.parent.Application
+public  class  SampleApplication  extends  cc.mashroom.hedgehog.parent.Application
 {
     public  void  onCreate()
     {
@@ -16,9 +16,9 @@ public  class  Application    extends  cc.mashroom.hedgehog.parent.Application
 
         Fresco.initialize( this );
 
-        Configuration  configuration= super.getResources().getConfiguration();
+        Configuration  configuration    = super.getResources().getConfiguration();
 
-        Locale  locale = Locale.forLanguageTag( super.getSharedPreferences("CONFIGURATION", Context.MODE_PRIVATE).getString("LOCAL",Locale.ENGLISH.toLanguageTag()) );
+        Locale  locale = Locale.forLanguageTag( super.getSharedPreferences("CONFIGURATION",Context.MODE_PRIVATE).getString("LOCAL",Locale.CHINESE.toLanguageTag()) );
 
         if( Build.VERSION.SDK_INT   < Build.VERSION_CODES.N )
         {

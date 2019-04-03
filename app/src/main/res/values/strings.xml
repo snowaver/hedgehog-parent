@@ -2,5 +2,5 @@
     <string  name="app_name">hedgehog-widget</string>
     <string  name="camcorder"  translatable="false">CAMCORDER</string>
     <string  name="sneaker"  translatable="false">SHOW SNEAKER WINDOW</string>
-    <string  name="registration_form_error"  translatable="false">提示：账号，昵称以及密码不得为空，并且两次输入密码必须相同</string>
+    <string  name="registration_form_error"  translatable="false">NOTICE: ANY INPUT EMPTY OR TWO INPUT PASSWORDS NOT CONSISTENT</string>
 </resources>

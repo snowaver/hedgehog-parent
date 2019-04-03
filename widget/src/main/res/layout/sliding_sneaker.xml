@@ -7,7 +7,7 @@
 
         <ImageView  android:id="@+id/icon"  android:layout_width="22dp"  android:layout_height="22dp"  android:layout_gravity="center_vertical"/>
 
-        <com.bluejamesbond.text.DocumentView  android:id="@+id/title"  android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:layout_marginLeft="10dp"  android:layout_gravity="center_vertical"  app:documentView_textSize="14dp"  app:documentView_textAlignment="justified"  app:documentView_textTypefacePath="font/droid_sans_mono.ttf"/>
+        <com.codesgood.views.JustifiedTextView  android:id="@+id/title"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:layout_marginLeft="10dp"  android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 

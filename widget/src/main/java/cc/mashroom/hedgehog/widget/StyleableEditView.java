@@ -3,9 +3,8 @@ package cc.mashroom.hedgehog.widget;
 import  android.content.Context;
 import  android.content.res.TypedArray;
 import  android.graphics.Color;
-import  androidx.core.content.res.ResourcesCompat;
 
-import android.graphics.Typeface;
+import  android.graphics.Typeface;
 import  android.text.Editable;
 import  android.text.InputType;
 import  android.util.AttributeSet;
@@ -53,7 +52,7 @@ public  class  StyleableEditView  extends  RelativeLayout
 	{
 		super( context, attributeSet );
 
-		LayoutInflater.from(context).inflate(   R.layout.prompt_inputbox , this );
+		LayoutInflater.from(context).inflate( R.layout.styleable_editview, this );
 
 		TypedArray  typedArray = context.obtainStyledAttributes(   attributeSet ,R.styleable.StyleableEditView );
 
