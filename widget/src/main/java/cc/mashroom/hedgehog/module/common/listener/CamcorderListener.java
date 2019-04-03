@@ -31,7 +31,7 @@ import  lombok.Setter;
 import  lombok.experimental.Accessors;
 import  me.relex.photodraweeview.PhotoDraweeView;
 
-public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongClickListener, View.OnClickListener, PhotoTakenListener
+public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongClickListener,View.OnClickListener,PhotoTakenListener
 {
 	public  CamcorderListener(CamcorderActivity context,/*Lollipop*/Camera  camera,int  captureFlag )
 	{
@@ -63,7 +63,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		}
 		catch( Exception  e )
 		{
-			Toasty.error(context, context.getString(R.string.permission_grant_error), Toast.LENGTH_LONG, false ).show();
+			Toasty.error( this.context,context.getString( R.string.permission_denied ),Toast.LENGTH_LONG, false).show();
 		}
 
 		return  false;
@@ -89,7 +89,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 				//  touch  event  sometimes  changes  to  {@link  MotionEvent.ACTION_UP}  but  {@link  MotionEvent.ACTION_CANCEL}  after  denial  of  record  audio  permission  on  vivo  (y66).
 				if( ! videoFile.exists() )
 				{
-					Toasty.error(this.context,this.context.getString(R.string.permission_grant_error),Toast.LENGTH_LONG,false).show();
+					Toasty.error(this.context,this.context.getString( R.string.permission_denied ),Toast.LENGTH_LONG,false).show();
 
 				camera.continuePreview( );
 

@@ -35,7 +35,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		}
 		else
 		{
-			Toasty.error(this,getString(R.string.content_blank_error),Toast.LENGTH_LONG,false).show();
+			Toasty.error(this,getString(R.string.content_empty_error),Toast.LENGTH_LONG,false).show();
 		}
 	}
 }

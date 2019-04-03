@@ -66,7 +66,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (view) -> {try{ camera.switchOrientation(); }catch(Exception  e){ e.printStackTrace(); }} );
 	}
 
-	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.taking_photo).addEntry(2,R.string.recording_video).addEntry( 3,R.string.taking_photo_or_recording_video );
+	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.camera_take_photo).addEntry(2,R.string.camera_record_video).addEntry( 3,R.string.camera_take_photo_or_record_video );
 
 	@Accessors( chain= true )
 	@Setter
@@ -136,7 +136,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 		{
 			super.error(ise);
 
-			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_grant_error, R.color.white, R.color.red );
+			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 
 			super.finish(  );
 
@@ -158,6 +158,6 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	public  void  showPermissionRationale(     PermissionRequest  permissionRequest )
 	{
-		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camcorder_permission_check).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)).show();
+		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)).show();
 	}
 }

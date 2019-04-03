@@ -38,9 +38,9 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 
 		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setCropSaveCompleteListener(this );
 
-		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white,R.color.red) );
+		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.image_cropping_error,R.color.white,R.color.red) );
 
-		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.fromFile(new  File(super.getIntent().getStringExtra("PATH"))) );
+		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.fromFile(new  File(getIntent().getStringExtra("PATH"))) );
 	}
 
 	public  void  onCroppedRegionSaved(    Uri  bitmapUri )
@@ -53,7 +53,7 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 		{
 			super.error( e );
 
-			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.cropping_error,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this), com.irozon.sneaker.R.drawable.ic_error,R.string.image_cropping_error,R.color.white,R.color.red );
 		}
 	}
 }

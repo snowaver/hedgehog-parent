@@ -7,7 +7,6 @@ import  android.os.Bundle;
 import  androidx.annotation.NonNull;
 import  android.view.View;
 import  android.view.ViewGroup;
-import  android.widget.CompoundButton;
 import  android.widget.ListView;
 import  android.widget.TextView;
 
@@ -43,7 +42,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 	public  void  showPermissionRationale(   PermissionRequest  permissionRequest )
 	{
-		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_permission_check).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog, which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show();
+		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_require_album_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog, which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show();
 	}
 
 	protected  void  onCreate( Bundle  savedInstanceState )
@@ -52,7 +51,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		super.setContentView(R.layout.activity_album_media_multichoice );
 
-		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.photo_and_video).setItemsTextSize(18).setCancel(R.string.cancel).setCancelTextColor(Color.RED).setCancelTextSize(18).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
+		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setCancel(R.string.cancel).setCancelTextColor(Color.RED).setCancelTextSize(18).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
 
 		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("CAPTURED_MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias(),Serializable.class))) );
 
@@ -63,14 +62,14 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	@SneakyThrows
 	public  void  checkPermissions()
 	{
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString( titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3)) ) );
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(  titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3))) );
 
 		super.findViewById(R.id.additional_text).setVisibility( getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
 
 		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this, super.getIntent().getIntExtra("CAPTURE_FLAG",3), 3, super.getIntent().getIntExtra("LIMITATION",3), this ) );
 	}
 
-	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3,R.string.photo_and_video );
+	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3 , R.string.album_photo_and_video );
 
 	public  void  onRequestPermissionsResult( int  requestCode, @NonNull  String[]  permissions, @NonNull  int[]  grantedResults )
 	{

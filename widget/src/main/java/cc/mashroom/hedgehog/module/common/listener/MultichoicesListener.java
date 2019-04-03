@@ -64,7 +64,7 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 
 				if( isChecked   != smoothCheckBox.isChecked() )
 				{
-					Toasty.warning(smoothCheckBox.getContext(),smoothCheckBox.getContext().getString(R.string.multichoice_limitation_error),Toast.LENGTH_LONG,false).show();
+					Toasty.warning(smoothCheckBox.getContext(),smoothCheckBox.getContext().getString(R.string.album_multichoice_out_of_limitation_error),Toast.LENGTH_LONG,false).show();
 				}
 			}
 		}
