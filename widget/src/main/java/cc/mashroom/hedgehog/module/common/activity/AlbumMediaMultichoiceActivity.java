@@ -13,6 +13,7 @@ import  android.widget.TextView;
 import  com.aries.ui.widget.BasisDialog;
 import  com.aries.ui.widget.action.sheet.UIActionSheetDialog;
 import  com.aries.ui.widget.alert.UIAlertDialog;
+import com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
@@ -45,7 +46,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_require_album_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog, which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show();
 	}
 
-	protected  void  onCreate( Bundle  savedInstanceState )
+	protected  void  onCreate(      Bundle  savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
 
@@ -82,14 +83,17 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		AlbumMediaMultichoiceActivityPermissionsDispatcher.onRequestPermissionsResult( this,requestCode,grantedResults );
 
-		if( !PermissionUtils.verifyPermissions(grantedResults) )ContextUtils.finish( this );
+		if( !PermissionUtils.verifyPermissions(grantedResults) )
+		{
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish(this)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+		}
 	}
 
 	public  void  onClick( BasisDialog  dialog,View  view,int  position )
 	{
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(titles.get(position+1)) );
 
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter(this,position+1,3,super.getIntent().getIntExtra("LIMITATION",3),this) );
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this,position+1,3,super.getIntent().getIntExtra("LIMITATION",3),this ) );
 	}
 
 	public  void  onCheckedChanged( SmoothCheckBox compoundButton,boolean checked )

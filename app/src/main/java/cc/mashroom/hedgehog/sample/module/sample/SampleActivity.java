@@ -2,6 +2,9 @@ package cc.mashroom.hedgehog.sample.module.sample;
 
 import  android.content.Intent;
 import  android.os.Bundle;
+import android.widget.Toast;
+
+import  com.irozon.sneaker.Sneaker;
 
 import  androidx.core.app.ActivityCompat;
 import  cc.mashroom.hedgehog.R;
@@ -17,5 +20,9 @@ public  class  SampleActivity  extends  AbstractActivity
         super.setContentView(  R.layout.activity_sample  );
 
         super.findViewById(R.id.to_camcorder_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,CamcorderActivity.class),null) );
+
+        super.findViewById(R.id.show_sneaker_window_button).setOnClickListener( (button) -> {super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red);
+            Toast.makeText(this,R.string.registration_form_error,Toast.LENGTH_LONG).show();
+        } );
     }
 }

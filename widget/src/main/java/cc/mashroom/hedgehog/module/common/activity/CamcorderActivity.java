@@ -124,7 +124,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		if( ! PermissionUtils.verifyPermissions(  grantedResults ) )
 		{
-			super.showSneakerWindow( new  Sneaker(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 		}
 	}
 
