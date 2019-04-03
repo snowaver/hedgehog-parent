@@ -85,7 +85,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 	@SneakyThrows
 	public  void  onSurfaceTextureAvailable(   SurfaceTexture  surface,int  width,int  height )
 	{
-		CamcorderActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck(     this );
+		new  Thread(() -> CamcorderActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck(this)).start();
 	}
 
 	public  void  onError( CameraDevice  device,int  errorCode,Throwable  throwable )
@@ -120,7 +120,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 	{
 		super.onRequestPermissionsResult( requestCode, permissions, grantedResults );
 
-		CamcorderActivityPermissionsDispatcher.onRequestPermissionsResult( this,requestCode,grantedResults );
+		CamcorderActivityPermissionsDispatcher.onRequestPermissionsResult( CamcorderActivity.this, requestCode , grantedResults );
 
 		if( ! PermissionUtils.verifyPermissions(  grantedResults ) )
 		{
@@ -148,7 +148,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setOnTouchListener( camcorderListener );
 
-		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setOnLongClickListener(    camcorderListener );
+		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setOnLongClickListener( camcorderListener );
 
 		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setOnClickListener( camcorderListener );
 

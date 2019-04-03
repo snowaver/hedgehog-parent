@@ -54,8 +54,13 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setCancel(R.string.cancel).setCancelTextColor(Color.RED).setCancelTextSize(18).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
 
 		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("CAPTURED_MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias(),Serializable.class))) );
+	}
 
-		AlbumMediaMultichoiceActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck(    this );
+	protected  void  onStart()
+	{
+		super.onStart();
+
+		new  Thread(() -> AlbumMediaMultichoiceActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck( this )).start();
 	}
 
 	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
