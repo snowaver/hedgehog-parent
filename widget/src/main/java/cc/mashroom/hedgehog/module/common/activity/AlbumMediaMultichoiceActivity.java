@@ -13,8 +13,9 @@ import  android.widget.TextView;
 import  com.aries.ui.widget.BasisDialog;
 import  com.aries.ui.widget.action.sheet.UIActionSheetDialog;
 import  com.aries.ui.widget.alert.UIAlertDialog;
-import com.irozon.sneaker.Sneaker;
+import  com.irozon.sneaker.Sneaker;
 
+import  androidx.annotation.UiThread;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.module.common.adapters.AlbumMediaMultichoiceListviewAdapter;
@@ -39,6 +40,7 @@ import  java.util.List;
 
 public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  implements  UIActionSheetDialog.OnItemClickListener,SmoothCheckBox.OnCheckedChangeListener
 {
+	@UiThread
 	@OnShowRationale( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 
 	public  void  showPermissionRationale(   PermissionRequest  permissionRequest )
@@ -64,6 +66,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 		new  Thread(() -> AlbumMediaMultichoiceActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck( this )).start();
 	}
 
+	@UiThread
 	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 	@SneakyThrows
 	public  void  checkPermissions()
@@ -77,6 +80,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3 , R.string.album_photo_and_video );
 
+	@UiThread
 	public  void  onRequestPermissionsResult( int  requestCode, @NonNull  String[]  permissions, @NonNull  int[]  grantedResults )
 	{
 		super.onRequestPermissionsResult( requestCode,permissions,grantedResults );
