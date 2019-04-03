@@ -14,7 +14,7 @@ import  com.aries.ui.widget.alert.UIAlertDialog;
 import  com.facebook.drawee.view.SimpleDraweeView;
 import  com.irozon.sneaker.Sneaker;
 
-import androidx.annotation.UiThread;
+import  androidx.annotation.UiThread;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.device.camera.Camera;
 import  cc.mashroom.hedgehog.device.camera.eclair.EclairCamera;
