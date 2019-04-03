@@ -1,3 +1,4 @@
-<resources>
-    <string name="app_name">hedgehog-widget</string>
+<resources >
+    <string  name="app_name">hedgehog-widget</string>
+    <string  name="camcorder"  translatable="false">CAMCORDER</string>
 </resources>

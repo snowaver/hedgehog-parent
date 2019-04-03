@@ -90,6 +90,8 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	public  void  onError( CameraDevice  device,int  errorCode,Throwable  throwable )
 	{
+		error(   throwable );
+
 		ContextUtils.finish( this );
 	}
 
@@ -120,14 +122,17 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		CamcorderActivityPermissionsDispatcher.onRequestPermissionsResult( this,requestCode,grantedResults );
 
-		if( ! PermissionUtils.verifyPermissions(grantedResults) )  ContextUtils.finish( this );
+		if( ! PermissionUtils.verifyPermissions(  grantedResults ) )
+		{
+			super.showSneakerWindow( new  Sneaker(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+		}
 	}
 
 	@NeedsPermission( {Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO} )
 	@SneakyThrows
 	public  void  checkPermissions()
 	{
-		//  lollipop  camera  (camera2)  do  not  work  well  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )  but  no  way  to  resolve  it,  so  use  eclair  camera  (camera1)  instead.
+		//  lollipop  camera  (camera2)  do  not  work  well  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )  but  no  way  to  resolve  it  for  xiaomi  customized  android  system,  so  use  eclair  camera  (camera1)  instead.
 		try
 		{
 			this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),captureFlag) );
@@ -136,9 +141,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 		{
 			super.error(ise);
 
-			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
-
-			super.finish(  );
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 
 			return;
 		}
