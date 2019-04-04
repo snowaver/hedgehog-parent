@@ -40,17 +40,16 @@ import  java.util.List;
 
 public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  implements  UIActionSheetDialog.OnItemClickListener,SmoothCheckBox.OnCheckedChangeListener
 {
-	@UiThread
 	@OnShowRationale( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 
 	public  void  showPermissionRationale(   PermissionRequest  permissionRequest )
 	{
-		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_require_album_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog, which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show();
+		application().getMainLooperHandler().post( () -> new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_require_album_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show() );
 	}
 
 	protected  void  onCreate(      Bundle  savedInstanceState )
 	{
-		super.onCreate( savedInstanceState );
+		super.onCreate(savedInstanceState);
 
 		super.setContentView(R.layout.activity_album_media_multichoice );
 
@@ -63,13 +62,17 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	{
 		super.onStart();
 
-		new  Thread(() -> AlbumMediaMultichoiceActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck( this )).start();
+		new  Thread(    () -> AlbumMediaMultichoiceActivityPermissionsDispatcher.afterPermissionsGrantedWithPermissionCheck(this)).start();
 	}
 
-	@UiThread
 	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
-	@SneakyThrows
-	public  void  checkPermissions()
+
+	public  void  afterPermissionsGranted()
+	{
+		application().getMainLooperHandler().post(  () -> initialize() );
+	}
+
+	public  void  initialize()
 	{
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(  titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3))) );
 

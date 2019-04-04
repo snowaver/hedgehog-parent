@@ -1,8 +1,12 @@
 <?xml  version="1.0"  encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="match_parent">
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:background="@color/white">
 
-    <Button  android:id="@+id/to_camcorder_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/camcorder"/>
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:title="@string/sample"  android:background="@color/steelblue"></cc.mashroom.hedgehog.widget.HeaderBar>
 
-    <Button  android:id="@+id/show_sneaker_window_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/sneaker"/>
+    <Button  android:id="@+id/to_camcorder_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/camcorder"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
+    <Button  android:id="@+id/show_sneaker_window_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/sneaker"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
 
 </LinearLayout>

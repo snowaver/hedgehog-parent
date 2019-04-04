@@ -1,8 +1,9 @@
 <manifest  xmlns:android="http://schemas.android.com/apk/res/android"  package="cc.mashroom.hedgehog">
     <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission  android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission  android:name="android.permission.ACCESS_FINE_LOCATION"/>、
+    <uses-permission  android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission  android:name="android.permission.CAMERA"/>
+    <uses-permission  android:name="android.permission.RECORD_AUDIO"/>
     <application >
         <activity  android:name=".module.common.activity.EditorActivity"  android:screenOrientation="portrait"  android:windowSoftInputMode="adjustResize"></activity>
         <activity  android:name=".module.common.activity.CamcorderActivity"  android:screenOrientation="portrait"/>

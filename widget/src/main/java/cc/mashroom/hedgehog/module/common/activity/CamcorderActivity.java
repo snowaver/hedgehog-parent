@@ -44,9 +44,9 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 {
 	protected  void  onCreate(  Bundle  savedInstanceState )
 	{
-		super.onCreate( savedInstanceState );
+		super.onCreate(savedInstanceState);
 
-		ContextUtils.setupImmerseBar( this );
+		ContextUtils.setupImmerseBar(this);
 
 		super.setContentView( R.layout.activity_camcorder );
 
@@ -69,16 +69,16 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.camera_take_photo).addEntry(2,R.string.camera_record_video).addEntry( 3,R.string.camera_take_photo_or_record_video );
 
-	@Accessors( chain= true )
+	@Accessors( chain = true )
 	@Setter
 	private  CamcorderListener  camcorderListener;
-	@Accessors( chain= true )
+	@Accessors( chain = true )
 	@Setter
-	private  Camera   camera;
-	@Accessors( chain= true )
+	private  Camera    camera;
+	@Accessors( chain = true )
 	@Setter
 	private  int  captureFlag   = 3;
-	@Accessors( chain= true )
+	@Accessors( chain = true )
 	@Setter
 	@Getter
 	private  boolean  isRequestingNeedPermissions;
@@ -86,12 +86,12 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 	@SneakyThrows
 	public  void  onSurfaceTextureAvailable(   SurfaceTexture  surface,int  width,int  height )
 	{
-		new  Thread(() -> CamcorderActivityPermissionsDispatcher.checkPermissionsWithPermissionCheck(this)).start();
+		new  Thread(       () -> CamcorderActivityPermissionsDispatcher.afterPermissionsGrantedWithPermissionCheck(this)).start();
 	}
 
 	public  void  onError( CameraDevice  device,int  errorCode,Throwable  throwable )
 	{
-		error(   throwable );
+		error(    throwable );
 
 		ContextUtils.finish( this );
 	}
@@ -103,9 +103,9 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	public  boolean  onSurfaceTextureDestroyed(  SurfaceTexture  surface )
 	{
-		if( camera  != null )
+		if( camera   != null )
 		{
-			camera.release();
+			camera.release( );
 		}
 
 		return  false;
@@ -124,25 +124,30 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		CamcorderActivityPermissionsDispatcher.onRequestPermissionsResult( CamcorderActivity.this, requestCode , grantedResults );
 
-		if( ! PermissionUtils.verifyPermissions(  grantedResults ) )
+		if( !    PermissionUtils.verifyPermissions(grantedResults) )
 		{
 			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 		}
 	}
 
-	@UiThread
 	@NeedsPermission( {Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO} )
+
+	public  void  afterPermissionsGranted()
+	{
+		application().getMainLooperHandler().post(   () -> initialize() );
+	}
+
 	@SneakyThrows
-	public  void  checkPermissions()
+	public  void  initialize()
 	{
 		//  lollipop  camera  (camera2)  do  not  work  well  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )  but  no  way  to  resolve  it  for  xiaomi  customized  android  system,  so  use  eclair  camera  (camera1)  instead.
 		try
 		{
 			this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),captureFlag) );
 		}
-		catch(   IllegalStateException  ise )
+		catch( IllegalStateException  ise )
 		{
-			super.error(ise);
+			super.error(ise );
 
 			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 
@@ -160,11 +165,10 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 		ObjectUtils.cast(super.findViewById(R.id.confirm_button),SimpleDraweeView.class).setOnClickListener(  camcorderListener );
 	}
 
-	@UiThread
 	@OnShowRationale( {Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO} )
 
 	public  void  showPermissionRationale(     PermissionRequest  permissionRequest )
 	{
-		new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)).show();
+		application().getMainLooperHandler().post( () -> new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)).show() );
 	}
 }
