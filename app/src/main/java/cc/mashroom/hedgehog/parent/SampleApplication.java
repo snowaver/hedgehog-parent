@@ -18,7 +18,7 @@ public  class  SampleApplication  extends  cc.mashroom.hedgehog.parent.Applicati
 
         Configuration  configuration    = super.getResources().getConfiguration();
 
-        Locale  locale = Locale.forLanguageTag( super.getSharedPreferences("CONFIGURATION",Context.MODE_PRIVATE).getString("LOCAL",Locale.CHINESE.toLanguageTag()) );
+        Locale  locale = Locale.forLanguageTag( super.getSharedPreferences("CONFIGURATION",Context.MODE_PRIVATE).getString("LOCAL",Locale.ENGLISH.toLanguageTag()) );
 
         if( Build.VERSION.SDK_INT   < Build.VERSION_CODES.N )
         {

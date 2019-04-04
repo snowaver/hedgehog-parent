@@ -3,5 +3,6 @@
     <string  name="camcorder"  translatable="false">CAMCORDER</string>
     <string  name="sneaker"  translatable="false">SHOW SNEAKER WINDOW</string>
     <string  name="sample"  translatable="false">SAMPLE</string>
+    <string  name="album_multimedia_choice"  translatable="false">ALBUM MULTIMEDIA CHOICE</string>
     <string  name="registration_form_error"  translatable="false">NOTICE: ANY INPUT EMPTY OR TWO INPUT PASSWORDS NOT CONSISTENT</string>
 </resources>

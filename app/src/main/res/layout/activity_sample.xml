@@ -7,6 +7,10 @@
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
+    <Button  android:id="@+id/to_album_multimedia_choice_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/album_multimedia_choice"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
     <Button  android:id="@+id/show_sneaker_window_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/sneaker"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
 
 </LinearLayout>

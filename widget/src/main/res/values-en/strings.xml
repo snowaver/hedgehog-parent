@@ -20,7 +20,7 @@
     <string  name="camera_switch_orientation">SWITCH</string>
     <string  name="camera_record_video">RECORD VIDEO</string>
     <string  name="camera_take_photo_or_record_video">PHOTO/VIDEO</string>
-    <string  name="album_multichoice_out_of_limitation_error">OUT OF LIMITATION</string>
+    <string  name="album_multichoice_out_of_limitation_error">OUT OF THE COUNT LIMITATION</string>
     <string  name="album_require_album_permission">REQUIRE ALBUM PERMISSION</string>
     <string  name="album_photo_and_video">PHOTO+VIDEO</string>
     <string  name="camera_require_camera_and_audio_record_permission">REQUIRE CAMERA AND AUDIO RECORD PERMISSION</string>

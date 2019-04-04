@@ -2,7 +2,6 @@ package cc.mashroom.hedgehog.module.common.activity;
 
 import  android.Manifest;
 import  android.content.Intent;
-import  android.graphics.Color;
 import  android.os.Bundle;
 import  androidx.annotation.NonNull;
 import  android.view.View;
@@ -21,12 +20,12 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.module.common.adapters.AlbumMediaMultichoiceListviewAdapter;
 import  cc.mashroom.hedgehog.system.Media;
 import  cc.mashroom.hedgehog.util.ContextUtils;
+import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.util.collection.map.HashMap;
 import  cc.mashroom.util.collection.map.Map;
 import  cn.refactor.library.SmoothCheckBox;
-import  lombok.SneakyThrows;
 import  permissions.dispatcher.NeedsPermission;
 import  permissions.dispatcher.OnShowRationale;
 import  permissions.dispatcher.PermissionRequest;
@@ -53,7 +52,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		super.setContentView(R.layout.activity_album_media_multichoice );
 
-		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setCancel(R.string.cancel).setCancelTextColor(Color.RED).setCancelTextSize(18).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
+		super.findViewById(R.id.additional_text).setOnClickListener( (view) -> new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setItemsMinHeight(DensityUtils.px(this,50)).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create().show() );
 
 		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("CAPTURED_MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias(),Serializable.class))) );
 	}
