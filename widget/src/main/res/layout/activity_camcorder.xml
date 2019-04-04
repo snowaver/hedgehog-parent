@@ -7,17 +7,17 @@
 
         <me.relex.photodraweeview.PhotoDraweeView  android:id="@+id/photo_viewer"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:visibility="gone"/>
 
-        <SurfaceView  android:id="@+id/video_viewer"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:visibility="gone"/>
+        <SurfaceView  android:id="@+id/video_viewer"  android:layout_width="match_parent"  android:layout_height="match_parent"   android:visibility="gone"/>
 
     </cc.mashroom.hedgehog.widget.ViewSwitcher>
 
     <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/cancel"  app:additionalText="@string/camera_switch_orientation"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
 
-    <cc.mashroom.hedgehog.widget.ViewSwitcher  android:id="@+id/control_switcher"  android:layout_width="match_parent" android:layout_height="150dp"  android:background="@color/transparent"  android:layout_alignParentBottom="true">
+    <cc.mashroom.hedgehog.widget.ViewSwitcher  android:id="@+id/control_switcher"  android:layout_width="match_parent" android:layout_height="60dp"  android:background="@color/transparent"  android:layout_alignParentBottom="true"  android:layout_marginBottom="50dp">
 
         <com.facebook.drawee.view.SimpleDraweeView  android:id="@+id/take_picture_or_record_video_button"  android:layout_width="60dp"  android:layout_height="60dp"  android:layout_centerInParent="true"  app:roundAsCircle="true"  app:roundingBorderWidth="5dp"  app:roundingBorderColor="@color/white"/>
 
-        <RelativeLayout  android:layout_width="match_parent"  android:layout_height="60dp"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:layout_centerInParent="true"  android:visibility="gone">
+        <RelativeLayout  android:layout_width="match_parent"  android:layout_height="60dp"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:visibility="gone">
 
             <com.facebook.drawee.view.SimpleDraweeView  android:id="@+id/preview_button"  android:layout_width="60dp"  android:layout_height="60dp"  android:layout_alignParentLeft="true"  app:actualImageResource="@drawable/cancel"  app:roundAsCircle="true"/>
 

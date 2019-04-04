@@ -9,7 +9,9 @@ import  androidx.core.app.ActivityCompat;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
+import cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
+import cc.mashroom.hedgehog.util.ImageUtils;
 
 public  class  SampleActivity  extends  AbstractActivity
 {
@@ -18,6 +20,8 @@ public  class  SampleActivity  extends  AbstractActivity
         super.onCreate( savedInstanceState );
 
         super.setContentView(  R.layout.activity_sample  );
+
+        super.findViewById(R.id.to_image_cropping).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,ImageCropingActivity.class).putExtra("PATH",ImageUtils.toUri(this,R.drawable.lavender).toString()),null) );
 
         super.findViewById(R.id.to_camcorder_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,CamcorderActivity.class),null) );
 

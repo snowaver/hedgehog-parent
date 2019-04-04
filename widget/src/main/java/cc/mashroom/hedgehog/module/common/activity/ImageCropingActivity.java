@@ -4,7 +4,6 @@ import  android.content.Intent;
 import  android.graphics.Bitmap;
 import  android.net.Uri;
 import  android.os.Bundle;
-import  android.view.WindowManager;
 import  android.widget.TextView;
 
 import  com.irozon.sneaker.Sneaker;
@@ -26,8 +25,6 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 	{
 		super.onCreate( savedInstanceState );
 
-		super.getWindow().clearFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN );
-
 		setContentView( R.layout.activity_image_croping  );
 
 		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (view) -> {try{ ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).crop(new  CropIwaSaveConfig.Builder(Uri.fromFile(FileUtils.createFileIfAbsent(new  File(application().getCacheDir(),"image.png.tmp"),null))).setCompressFormat(Bitmap.CompressFormat.PNG).setQuality(100).setSize(200,200).build()); }catch(Exception  e){ e.printStackTrace(); }} );
@@ -40,7 +37,7 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 
 		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.image_cropping_error,R.color.white,R.color.red) );
 
-		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.fromFile(new  File(getIntent().getStringExtra("PATH"))) );
+		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.parse(getIntent().getStringExtra("PATH")) );
 	}
 
 	public  void  onCroppedRegionSaved(    Uri  bitmapUri )

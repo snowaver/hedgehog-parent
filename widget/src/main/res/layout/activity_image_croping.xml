@@ -3,6 +3,6 @@
 
     <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/steelblue"  android:title="@string/image_cropping"  app:backText="@string/cancel"  app:additionalText="@string/finish"  app:immersive="true"></cc.mashroom.hedgehog.widget.HeaderBar>
 
-    <com.steelkiwi.cropiwa.CropIwaView  android:id="@+id/crop_view"  android:layout_width="match_parent"  android:layout_height="match_parent"  app:ci_initial_position="centerInside"  app:ci_aspect_ratio_w="1"  app:ci_aspect_ratio_h="1"  app:ci_translation_enabled="true"  app:ci_crop_shape="rectangle"  app:ci_dynamic_aspect_ratio="false"  app:ci_draw_grid="true"  app:ci_border_width="2dp"/>
+    <com.steelkiwi.cropiwa.CropIwaView  android:id="@+id/crop_view"  android:layout_width="match_parent"  android:layout_height="match_parent"  app:ci_initial_position="centerCrop"  app:ci_aspect_ratio_w="1"  app:ci_aspect_ratio_h="1"  app:ci_translation_enabled="true"  app:ci_crop_shape="rectangle"  app:ci_dynamic_aspect_ratio="false"  app:ci_draw_grid="true"  app:ci_border_width="1dp"  app:ci_grid_width="1dp"/>
 
 </LinearLayout>
