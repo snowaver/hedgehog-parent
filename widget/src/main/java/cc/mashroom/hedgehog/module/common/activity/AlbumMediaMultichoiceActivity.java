@@ -26,6 +26,7 @@ import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.util.collection.map.HashMap;
 import  cc.mashroom.util.collection.map.Map;
 import  cn.refactor.library.SmoothCheckBox;
+import  lombok.Setter;
 import  permissions.dispatcher.NeedsPermission;
 import  permissions.dispatcher.OnShowRationale;
 import  permissions.dispatcher.PermissionRequest;
@@ -46,6 +47,9 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 		application().getMainLooperHandler().post( () -> new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.album_require_album_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog,which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)).show() );
 	}
 
+	@Setter
+	protected  boolean  initialized= false;
+
 	protected  void  onCreate(      Bundle  savedInstanceState )
 	{
 		super.onCreate(savedInstanceState);
@@ -60,8 +64,11 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	protected  void  onStart()
 	{
 		super.onStart();
-
-		new  Thread(    () -> AlbumMediaMultichoiceActivityPermissionsDispatcher.afterPermissionsGrantedWithPermissionCheck(this)).start();
+		//  initialize  or  retain  the  album  media  listview  state  by  initialized  flag,  else  the  list  adapter  is  reset  in  the  initialize  method  after  permissions  granted  and  seems  a  scrolling  to  the  list  top.
+		if( !    initialized )
+		{
+			new  Thread(() -> AlbumMediaMultichoiceActivityPermissionsDispatcher.afterPermissionsGrantedWithPermissionCheck(this)).start();
+		}
 	}
 
 	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
@@ -73,6 +80,8 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 	public  void  initialize()
 	{
+		initialized    = true;
+
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(  titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3))) );
 
 		super.findViewById(R.id.additional_text).setVisibility( getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
