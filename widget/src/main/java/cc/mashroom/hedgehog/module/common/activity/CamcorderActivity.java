@@ -2,6 +2,7 @@ package cc.mashroom.hedgehog.module.common.activity;
 
 import  android.Manifest;
 import  android.graphics.SurfaceTexture;
+import  android.graphics.Typeface;
 import  android.hardware.camera2.CameraCharacteristics;
 import  android.hardware.camera2.CameraDevice;
 import  android.os.Bundle;
@@ -22,6 +23,7 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.module.common.listener.CamcorderListener;
 import  cc.mashroom.hedgehog.device.camera.ErrorStateCallback;
 import  cc.mashroom.hedgehog.util.ContextUtils;
+import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
 import  cc.mashroom.hedgehog.util.ImageUtils;
 import  cc.mashroom.util.ObjectUtils;
 
@@ -169,6 +171,6 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	public  void  showPermissionRationale(     PermissionRequest  permissionRequest )
 	{
-		application().getMainLooperHandler().post( () -> new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)).show() );
+		application().getMainLooperHandler().post( () -> ExtviewsAdapter.adapter(new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show() );
 	}
 }
