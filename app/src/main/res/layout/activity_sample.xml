@@ -1,5 +1,5 @@
 <?xml  version="1.0"  encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:background="@color/white">
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"  xmlns:app="http://schemas.android.com/apk/res-auto"  android:orientation="vertical"  android:layout_width="match_parent"  android:layout_height="match_parent"  android:background="@color/white">
 
     <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:title="@string/samples"  android:background="@color/steelblue"></cc.mashroom.hedgehog.widget.HeaderBar>
 
@@ -16,5 +16,11 @@
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
     <Button  android:id="@+id/show_sneaker_window_button"  style="?android:attr/borderlessButtonStyle"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/sneaker"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
+    <cc.mashroom.hedgehog.widget.StyleableEditView  android:layout_width="match_parent"  android:layout_height="50dp"  android:textAlignment="viewEnd"  android:title="@string/username"  android:text="SNOWAVER"></cc.mashroom.hedgehog.widget.StyleableEditView>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
 </LinearLayout>
