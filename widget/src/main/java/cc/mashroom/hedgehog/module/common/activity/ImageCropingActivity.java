@@ -37,7 +37,9 @@ public  class  ImageCropingActivity    extends  AbstractActivity  implements  Cr
 
 		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setErrorListener( (error) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.image_cropping_error,R.color.white,R.color.red) );
 
-		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( Uri.parse(getIntent().getStringExtra("PATH")) );
+		String  path= getIntent().getStringExtra( "PATH" );
+
+		ObjectUtils.cast(super.findViewById(R.id.crop_view),CropIwaView.class).setImageUri( path.trim().startsWith("/") ? Uri.fromFile(new  File(path)) : Uri.parse(path) );
 	}
 
 	public  void  onCroppedRegionSaved(    Uri  bitmapUri )
