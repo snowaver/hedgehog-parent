@@ -20,7 +20,11 @@ public  class  ExtviewsAdapter
     {
         TextView  alertDialogTitle = alertDialog.getTitle();
 
-        if( alertDialogTitle != null )  alertDialogTitle.setTypeface( typeface );  return  alertDialog;
+        if( alertDialogTitle != null )  alertDialogTitle.setTypeface( typeface );
+
+        TextView  alertDialogMessage     = alertDialog.getMessage();
+
+        if( alertDialogMessage     != null )      alertDialogMessage.setTypeface( typeface );  return        alertDialog;
     }
 
     public  static  UIActionSheetDialog  adapter( UIActionSheetDialog  actionSheetDialog,Typeface  typeface )
