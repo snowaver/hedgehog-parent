@@ -4,8 +4,8 @@ import  android.os.Bundle;
 import  android.view.SurfaceHolder;
 import  android.view.SurfaceView;
 import  android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
+import  android.widget.RelativeLayout;
+import  android.widget.SeekBar;
 import  android.widget.Toast;
 
 import  cc.mashroom.hedgehog.R;
@@ -16,8 +16,9 @@ import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
 import  java.io.File;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
+import  java.util.concurrent.ScheduledThreadPoolExecutor;
+import  java.util.concurrent.ThreadPoolExecutor;
+import  java.util.concurrent.TimeUnit;
 
 import  cc.mashroom.hedgehog.util.ContextUtils;
 import  es.dmoral.toasty.Toasty;
@@ -47,10 +48,8 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		this.setVideoFile( new  File(getIntent().getStringExtra("PATH")));
 
-		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback( this );
+		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback(this);
 	}
-
-	private  ThreadPoolExecutor  progressUpdateThread = new ScheduledThreadPoolExecutor(1 );
 
 	@Accessors( chain= true )
 	@Setter
@@ -78,7 +77,11 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		player.close();
 
 		progressUpdateThread.remove(   this );
+
+		this.progressUpdateThread.shutdown( );
 	}
+
+	private  ScheduledThreadPoolExecutor  progressUpdateThread = new  ScheduledThreadPoolExecutor(1);
 
 	public  void  onPrepared(    android.media.MediaPlayer  mediaPlayer )
 	{
@@ -94,7 +97,9 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		surfaceView.setLayoutParams( layout );
 
-		progressUpdateThread.execute(  this );
+		this.progressUpdateThread.scheduleAtFixedRate( this,0,1,TimeUnit.SECONDS );
+
+		ObjectUtils.cast(super.findViewById(R.id.seek_bar),SeekBar.class).setMax(    mediaPlayer.getDuration() );
 	}
 
 	public  void  onDownloadError(  Throwable   throwable )
@@ -121,7 +126,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 					}
 
 					@SneakyThrows
-					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>     retrofitResponse )
+					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>   retrofitResponse )
 					{
 						if( retrofitResponse.code()== 200 )
 						{
