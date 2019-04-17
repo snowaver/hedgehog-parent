@@ -9,6 +9,7 @@
     <string  name="video">VIDEO</string>
     <string  name="finish">FINISH</string>
     <string  name="notice">NOTICE</string>
+    <string  name="player">PLAYER</string>
     <string  name="close">CLOSE</string>
     <string  name="filter">FILTER</string>
     <string  name="permission_denied">PERMISSION DENIED</string>
