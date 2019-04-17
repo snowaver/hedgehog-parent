@@ -3,4 +3,12 @@
 
     <SurfaceView  android:id="@+id/video_surface"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:layout_centerInParent="true"/>
 
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/goback"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
+
+    <LinearLayout  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/halftransparentwhite"  android:layout_alignParentBottom="true"  android:paddingLeft="10dp"  android:paddingRight="10dp">
+
+        <SeekBar  android:id="@+id/seek_bar"  android:layout_width="match_parent"  android:layout_height="20dp"  android:paddingStart="0dp"  android:paddingEnd="0dp"  android:layout_gravity="center_vertical"  android:max="100"  android:splitTrack="false"  android:thumbOffset="0dp"  android:progressDrawable="@drawable/video_preview_seekbar_drawable"  android:thumb="@drawable/video_preview_seekbar_thumb"/>
+
+    </LinearLayout>
+
 </RelativeLayout>

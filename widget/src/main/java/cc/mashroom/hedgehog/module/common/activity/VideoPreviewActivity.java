@@ -4,6 +4,8 @@ import  android.os.Bundle;
 import  android.view.SurfaceHolder;
 import  android.view.SurfaceView;
 import  android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import  android.widget.Toast;
 
 import  cc.mashroom.hedgehog.R;
@@ -14,6 +16,8 @@ import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
 import  java.io.File;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import  cc.mashroom.hedgehog.util.ContextUtils;
 import  es.dmoral.toasty.Toasty;
@@ -25,7 +29,7 @@ import  retrofit2.Call;
 import  retrofit2.Callback;
 import  retrofit2.Response;
 
-public  class  VideoPreviewActivity  extends  AbstractActivity  implements  SurfaceHolder.Callback,android.media.MediaPlayer.OnPreparedListener
+public  class  VideoPreviewActivity  extends  AbstractActivity  implements  SurfaceHolder.Callback,android.media.MediaPlayer.OnPreparedListener,Runnable
 {
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -35,12 +39,18 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		setContentView( R.layout.activity_video_preview  );
 
-		setVideoFile( new  File(getIntent().getStringExtra("PATH") ) );
+		RelativeLayout.LayoutParams  layoutParams = ObjectUtils.cast( super.findViewById( R.id.header_bar ).getLayoutParams() );
 
-		ObjectUtils.cast(   findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback( this );
+		layoutParams.topMargin = ContextUtils.getStatusBarHeight(  this );
 
-		super.findViewById(R.id.play_video_layout).setOnClickListener( (view)  -> ContextUtils.finish( this ) );
+		super.findViewById(R.id.header_bar).setLayoutParams(layoutParams);
+
+		this.setVideoFile( new  File(getIntent().getStringExtra("PATH")));
+
+		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback( this );
 	}
+
+	private  ThreadPoolExecutor  progressUpdateThread = new ScheduledThreadPoolExecutor(1 );
 
 	@Accessors( chain= true )
 	@Setter
@@ -48,6 +58,14 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	@Accessors( chain= true )
 	@Setter
 	private  MediaPlayer  player;
+
+	public  void  run()
+	{
+		if( player.getPlayer().isPlaying()  )
+		{
+			application().getMainLooperHandler().post(   () -> ObjectUtils.cast(findViewById(R.id.seek_bar),SeekBar.class).setProgress(player.getPlayer().getCurrentPosition()) );
+		}
+	}
 
 	public  void  surfaceChanged( SurfaceHolder  holder,int  format,int  width,int  height )
 	{
@@ -58,21 +76,25 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	public  void  surfaceDestroyed( SurfaceHolder  holder )
 	{
 		player.close();
+
+		progressUpdateThread.remove(   this );
 	}
 
-	public  void  onPrepared(  android.media.MediaPlayer  mediaPlayer )
+	public  void  onPrepared(    android.media.MediaPlayer  mediaPlayer )
 	{
 		SurfaceView  surfaceView=ObjectUtils.cast( super.findViewById(R.id.video_surface) );
 
 		float  maxScale = Math.max( (float)  mediaPlayer.getVideoWidth()/(float)  surfaceView.getWidth(),(float)  mediaPlayer.getVideoHeight()/(float)  surfaceView.getHeight() );
 
-		ViewGroup.LayoutParams  layout = surfaceView.getLayoutParams();
+		ViewGroup.LayoutParams  layout   = surfaceView.getLayoutParams();
 
 		layout.width  = (int)  Math.ceil( (float)  mediaPlayer.getVideoWidth() / maxScale );
 
 		layout.height = (int)  Math.ceil( (float)  mediaPlayer.getVideoHeight()/ maxScale );
 
 		surfaceView.setLayoutParams( layout );
+
+		progressUpdateThread.execute(  this );
 	}
 
 	public  void  onDownloadError(  Throwable   throwable )
@@ -81,7 +103,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	}
 
 	@SneakyThrows
-	public  void  surfaceCreated( final  SurfaceHolder  surfaceHolder )
+	public  void  surfaceCreated(   final  SurfaceHolder  surfaceHolder )
 	{
 		if( videoFile.exists() )
 		{
@@ -99,7 +121,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 					}
 
 					@SneakyThrows
-					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>  retrofitResponse )
+					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>     retrofitResponse )
 					{
 						if( retrofitResponse.code()== 200 )
 						{

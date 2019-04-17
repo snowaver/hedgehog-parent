@@ -11,4 +11,5 @@
     <color  name="transparent">#00000000</color>
     <color  name="halftransparentwhite">#50ffffff</color>
     <color  name="blue">#0000ff</color>
+    <color  name="skyblue">#87CEEB</color>
 </resources>
