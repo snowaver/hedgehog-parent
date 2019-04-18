@@ -9,9 +9,9 @@ import  androidx.core.app.ActivityCompat;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
-import cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
+import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
-import cc.mashroom.hedgehog.util.ImageUtils;
+import  cc.mashroom.hedgehog.util.ImageUtils;
 
 public  class  SampleActivity  extends  AbstractActivity
 {
