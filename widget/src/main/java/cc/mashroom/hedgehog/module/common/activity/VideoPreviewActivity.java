@@ -14,6 +14,7 @@ import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.device.MediaPlayer;
 import  cc.mashroom.hedgehog.webkit.DynamicService;
+import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
@@ -51,16 +52,20 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		this.setVideoFile( new  File(getIntent().getStringExtra("PATH")));
 
 		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback(this);
+
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setOnClickListener( (bar ) -> {} );
+
+		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( ( controlPanel ) -> {} );
 	}
 
 	private  AtomicBoolean  isTrackingTouch  = new AtomicBoolean( false );
 
 	private  AtomicBoolean  isMediaPlayerPrepared  = new  AtomicBoolean();
 
-	@Accessors( chain= true )
+	@Accessors( chain=true )
 	@Setter
-	private  File  videoFile;
-	@Accessors( chain= true )
+	private  File videoFile;
+	@Accessors( chain=true )
 	@Setter
 	private  MediaPlayer  player;
 
@@ -77,22 +82,29 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 	}
 
+	private  ScheduledThreadPoolExecutor  progressUpdateThread = new  ScheduledThreadPoolExecutor(1 );
+
 	@SneakyThrows
 	public  void  surfaceDestroyed( SurfaceHolder  holder )
 	{
-		player.close();
+		if( player != null )  player.close();
 
 		progressUpdateThread.remove(  this );
 
 		this.progressUpdateThread.shutdown();
 	}
 
-	private  ScheduledThreadPoolExecutor  progressUpdateThread = new  ScheduledThreadPoolExecutor(1 );
-
 	public  void  onPrepared(     android.media.MediaPlayer  mediaPlayer )
 	{
 		isMediaPlayerPrepared.set(    true );
 
+		mediaPlayer.start();
+
+		application().getMainLooperHandler().post(  () -> initializeUIOnPlayerPrepared(mediaPlayer) );
+	}
+
+	protected  void  initializeUIOnPlayerPrepared( android.media.MediaPlayer   mediaPlayer )
+	{
 		ObjectUtils.cast(super.findViewById(R.id.play_button),ImageView.class).setVisibility(        View.GONE );
 
 		SurfaceView  surfaceView=ObjectUtils.cast( super.findViewById(R.id.video_surface) );
@@ -107,7 +119,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		surfaceView.setLayoutParams(layout );
 
-		this.progressUpdateThread.scheduleAtFixedRate(this, 0, 100, TimeUnit.MILLISECONDS );
+		this.progressUpdateThread.scheduleAtFixedRate( this, 0,1000,TimeUnit.MILLISECONDS );
 
 		ObjectUtils.cast(super.findViewById(R.id.seek_bar),SeekBar.class).setOnSeekBarChangeListener(     this );
 
@@ -118,14 +130,11 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		ObjectUtils.cast(super.findViewById(R.id.play_button), ImageView.class).setOnClickListener( (playButton) -> {player.getPlayer().start();  ObjectUtils.cast(super.findViewById(R.id.play_button),ImageView.class).setVisibility(View.GONE);} );
 	}
 
-	public  void  onDownloadError(  Throwable   throwable )
-	{
-
-	}
-
 	protected    void  onPause()
 	{
-		super.onPause();if( player!=null&&player.getPlayer().isPlaying() )   player.pause();
+		super.onPause();
+
+		if( this.player != null &&   this.player.getPlayer().isPlaying() )  player.pause();
 	}
 
 	@SneakyThrows
@@ -166,28 +175,22 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	@SneakyThrows
 	public  void  onCompletion(   android.media.MediaPlayer  mediaPlayer )
 	{
-		player.reset();
-
-		isMediaPlayerPrepared.set(   false );
-
-		player.play( videoFile.getPath(),ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),this,this,this );
-
-		player.pause();
+		this.player.getPlayer().seekTo(  0 );
 
         application().getMainLooperHandler().post( () -> {ObjectUtils.cast(super.findViewById(R.id.seek_bar),SeekBar.class).setProgress(0);  ObjectUtils.cast(super.findViewById(R.id.play_button),ImageView.class).setVisibility(View.VISIBLE);} );
-	}
-
-	public  void  onProgressChanged( SeekBar  seekBar  , int  progress , boolean  fromUser )
-	{
-		if( fromUser  )
-		{
-			this.player.getPlayer().seekTo(    progress );
-		}
 	}
 
 	public  void  onStartTrackingTouch( SeekBar  seekBar )
 	{
 		this.isTrackingTouch.compareAndSet( false, true );
+	}
+
+	public  void  onProgressChanged( SeekBar  seekBar  , int  progress , boolean  fromUser )
+	{
+		if( fromUser   )
+		{
+			this.player.getPlayer().seekTo(    progress );
+		}
 	}
 
 	public  void  onStopTrackingTouch(  SeekBar  seekBar )

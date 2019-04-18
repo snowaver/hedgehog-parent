@@ -10,25 +10,23 @@ import  lombok.NonNull;
 
 public  class  MediaPlayer  implements  Closeable
 {
+	public  MediaPlayer  pause()
+	{
+		player.pause();  return this;
+	}
+
 	public  void  close()
 	{
-		player.stop();
+		player.stop( );  player.release();
+	}
 
-		player.release();
+	public  MediaPlayer  start()
+	{
+		player.pause();  return this;
 	}
 
 	@Getter
 	private  android.media.MediaPlayer  player = new  android.media.MediaPlayer();
-
-	public  void  reset()
-	{
-		player.reset(  );
-	}
-
-	public  void  pause()
-	{
-		player.pause(  );
-	}
 
 	public  MediaPlayer  play( @NonNull  String  path,SurfaceHolder  surfaceHolder,android.media.MediaPlayer.OnPreparedListener  preparedListener )  throws  IllegalArgumentException,SecurityException,IllegalStateException,IOException
 	{
@@ -59,10 +57,10 @@ public  class  MediaPlayer  implements  Closeable
 			player.setOnSeekCompleteListener( seekCompleteListener );
 		}
 		
-		player.setDataSource( path );
-		
-		player.prepare();  player.start();
+		player.setDataSource( path );  player.prepareAsync();
 
-		return   this;
+		player.start();
+
+		return    this;
 	}
 }
