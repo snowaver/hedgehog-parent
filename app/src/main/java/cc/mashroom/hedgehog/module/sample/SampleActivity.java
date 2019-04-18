@@ -12,6 +12,8 @@ import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
 import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.ImageUtils;
+import  cc.mashroom.hedgehog.widget.HeaderBar;
+import  cc.mashroom.util.ObjectUtils;
 
 public  class  SampleActivity  extends  AbstractActivity
 {
@@ -20,6 +22,8 @@ public  class  SampleActivity  extends  AbstractActivity
         super.onCreate( savedInstanceState );
 
         super.setContentView(  R.layout.activity_sample  );
+
+        ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video).addDropdownItem(R.string.photo);
 
         super.findViewById(R.id.to_image_cropping).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,ImageCropingActivity.class).putExtra("PATH",ImageUtils.toUri(this,R.drawable.lavender).toString()),null) );
 
