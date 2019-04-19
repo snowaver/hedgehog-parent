@@ -3,41 +3,31 @@ package cc.mashroom.hedgehog.widget;
 import  android.app.Activity;
 import  android.content.Context;
 import  android.content.res.TypedArray;
-import android.graphics.Typeface;
+import  android.graphics.Typeface;
 import  android.graphics.drawable.ColorDrawable;
 import  android.util.AttributeSet;
-import android.view.Gravity;
+import  android.view.Gravity;
 import  android.view.LayoutInflater;
-import android.view.View;
+import  android.view.View;
 import  android.view.WindowManager;
 import  android.widget.LinearLayout;
 import  android.widget.RelativeLayout;
 import  android.widget.TextView;
-import  android.widget.Toast;
 
-import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
+import  androidx.annotation.ColorRes;
+import  androidx.annotation.NonNull;
 import  androidx.annotation.StringRes;
 
-import cc.mashroom.hedgehog.util.DensityUtils;
+import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.util.ContextUtils;
+import  lombok.Getter;
+import  lombok.Setter;
+import  lombok.experimental.Accessors;
 
-public  class  HeaderBar  extends  RelativeLayout
+public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClickListener
 {
-	protected  LinearLayout  addtionalDropdownContent;
-
-	public  void  setTitle( CharSequence  title )
-	{
-		ObjectUtils.cast(super.findViewById(R.id.title),TextView.class).setText(title );
-	}
-
-	public  HeaderBar  addDropdownItem( @StringRes  int  text    )
-	{
-		return  addDropdownItem( text,R.color.white,18,Typeface.createFromAsset(super.getContext().getAssets(),"font/droid_sans_mono.ttf"),Gravity.LEFT|Gravity.CENTER_VERTICAL,1,new  LinearLayout.LayoutParams(super.getContext().getResources().getDisplayMetrics().widthPixels/2,DensityUtils.px(super.getContext(),50)),DensityUtils.px(super.getContext(),10),0,DensityUtils.px(super.getContext(),10),0 );
-	}
-
 	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,Typeface  textTypeface,int  textGravity,int  dividerHeight,@NonNull  LinearLayout.LayoutParams  layoutParams,int  leftPadding,int  topPadding,int  rightPadding,int  bottomPadding )
 	{
 		if( this.addtionalDropdownContent.getChildCount()   >= 1 )
@@ -69,9 +59,40 @@ public  class  HeaderBar  extends  RelativeLayout
 
 		textview.setGravity( textGravity );
 
+		textview.setOnClickListener(this );
+
 		this.addtionalDropdownContent.addView(   textview );
 
 		return  this;
+	}
+
+	public  HeaderBar  addDropdownItem( @StringRes  int  text    )
+	{
+		return  addDropdownItem( text,R.color.white,18,Typeface.createFromAsset(super.getContext().getAssets(),"font/droid_sans_mono.ttf"),Gravity.RIGHT|Gravity.CENTER_VERTICAL,1,new  LinearLayout.LayoutParams(super.getContext().getResources().getDisplayMetrics().widthPixels/2,DensityUtils.px(super.getContext(),50)),DensityUtils.px(super.getContext(),10),0,DensityUtils.px(super.getContext(),10),0 );
+	}
+
+	protected  LinearLayout  addtionalDropdownContent;
+
+	public  interface   OnItemClickListener
+	{
+		public  void  onItemClick( View  itemView,int  position );
+	}
+	@Accessors( chain=true )
+	@Setter
+	@Getter
+	private  OnItemClickListener  onItemClickListener;
+
+	public  void  onClick( View  v )
+	{
+		if( this.onItemClickListener   != null )
+		{
+			this.onItemClickListener.onItemClick( v, this.addtionalDropdownContent.indexOfChild(v)/2 );
+		}
+	}
+
+	public  void  setTitle(CharSequence  title )
+	{
+		ObjectUtils.cast(super.findViewById(R.id.title),TextView.class).setText(title );
 	}
 
 	public  HeaderBar( Context  context,AttributeSet  attributes )
