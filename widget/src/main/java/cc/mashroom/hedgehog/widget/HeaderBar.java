@@ -18,6 +18,9 @@ import  androidx.annotation.ColorRes;
 import  androidx.annotation.NonNull;
 import  androidx.annotation.StringRes;
 
+import  java.util.ArrayList;
+import  java.util.List;
+
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.hedgehog.R;
@@ -69,7 +72,23 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 		return  addDropdownItem( text,textColor,textSize,Typeface.createFromAsset(super.getContext().getAssets(),"font/droid_sans_mono.ttf"),Gravity.RIGHT|Gravity.CENTER_VERTICAL,new  LinearLayout.LayoutParams(width,height),DensityUtils.px(super.getContext(),10),0,DensityUtils.px(super.getContext(),10),0,1 );
 	}
 
+	@Getter
 	protected  LinearLayout  addtionalDropdownContent;
+
+	public  List< View>  getDropdownItems()
+	{
+		List<View>  items    = new  ArrayList<View>();
+
+		for( int  i = 0;i <= this.addtionalDropdownContent.getChildCount()-1;i = i + 1 )
+		{
+			if( i % 2 == 0 )
+			{
+				items.add( this.addtionalDropdownContent.getChildAt( i) );
+			}
+		}
+
+		return items;
+	}
 
 	public  interface   OnItemClickListener
 	{
