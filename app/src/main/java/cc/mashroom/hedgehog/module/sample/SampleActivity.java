@@ -13,6 +13,7 @@ import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivit
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
 import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
+import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.util.ObjectUtils;
@@ -25,7 +26,7 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.setContentView(  R.layout.activity_sample  );
 
-        ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video).addDropdownItem(R.string.photo).setOnItemClickListener( this );
+        ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).addDropdownItem(R.string.photo,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).setOnItemClickListener( this );
 
         super.findViewById(R.id.to_image_cropping).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,ImageCropingActivity.class).putExtra("PATH",ImageUtils.toUri(this,R.drawable.lavender).toString()),null) );
 

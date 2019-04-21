@@ -28,7 +28,7 @@ import  lombok.experimental.Accessors;
 
 public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClickListener
 {
-	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,Typeface  textTypeface,int  textGravity,int  dividerHeight,@NonNull  LinearLayout.LayoutParams  layoutParams,int  leftPadding,int  topPadding,int  rightPadding,int  bottomPadding )
+	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,Typeface  textTypeface,int  textGravity,@NonNull  LinearLayout.LayoutParams  layoutParams,int  leftPadding,int  topPadding,int  rightPadding,int  bottomPadding,int  dividerHeight )
 	{
 		if( this.addtionalDropdownContent.getChildCount()   >= 1 )
 		{
@@ -59,16 +59,14 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 
 		textview.setGravity( textGravity );
 
-		textview.setOnClickListener(this );
-
-		this.addtionalDropdownContent.addView(   textview );
+		textview.setOnClickListener(this );          this.addtionalDropdownContent.addView( textview );
 
 		return  this;
 	}
 
-	public  HeaderBar  addDropdownItem( @StringRes  int  text    )
+	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,int  width,int  height )
 	{
-		return  addDropdownItem( text,R.color.white,18,Typeface.createFromAsset(super.getContext().getAssets(),"font/droid_sans_mono.ttf"),Gravity.RIGHT|Gravity.CENTER_VERTICAL,1,new  LinearLayout.LayoutParams(super.getContext().getResources().getDisplayMetrics().widthPixels/2,DensityUtils.px(super.getContext(),50)),DensityUtils.px(super.getContext(),10),0,DensityUtils.px(super.getContext(),10),0 );
+		return  addDropdownItem( text,textColor,textSize,Typeface.createFromAsset(super.getContext().getAssets(),"font/droid_sans_mono.ttf"),Gravity.RIGHT|Gravity.CENTER_VERTICAL,new  LinearLayout.LayoutParams(width,height),DensityUtils.px(super.getContext(),10),0,DensityUtils.px(super.getContext(),10),0,1 );
 	}
 
 	protected  LinearLayout  addtionalDropdownContent;
