@@ -29,7 +29,7 @@ import  lombok.Getter;
 import  lombok.Setter;
 import  lombok.experimental.Accessors;
 
-public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClickListener
+public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClickListener
 {
 	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,Typeface  textTypeface,int  textGravity,@NonNull  LinearLayout.LayoutParams  layoutParams,int  leftPadding,int  topPadding,int  rightPadding,int  bottomPadding,int  dividerHeight )
 	{
@@ -90,24 +90,26 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 		return  items;
 	}
 
-	public  interface   OnItemClickListener
-	{
-		public  void  onItemClick( View  itemView,int  position );
-	}
+	public  interface  OnItemClickListener{public  void  onItemClick( View  itemView, int  position );}
+
+	@Getter
+	private TipWindow  dropdownMenu;
 	@Accessors( chain=true )
 	@Setter
 	@Getter
-	private  OnItemClickListener  onItemClickListener;
+	private OnItemClickListener   onItemClickListener;
 
 	public  void  onClick( View  v )
 	{
-		if( this.onItemClickListener   != null )
+	    this.dropdownMenu.dismiss();
+
+		if( this.onItemClickListener    != null )
 		{
 			this.onItemClickListener.onItemClick( v, this.addtionalDropdownContent.indexOfChild(v)/2 );
 		}
 	}
 
-	public  void  setTitle(CharSequence  title )
+	public  void  setTitle( CharSequence  title )
 	{
 		ObjectUtils.cast(super.findViewById(R.id.title),TextView.class).setText(title );
 	}
@@ -126,7 +128,9 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 
 		addtionalDropdownContent.setOrientation(  LinearLayout.VERTICAL );
 
-		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (addtionalText) -> new  TipWindow(context,addtionalDropdownContent,true).showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,0) );
+		this.dropdownMenu= new  TipWindow( context,this.addtionalDropdownContent,true );
+
+		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (addtionalText) -> dropdownMenu.showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,0 ) );
 
 		TypedArray  typedArray    = context.obtainStyledAttributes( attributes,R.styleable.HeaderBar );
 
