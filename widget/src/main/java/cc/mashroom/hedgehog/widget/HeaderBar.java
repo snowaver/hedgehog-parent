@@ -64,7 +64,7 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 
 		textview.setOnClickListener(this );          this.addtionalDropdownContent.addView( textview );
 
-		return  this;
+		return   this;
 	}
 
 	public  HeaderBar  addDropdownItem( @StringRes  int  text,@ColorRes  int  textColor,float  textSize,int  width,int  height )
@@ -87,7 +87,7 @@ public  class  HeaderBar  extends  RelativeLayout       implements  View.OnClick
 			}
 		}
 
-		return items;
+		return  items;
 	}
 
 	public  interface   OnItemClickListener
