@@ -41,7 +41,7 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 
 			divider.setLayoutParams(  dividerLayoutParams );
 
-			divider.setBackgroundResource(R.color.darkslategrey );
+			divider.setBackgroundResource(    R.color.gainsboro );
 
 			this.addtionalDropdownContent.addView(divider );
 		}
@@ -123,20 +123,22 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 		addtionalDropdownContent   = new  LinearLayout( context );
 
 		addtionalDropdownContent.setLayoutParams( new  LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT) );
-
+		/*
 		addtionalDropdownContent.setBackgroundResource(    R.drawable.header_bar_dropdown_background );
+		*/
+		addtionalDropdownContent.setBackground( new  ColorDrawable(ObjectUtils.cast(super.getBackground(),ColorDrawable.class).getColor()) );
 
 		addtionalDropdownContent.setOrientation(  LinearLayout.VERTICAL );
 
 		this.dropdownMenu= new  TipWindow( context,this.addtionalDropdownContent,true );
 
-		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (addtionalText) -> dropdownMenu.showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,0 ) );
+		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (addtionalText) -> dropdownMenu.showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,1 ) );
 
 		TypedArray  typedArray    = context.obtainStyledAttributes( attributes,R.styleable.HeaderBar );
 
 		if( typedArray.getBoolean(R.styleable.HeaderBar_immersive,false) )
 		{
-			ObjectUtils.cast(context,Activity.class).getWindow().addFlags( WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
+			ObjectUtils.cast(context,Activity.class).getWindow().addFlags(    WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
 
 			ColorDrawable  color = new  ColorDrawable( ObjectUtils.cast(super.getBackground(),ColorDrawable.class).getColor() );
 
