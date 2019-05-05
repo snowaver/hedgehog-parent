@@ -128,7 +128,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		if( !    PermissionUtils.verifyPermissions(grantedResults) )
 		{
-			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 		}
 	}
 
@@ -151,7 +151,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 		{
 			super.error(ise );
 
-			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> ContextUtils.finish( this )),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 
 			return;
 		}
