@@ -3,6 +3,6 @@
 
     <TextView  android:id="@+id/title"  android:layout_width="wrap_content"  android:layout_height="match_parent"  android:gravity="center_vertical"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:textColor="@color/black"  android:textSize="18dp"  android:visibility="gone"/>
 
-    <TextView  android:id="@+id/edit_inputor"  android:layout_width="0dp"  android:layout_height="match_parent"  android:layout_weight="1"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:textColor="@color/black"  android:textSize="18dp"  android:background="@color/white"  android:imeOptions="actionDone"  android:singleLine="true"/>
+    <EditText  android:id="@+id/edit_inputor"  android:layout_width="0dp"  android:layout_height="match_parent"  android:layout_weight="1"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:textColor="@color/black"  android:textSize="18dp"  android:background="@color/white"  android:imeOptions="actionDone"  android:singleLine="true"/>
 
 </LinearLayout>

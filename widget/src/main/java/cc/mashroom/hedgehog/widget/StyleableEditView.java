@@ -37,7 +37,7 @@ public  class  StyleableEditView     extends  RelativeLayout
 	@Setter(value=AccessLevel.PRIVATE )
 	@Getter
 	@Accessors( chain  = true )
-	private  TextView  content;
+	private  EditText  content;
 	@Setter(value=AccessLevel.PRIVATE )
 	@Getter
 	@Accessors( chain  = true )
@@ -51,7 +51,7 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		TypedArray  typedArray = context.obtainStyledAttributes(   attributeSet ,R.styleable.StyleableEditView );
 
-		this.setContent(ObjectUtils.cast(super.findViewById(R.id.edit_inputor),TextView.class)).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
+		this.setContent(ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class)).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
 
 		if( typedArray.hasValue(    R.styleable.StyleableEditView_android_title) )
 		{
@@ -62,6 +62,8 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_editable) && !typedArray.getBoolean(R.styleable.StyleableEditView_android_editable,true) )
 		{
+		    this.content.setFocusable( false );  content.setOnKeyListener( null );  this.content.setFocusableInTouchMode( false );
+
 			this.content.setTextColor( context.getResources().getColor(R.color.darkgray) );
 		}
 
@@ -74,9 +76,9 @@ public  class  StyleableEditView     extends  RelativeLayout
 		{
 			this.content.setInputType( typedArray.getInt( R.styleable.StyleableEditView_android_inputType, 0 ) );
 
-			if( typedArray.getInt(R.styleable.StyleableEditView_android_inputType,0) == InputType.TYPE_TEXT_VARIATION_PASSWORD + 1 )
+			if( typedArray.getInt(R.styleable.StyleableEditView_android_inputType,0) == InputType.TYPE_TEXT_VARIATION_PASSWORD+1 )
 			{
-				ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class).setTransformationMethod(   new  AsteriskPasswordTransformationMethod() );
+				this.content.setTransformationMethod(  new  AsteriskPasswordTransformationMethod() );
 			}
 		}
 
