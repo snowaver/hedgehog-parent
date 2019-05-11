@@ -5,7 +5,6 @@ import  android.content.res.TypedArray;
 import  android.graphics.Color;
 
 import  android.graphics.Typeface;
-import  android.text.Editable;
 import  android.text.InputType;
 import  android.util.AttributeSet;
 import  android.view.LayoutInflater;
@@ -17,34 +16,30 @@ import  android.widget.TextView;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.util.ObjectUtils;
 import  lombok.AccessLevel;
+import  lombok.Getter;
 import  lombok.Setter;
 import  lombok.experimental.Accessors;
 
-public  class  StyleableEditView  extends  RelativeLayout
+public  class  StyleableEditView     extends  RelativeLayout
 {
-	public  Editable  getText()
+	public      CharSequence  getText()
 	{
-		return  this.inputor.getText();
+		return  this.content.getText();
 	}
 
-    public  StyleableEditView  setInputorKeyListener(    OnKeyListener  listener )
-    {
-        this.inputor.setOnKeyListener( listener );
-
-        return  this;
-    }
-
-	public  StyleableEditView  setText(    String  text )
+	public  StyleableEditView  setText( CharSequence  text )
 	{
-		this.inputor.setText(   text );
+		this.content.setText(   text );
 
 		return  this;
 	}
 
 	@Setter(value=AccessLevel.PRIVATE )
+	@Getter
 	@Accessors( chain  = true )
-	private  EditText  inputor;
+	private  TextView  content;
 	@Setter(value=AccessLevel.PRIVATE )
+	@Getter
 	@Accessors( chain  = true )
 	private  TextView    title;
 
@@ -56,28 +51,28 @@ public  class  StyleableEditView  extends  RelativeLayout
 
 		TypedArray  typedArray = context.obtainStyledAttributes(   attributeSet ,R.styleable.StyleableEditView );
 
-		this.setInputor(ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class)).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
+		this.setContent(ObjectUtils.cast(super.findViewById(R.id.edit_inputor),TextView.class)).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
 
 		if( typedArray.hasValue(    R.styleable.StyleableEditView_android_title) )
 		{
-			this.title.setVisibility(     View.VISIBLE );
+			this.title.setVisibility(        View.VISIBLE );
 
 			this.title.setText( typedArray.getString( R.styleable.StyleableEditView_android_title) );
 		}
 
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_editable) && !typedArray.getBoolean(R.styleable.StyleableEditView_android_editable,true) )
 		{
-			this.inputor.setFocusableInTouchMode(false );  this.inputor.setFocusable( false );  this.inputor.setKeyListener( null );
+			this.content.setTextColor( context.getResources().getColor(R.color.darkgray) );
 		}
 
 		if( typedArray.hasValue(     R.styleable.StyleableEditView_android_hint) )
 		{
-			this.inputor.setHint( typedArray.getString(R.styleable.StyleableEditView_android_hint) );
+			this.content.setHint( typedArray.getString(R.styleable.StyleableEditView_android_hint) );
 		}
 
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_inputType) )
 		{
-			this.inputor.setInputType( typedArray.getInt( R.styleable.StyleableEditView_android_inputType, 0 ) );
+			this.content.setInputType( typedArray.getInt( R.styleable.StyleableEditView_android_inputType, 0 ) );
 
 			if( typedArray.getInt(R.styleable.StyleableEditView_android_inputType,0) == InputType.TYPE_TEXT_VARIATION_PASSWORD + 1 )
 			{
@@ -85,14 +80,10 @@ public  class  StyleableEditView  extends  RelativeLayout
 			}
 		}
 
-		inputor.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,Color.BLACK) );
+		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,Color.BLACK) );
 
-		inputor.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
+		content.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
 
-		inputor.setTypeface( Typeface.createFromAsset(super.getResources().getAssets(),typedArray.hasValue(R.styleable.StyleableEditView_textTypefacePath) ? typedArray.getString(R.styleable.StyleableEditView_textTypefacePath) : "font/droid_sans_mono.ttf") );
-
-		super.findViewById(R.id.top_border).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_enableTopBorder,false)?View.VISIBLE: View.GONE );
-
-		super.findViewById(R.id.bottom_border).setVisibility(  typedArray.getBoolean(R.styleable.StyleableEditView_enableBottomBorder , false) ? View.VISIBLE : View.GONE );  typedArray.recycle();
+		content.setTypeface( Typeface.createFromAsset(super.getResources().getAssets(),typedArray.hasValue(R.styleable.StyleableEditView_textTypefacePath) ? typedArray.getString(R.styleable.StyleableEditView_textTypefacePath) : "font/droid_sans_mono.ttf") );  typedArray.recycle();
 	}
 }
