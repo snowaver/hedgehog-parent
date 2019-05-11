@@ -2,7 +2,6 @@ package cc.mashroom.hedgehog.widget;
 
 import  android.content.Context;
 import  android.content.res.TypedArray;
-import  android.graphics.Color;
 
 import  android.graphics.Typeface;
 import  android.text.InputType;
@@ -62,9 +61,9 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_editable) && !typedArray.getBoolean(R.styleable.StyleableEditView_android_editable,true) )
 		{
-		    this.content.setFocusable( false );  content.setOnKeyListener( null );  this.content.setFocusableInTouchMode( false );
+			this.content.setFocusableInTouchMode(   false );  content.setFocusable( false );  this.content.setKeyListener( null );
 
-			this.content.setTextColor( context.getResources().getColor(R.color.darkgray) );
+			this.content.setTextColor( context.getResources().getColor(R.color.darkgray ) );
 		}
 		else
 		{
@@ -85,6 +84,8 @@ public  class  StyleableEditView     extends  RelativeLayout
 				this.content.setTransformationMethod(  new  AsteriskPasswordTransformationMethod() );
 			}
 		}
+
+		ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_showRightArrow,false) ? View.VISIBLE : View.GONE );
 
 		content.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
 

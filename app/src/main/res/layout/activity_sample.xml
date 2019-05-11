@@ -3,6 +3,10 @@
 
     <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@+id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:title="@string/samples"  android:background="@color/steelblue"  app:additionalText="@string/option"></cc.mashroom.hedgehog.widget.HeaderBar>
 
+    <cc.mashroom.hedgehog.widget.StyleableEditView  android:layout_width="match_parent"  android:layout_height="50dp"  android:textAlignment="viewEnd"  android:title="@string/username"  android:editable="false"  android:hint="@string/option"  android:text="SNOWAVER"  app:showRightArrow="true"></cc.mashroom.hedgehog.widget.StyleableEditView>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
     <Button  android:id="@+id/to_camcorder_button"  style="?android:attr/borderlessButtonStyle"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/camcorder"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
@@ -16,10 +20,6 @@
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
     <Button  android:id="@+id/show_sneaker_window_button"  style="?android:attr/borderlessButtonStyle"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/sneaker"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
-
-    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
-
-    <cc.mashroom.hedgehog.widget.StyleableEditView  android:layout_width="match_parent"  android:layout_height="50dp"  android:textAlignment="viewEnd"  android:title="@string/username"  android:hint="@string/option"  android:text="SNOWAVER"></cc.mashroom.hedgehog.widget.StyleableEditView>
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
