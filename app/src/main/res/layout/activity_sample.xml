@@ -19,7 +19,7 @@
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
-    <cc.mashroom.hedgehog.widget.StyleableEditView  android:layout_width="match_parent"  android:layout_height="50dp"  android:textAlignment="viewEnd"  android:title="@string/username"  android:text="SNOWAVER"></cc.mashroom.hedgehog.widget.StyleableEditView>
+    <cc.mashroom.hedgehog.widget.StyleableEditView  android:layout_width="match_parent"  android:layout_height="50dp"  android:textAlignment="viewEnd"  android:title="@string/username"  android:hint="@string/option"  android:text="SNOWAVER"></cc.mashroom.hedgehog.widget.StyleableEditView>
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
