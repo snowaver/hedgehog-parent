@@ -42,6 +42,15 @@ public  class  StyleableEditView     extends  RelativeLayout
 	@Accessors( chain  = true )
 	private  TextView    title;
 
+	public  StyleableEditView  setOnContentAndRightArrowClickListener(  OnClickListener  onContentClickListener )
+	{
+		content.setOnClickListener(onContentClickListener );
+
+		super.findViewById(R.id.right_arrow).setOnClickListener(   onContentClickListener );
+
+		return  this;
+	}
+
 	public  StyleableEditView(     Context  context , AttributeSet  attributeSet )
 	{
 		super( context, attributeSet );
