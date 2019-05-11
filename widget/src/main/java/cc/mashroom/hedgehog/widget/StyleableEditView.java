@@ -66,6 +66,10 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 			this.content.setTextColor( context.getResources().getColor(R.color.darkgray) );
 		}
+		else
+		{
+			this.content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor( R.color.black ) ) );
+		}
 
 		if( typedArray.hasValue(     R.styleable.StyleableEditView_android_hint) )
 		{
@@ -81,8 +85,6 @@ public  class  StyleableEditView     extends  RelativeLayout
 				this.content.setTransformationMethod(  new  AsteriskPasswordTransformationMethod() );
 			}
 		}
-
-		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,Color.BLACK) );
 
 		content.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
 
