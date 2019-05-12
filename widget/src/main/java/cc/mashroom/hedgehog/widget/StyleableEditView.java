@@ -21,35 +21,26 @@ import  lombok.experimental.Accessors;
 
 public  class  StyleableEditView     extends  RelativeLayout
 {
-	public      CharSequence  getText()
+	public          CharSequence  getText()
 	{
-		return  this.content.getText();
+		return  ObjectUtils.cast(contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor),TextView.class).getText();
 	}
 
 	public  StyleableEditView  setText( CharSequence  text )
 	{
-		this.content.setText(   text );
+		ObjectUtils.cast(contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor),TextView.class).setText(   text );
 
 		return  this;
 	}
 
-	@Setter(value=AccessLevel.PRIVATE )
+	@Setter( value =  AccessLevel.PRIVATE )
 	@Getter
 	@Accessors( chain  = true )
-	private  EditText  content;
-	@Setter(value=AccessLevel.PRIVATE )
+	private  ViewSwitcher  contentSwitcher;
+	@Setter( value =  AccessLevel.PRIVATE )
 	@Getter
 	@Accessors( chain  = true )
 	private  TextView    title;
-
-	public  StyleableEditView  setOnContentAndRightArrowClickListener(  OnClickListener  onContentClickListener )
-	{
-		content.setOnClickListener(onContentClickListener );
-
-		super.findViewById(R.id.right_arrow).setOnClickListener(   onContentClickListener );
-
-		return  this;
-	}
 
 	public  StyleableEditView(     Context  context , AttributeSet  attributeSet )
 	{
@@ -57,40 +48,33 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		LayoutInflater.from(context).inflate( R.layout.styleable_editview, this );
 
-		TypedArray  typedArray = context.obtainStyledAttributes(   attributeSet ,R.styleable.StyleableEditView );
+		TypedArray  typedArray = context.obtainStyledAttributes( attributeSet,R.styleable.StyleableEditView );
 
-		this.setContent(ObjectUtils.cast(super.findViewById(R.id.edit_inputor),EditText.class)).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
+		this.setContentSwitcher(ObjectUtils.cast(super.findViewById(R.id.content_switcher),ViewSwitcher.class).setDisplayedChild(typedArray.getInteger(R.styleable.StyleableEditView_mode,0))).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
 
 		if( typedArray.hasValue(    R.styleable.StyleableEditView_android_title) )
 		{
 			this.title.setVisibility(        View.VISIBLE );
 
-			this.title.setText( typedArray.getString( R.styleable.StyleableEditView_android_title) );
+			this.title.setText( typedArray.getString(R.styleable.StyleableEditView_android_title) );
 		}
 
-		if( typedArray.hasValue(R.styleable.StyleableEditView_android_editable) && !typedArray.getBoolean(R.styleable.StyleableEditView_android_editable,true) )
-		{
-			this.content.setFocusableInTouchMode(   false );  content.setFocusable( false );  this.content.setKeyListener( null );
+		TextView  content = ObjectUtils.cast( contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor) );
 
-			this.content.setTextColor( context.getResources().getColor(R.color.darkgray ) );
-		}
-		else
-		{
-			this.content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor( R.color.black ) ) );
-		}
+		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor(R.color.black)) );
 
 		if( typedArray.hasValue(     R.styleable.StyleableEditView_android_hint) )
 		{
-			this.content.setHint( typedArray.getString(R.styleable.StyleableEditView_android_hint) );
+			content.setHint(    typedArray.getString(R.styleable.StyleableEditView_android_hint ) );
 		}
 
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_inputType) )
 		{
-			this.content.setInputType( typedArray.getInt( R.styleable.StyleableEditView_android_inputType, 0 ) );
+			content.setInputType(    typedArray.getInt( R.styleable.StyleableEditView_android_inputType,0 ) );
 
 			if( typedArray.getInt(R.styleable.StyleableEditView_android_inputType,0) == InputType.TYPE_TEXT_VARIATION_PASSWORD+1 )
 			{
-				this.content.setTransformationMethod(  new  AsteriskPasswordTransformationMethod() );
+				content.setTransformationMethod(      new  AsteriskPasswordTransformationMethod() );
 			}
 		}
 

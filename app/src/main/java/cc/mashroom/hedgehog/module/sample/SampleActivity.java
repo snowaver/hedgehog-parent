@@ -27,7 +27,7 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.setContentView(  R.layout.activity_sample  );
 
-        ObjectUtils.cast(super.findViewById(R.id.editview),StyleableEditView.class).setOnContentAndRightArrowClickListener( (v) -> Toast.makeText(this,"<<  EDITVIEW CLICKED  >>",Toast.LENGTH_LONG).show() );
+        ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> Toast.makeText(this,"<<  EDITVIEW CLICKED  >>",Toast.LENGTH_LONG).show() );
 
         ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).addDropdownItem(R.string.photo,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).setOnItemClickListener( this );
 
