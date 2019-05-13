@@ -18,24 +18,33 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 {
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
-		super.onCreate( savedInstanceState );
+		super.onCreate(     savedInstanceState );
 
 		super.setContentView(   R.layout.activity_editor );
 
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(R.string.edit) );
+		String  editContent = !super.getIntent().hasExtra("EDIT_CONTENT") ? "" : super.getIntent().getStringExtra( "EDIT_CONTENT" );
 
-		ObjectUtils.cast(super.findViewById(R.id.ok_button),Button.class).setOnClickListener(  this );
+		if( StringUtils.isNotBlank(editContent) )
+		{
+			ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).setText(    editContent );
+
+			ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).setSelection( editContent.length() );
+		}
+
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getIntent().hasExtra("TITLE") ? super.getIntent().getStringExtra("TITLE") : super.getString(R.string.edit) );
+
+		ObjectUtils.cast(super.findViewById(R.id.ok_button),Button.class).setOnClickListener( this );
 	}
 
-	public  void  onClick( View  view )
+	public  void  onClick(   View  finishButton )
 	{
-		if( StringUtils.isNotBlank(ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim()) )
+		if( StringUtils.isNotBlank(    ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim()) )
 		{
-			super.putResultDataAndFinish( this,0,new  Intent().putExtra("EDIT_CONTENT",ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim()) );
+			super.putResultDataAndFinish( this,0,new  Intent().putExtra("EDIT_CONTENT",ObjectUtils.cast(super.findViewById(R.id.edit), EditText.class).getText().toString().trim()) );
 		}
 		else
 		{
-			Toasty.error(this,getString(R.string.content_empty_error),Toast.LENGTH_LONG,false).show();
+			Toasty.error(this,    super.getString(R.string.content_empty_error),Toast.LENGTH_LONG,false).show();
 		}
 	}
 }

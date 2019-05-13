@@ -11,6 +11,7 @@ import  androidx.core.app.ActivityCompat;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
+import cc.mashroom.hedgehog.module.common.activity.EditorActivity;
 import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.DensityUtils;
@@ -27,7 +28,7 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.setContentView(  R.layout.activity_sample  );
 
-        ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> Toast.makeText(this,"<<  EDITVIEW CLICKED  >>",Toast.LENGTH_LONG).show() );
+        ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> ActivityCompat.startActivityForResult(this,new  Intent(this,EditorActivity.class).putExtra("TITLE","USERNAME").putExtra("EDIT_CONTENT","SNOWAVER"),0,null) );
 
         ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).addDropdownItem(R.string.photo,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).setOnItemClickListener( this );
 
