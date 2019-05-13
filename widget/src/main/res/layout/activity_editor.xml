@@ -9,6 +9,14 @@
 
     <View  android:layout_width="match_parent"  android:layout_height="0dp"  android:layout_weight="1"></View>
 
-    <Button  android:id="@+id/ok_button"  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/limegreen"  android:text="@string/finish"  android:textSize="18dp"  android:textColor="@color/white"   android:layout_alignParentBottom="true"/>
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
+    <RelativeLayout  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/white">
+
+        <TextView  android:id="@+id/notes"  android:layout_width="wrap_content"  android:layout_height="match_parent"  android:paddingLeft="10dp"  android:textColor="@color/darkgray"  android:textSize="18dp"  android:gravity="center"/>
+
+        <TextView  android:id="@+id/finish_button"  android:layout_width="wrap_content"  android:layout_height="match_parent"  android:paddingRight="10dp"  android:layout_alignParentRight="true"  android:textColor="@color/limegreen"  android:textSize="18dp"  android:text="@string/finish"  android:gravity="center"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
