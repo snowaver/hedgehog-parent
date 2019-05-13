@@ -13,6 +13,7 @@
     <string  name="player">PLAYER</string>
     <string  name="close">CLOSE</string>
     <string  name="filter">FILTER</string>
+    <string  name="content_length_exceeded">CONTENT LENGTH EXCEEDED</string>
     <string  name="permission_denied">PERMISSION DENIED</string>
     <string  name="file_not_found">FILE NOT FOUND</string>
     <string  name="network_or_internal_server_error">NETWORK ERROR</string>
