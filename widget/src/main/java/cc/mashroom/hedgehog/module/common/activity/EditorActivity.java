@@ -1,7 +1,6 @@
 package cc.mashroom.hedgehog.module.common.activity;
 
 import  android.content.Intent;
-import  android.graphics.Typeface;
 import  android.os.Bundle;
 import  android.text.Editable;
 import  android.text.TextWatcher;
@@ -10,11 +9,10 @@ import  android.widget.EditText;
 import  android.widget.TextView;
 import  android.widget.Toast;
 
-import  com.aries.ui.widget.alert.UIAlertDialog;
+import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
-import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.util.StringUtils;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
@@ -31,9 +29,9 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 	{
 		if( StringUtils.isNotBlank(ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim()) )
 		{
-			if( this.limitation == -1 || ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim().length() >= this.limitation+1 )
+			if( this.limitation == -1 || ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().length() >= limitation+1 )
 			{
-				ExtviewsAdapter.adapter(new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.content_length_exceeded).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextColor(super.getResources().getColor(R.color.red)).setNegativeButtonTextSize(18).setNegativeButton(R.string.ok,(dialog,which) -> {}).create().setWidth((int)  (super.getResources().getDisplayMetrics().widthPixels*0.9)),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show();
+				super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.length_out_of_limitation,R.color.white,R.color.red );
 			}
 			else
 			{
@@ -42,9 +40,11 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		}
 		else
 		{
-			Toasty.error(EditorActivity.this,     super.getString(R.string.content_empty_error),Toast.LENGTH_LONG,false).show();
+			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.content_empty_error,R.color.white,R.color.red );
 		}
 	}
+
+	private  int  limitation = -1;
 
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -66,8 +66,6 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 
 		ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).setSelection(content.length());
 	}
-
-	private  int  limitation = -1;
 
 	public  void  afterTextChanged(Editable  textEditable )
 	{
