@@ -7,7 +7,6 @@ import  android.text.TextWatcher;
 import  android.view.View;
 import  android.widget.EditText;
 import  android.widget.TextView;
-import  android.widget.Toast;
 
 import  com.irozon.sneaker.Sneaker;
 
@@ -16,7 +15,6 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.util.StringUtils;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
-import  es.dmoral.toasty.Toasty;
 
 public  class  EditorActivity  extends  AbstractActivity  implements  View.OnClickListener,TextWatcher
 {
@@ -74,7 +72,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		ObjectUtils.cast(super.findViewById(R.id.notes),TextView.class).setText( this.limitation == -1 ? ""+textEditable.length() : StringUtils.rightPad(""+textEditable.length(),Math.max(2,(limitation+"").length())," ")+" /"+StringUtils.leftPad(""+limitation,Math.max(2,(limitation+"").length())," ") );
 	}
 
-	public  void  onTextChanged(     CharSequence  text,int  start,int before,int  count )
+	public  void  onTextChanged(   CharSequence  text  ,int  start,int before,int  count )
 	{
 		ObjectUtils.cast(super.findViewById(R.id.notes),TextView.class).setTextColor( super.getResources().getColor(this.limitation == -1 || text.length() <= this.limitation ? R.color.darkgray : R.color.red) );
 
