@@ -29,7 +29,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		{
 			if( this.limitation == -1 || ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().length() >= limitation+1 )
 			{
-				super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.length_out_of_limitation,R.color.white,R.color.red );
+				super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.content_length_out_of_limitation,R.color.white,R.color.red );
 			}
 			else
 			{
@@ -38,7 +38,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		}
 		else
 		{
-			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.content_empty_error,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.content_empty,R.color.white,R.color.red );
 		}
 	}
 

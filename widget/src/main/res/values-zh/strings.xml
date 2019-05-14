@@ -1,0 +1,30 @@
+<resources>
+    <string  name="app_name">widget</string>
+    <string  name="goback">返回</string>
+    <string  name="cancel">取消</string>
+    <string  name="ok">确定</string>
+    <string  name="edit">编辑</string>
+    <string  name="photo">照片</string>
+    <string  name="content_empty">内容为空</string>
+    <string  name="video">视频</string>
+    <string  name="finish">完成</string>
+    <string  name="notice">提示</string>
+    <string  name="option">选项</string>
+    <string  name="player">播放器</string>
+    <string  name="close">关闭</string>
+    <string  name="filter">筛选</string>
+    <string  name="content_length_out_of_limitation">内容长度超出限制</string>
+    <string  name="permission_denied">权限不足</string>
+    <string  name="file_not_found">文件未找到</string>
+    <string  name="network_or_internal_server_error">网络错误</string>
+    <string  name="image_cropping">图片裁剪</string>
+    <string  name="image_cropping_error">裁剪错误</string>
+    <string  name="camera_take_photo">拍照</string>
+    <string  name="camera_switch_orientation">切换</string>
+    <string  name="camera_record_video">视频</string>
+    <string  name="camera_take_photo_or_record_video">照片或视频</string>
+    <string  name="album_multichoice_out_of_limitation_error">选择数量已超过最大限制</string>
+    <string  name="album_photo_and_video">照片和视频</string>
+    <string  name="camera_require_camera_and_audio_record_permission">需要摄像头以及录音权限</string>
+    <string  name="album_require_album_permission">需要读取您的相册</string>
+</resources>
