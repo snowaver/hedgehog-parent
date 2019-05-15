@@ -59,9 +59,14 @@ public  class  StyleableEditView     extends  RelativeLayout
 			this.title.setText( typedArray.getString(R.styleable.StyleableEditView_android_title) );
 		}
 
+		if( typedArray.hasValue(   R.styleable.StyleableEditView_titleTextColor) )
+		{
+			this.title.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_titleTextColor,context.getResources().getColor(R.color.black)) );
+		}
+
 		TextView  content = ObjectUtils.cast( contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor) );
 
-		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor(R.color.black)) );
+		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor(    R.color.black)) );
 
 		if( typedArray.hasValue(     R.styleable.StyleableEditView_android_hint) )
 		{

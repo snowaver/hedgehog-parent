@@ -5,7 +5,7 @@
 
     <cc.mashroom.hedgehog.widget.StyleableEditView  android:id="@+id/editview_external"  android:layout_width="match_parent"  android:layout_height="50dp"  android:layout_marginTop="1px"  android:textAlignment="viewEnd"  android:title="@string/username"  android:hint="@string/option"  app:mode="EXTERNAL"  app:showRightArrow="true"></cc.mashroom.hedgehog.widget.StyleableEditView>
 
-    <cc.mashroom.hedgehog.widget.StyleableEditView  android:id="@+id/editview_internal"  android:layout_width="match_parent"  android:layout_height="50dp"  android:layout_marginTop="1px"  android:textAlignment="viewEnd"  android:title="@string/username"  android:hint="@string/option"  app:mode="INTERNAL"></cc.mashroom.hedgehog.widget.StyleableEditView>
+    <cc.mashroom.hedgehog.widget.StyleableEditView  android:id="@+id/editview_internal"  android:layout_width="match_parent"  android:layout_height="50dp"  android:layout_marginTop="1px"  android:textAlignment="viewEnd"  android:title="@string/username"  android:hint="@string/option"  app:mode="INTERNAL"  app:titleTextColor="@color/limegreen"></cc.mashroom.hedgehog.widget.StyleableEditView>
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
