@@ -11,7 +11,7 @@
 
             <TextView  android:id="@+id/text_inputor"  android:layout_width="0dp"  android:layout_height="match_parent"  android:layout_weight="1"  android:paddingLeft="10dp"  android:paddingRight="10dp"  android:textColor="@color/darkgray"  android:textSize="18dp"  android:gravity="center"/>
 
-            <TextView  android:id="@+id/right_arrow"   android:layout_width="wrap_content"  android:layout_height="match_parent"  android:textColor="@color/darkgray"  android:textSize="18dp"  android:gravity="center"  android:text=">"  android:paddingRight="10dp"/>
+            <TextView  android:id="@+id/right_arrow"   android:layout_width="wrap_content"  android:layout_height="match_parent"  android:textColor="@color/darkgray"  android:textSize="18dp"  android:gravity="center"  android:text=" >"/>
 
         </LinearLayout>
 
