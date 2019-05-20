@@ -11,11 +11,11 @@ import  androidx.core.app.ActivityCompat;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
-import cc.mashroom.hedgehog.module.common.activity.EditorActivity;
 import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
+import  cc.mashroom.hedgehog.widget.BottomSheerEditor;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.hedgehog.widget.StyleableEditView;
 import  cc.mashroom.util.ObjectUtils;
@@ -28,7 +28,11 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.setContentView(  R.layout.activity_sample  );
 
+        BottomSheerEditor  editor = new  BottomSheerEditor(this,5).setOnEditCompleteListener( (text) -> ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setText(text) );
+        /*
         ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> ActivityCompat.startActivityForResult(this,new  Intent(this,EditorActivity.class).putExtra("LIMITATION",12).putExtra("TITLE","USERNAME").putExtra("EDIT_CONTENT","SNOWAVER"),0,null) );
+        */
+        ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> editor.withText(((StyleableEditView)  v).getText()).show() );
 
         ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).addDropdownItem(R.string.album_photo_and_video,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).addDropdownItem(R.string.photo,R.color.white,18,DensityUtils.px(this,150),DensityUtils.px(this,50)).setOnItemClickListener( this );
 
