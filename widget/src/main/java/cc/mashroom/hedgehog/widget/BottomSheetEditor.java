@@ -1,6 +1,6 @@
 package cc.mashroom.hedgehog.widget;
 
-import  android.content.Context;
+import  android.app.Activity;
 import  android.text.Editable;
 import  android.text.TextWatcher;
 import  android.view.View;
@@ -9,6 +9,7 @@ import  android.widget.EditText;
 import  com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import  cc.mashroom.hedgehog.R;
+import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.util.ObjectUtils;
 import  lombok.AccessLevel;
 import  lombok.Getter;
@@ -43,15 +44,19 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
     public  interface  OnEditCompleteListener{ public  void  onEditComplete(     CharSequence  text ); }
 
-    public  BottomSheetEditor( Context  context , int  limitation )
+    public  BottomSheetEditor( Activity  activity,int  limitation )
     {
-        this.setLimitation(limitation).setBottomSheetDialog(new  BottomSheetDialog(context,R.style.BottomSheetEditor)).getBottomSheetDialog().setContentView( R.layout.bottomsheet_editor );
+        this.setLimitation(limitation).setBottomSheetDialog(new  BottomSheetDialog(activity,R.style.BottomSheetEditor)).getBottomSheetDialog().setContentView( R.layout.bottomsheet_editor );
 
         ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).addTextChangedListener( this );
 
         this.bottomSheetDialog.findViewById(R.id.cancel_button).setOnClickListener( (button) -> this.bottomSheetDialog.cancel() );
 
         this.bottomSheetDialog.findViewById(R.id.finish_button).setOnClickListener(this );
+
+        this.bottomSheetDialog.setCanceledOnTouchOutside(  false );
+
+        this.bottomSheetDialog.setOnCancelListener( (dialog)  -> ContextUtils.hideSoftinput(activity) );
     }
 
     public  BottomSheetEditor  withHint( CharSequence hint )
