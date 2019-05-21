@@ -15,7 +15,7 @@ import  lombok.Getter;
 import  lombok.Setter;
 import  lombok.experimental.Accessors;
 
-public  class  BottomSheerEditor  implements  View.OnClickListener,TextWatcher
+public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 {
     public  void  beforeTextChanged( CharSequence  text,int  start,int  count,int  after )
     {
@@ -43,7 +43,7 @@ public  class  BottomSheerEditor  implements  View.OnClickListener,TextWatcher
 
     public  interface  OnEditCompleteListener{ public  void  onEditComplete(     CharSequence  text ); }
 
-    public  BottomSheerEditor( Context  context , int  limitation )
+    public  BottomSheetEditor( Context  context , int  limitation )
     {
         this.setLimitation(limitation).setBottomSheetDialog(new  BottomSheetDialog(context,R.style.BottomSheetEditor)).getBottomSheetDialog().setContentView( R.layout.bottomsheet_editor );
 
@@ -54,7 +54,14 @@ public  class  BottomSheerEditor  implements  View.OnClickListener,TextWatcher
         this.bottomSheetDialog.findViewById(R.id.finish_button).setOnClickListener(this );
     }
 
-    public  BottomSheerEditor  withText( CharSequence text )
+    public  BottomSheetEditor  withHint( CharSequence hint )
+    {
+        ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).setHint(hint);
+
+        return  this;
+    }
+
+    public  BottomSheetEditor  withText( CharSequence text )
     {
         ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).setText(text);
 

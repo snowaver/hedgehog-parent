@@ -15,7 +15,7 @@ import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
-import  cc.mashroom.hedgehog.widget.BottomSheerEditor;
+import  cc.mashroom.hedgehog.widget.BottomSheetEditor;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.hedgehog.widget.StyleableEditView;
 import  cc.mashroom.util.ObjectUtils;
@@ -28,7 +28,7 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.setContentView(  R.layout.activity_sample  );
 
-        BottomSheerEditor  editor = new  BottomSheerEditor(this,5).setOnEditCompleteListener( (text) -> ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setText(text) );
+        BottomSheetEditor editor = new BottomSheetEditor(this,5).setOnEditCompleteListener( (text) -> ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setText(text) );
         /*
         ObjectUtils.cast(super.findViewById(R.id.editview_external),StyleableEditView.class).setOnClickListener( (v) -> ActivityCompat.startActivityForResult(this,new  Intent(this,EditorActivity.class).putExtra("LIMITATION",12).putExtra("TITLE","USERNAME").putExtra("EDIT_CONTENT","SNOWAVER"),0,null) );
         */
