@@ -18,11 +18,6 @@ import  lombok.experimental.Accessors;
 
 public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 {
-    public  void  beforeTextChanged( CharSequence  text,int  start,int  count,int  after )
-    {
-
-    }
-
     public  void  onClick( View button )
     {
         String  editable = ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).getText().toString();
@@ -33,6 +28,8 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
         {
             this.onEditCompleteListener.onEditComplete( editable );
         }
+
+        ContextUtils.hideSoftinput( context,   this.bottomSheetDialog.getCurrentFocus() );
 
         this.bottomSheetDialog.cancel();
     }
@@ -71,6 +68,11 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
         ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).setSelection(  text.length() );
 
         return  this;
+    }
+
+    public  void  beforeTextChanged( CharSequence  text,int  start,int  count,int  after )
+    {
+
     }
 
     @Setter( value=AccessLevel.PRIVATE )
