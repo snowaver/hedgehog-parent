@@ -8,7 +8,6 @@ import  android.text.InputType;
 import  android.util.AttributeSet;
 import  android.view.LayoutInflater;
 import  android.view.View;
-import  android.widget.EditText;
 import  android.widget.RelativeLayout;
 import  android.widget.TextView;
 
@@ -64,6 +63,13 @@ public  class  StyleableEditView     extends  RelativeLayout
 			this.title.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_titleTextColor,context.getResources().getColor(R.color.black)) );
 		}
 
+		if( typedArray.hasValue( R.styleable.StyleableEditView_showRightArrowAs) )
+		{
+			ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setText( typedArray.getString(R.styleable.StyleableEditView_showRightArrowAs) );
+		}
+
+		ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_showRightArrow,false) ? View.VISIBLE : View.GONE );
+		
 		TextView  content = ObjectUtils.cast( contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor) );
 
 		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor(    R.color.black)) );
@@ -82,8 +88,6 @@ public  class  StyleableEditView     extends  RelativeLayout
 				content.setTransformationMethod(      new  AsteriskPasswordTransformationMethod() );
 			}
 		}
-
-		ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_showRightArrow,false) ? View.VISIBLE : View.GONE );
 
 		content.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
 
