@@ -55,8 +55,6 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
         this.bottomSheetDialog.findViewById(R.id.finish_button).setOnClickListener(this );
 
         this.bottomSheetDialog.setCanceledOnTouchOutside(  false );
-
-        this.bottomSheetDialog.setOnCancelListener( (dialog)  -> ContextUtils.hideSoftinput(activity) );
     }
 
     public  BottomSheetEditor  withHint( CharSequence hint )
@@ -95,7 +93,7 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
     public  void  cancel()
     {
-        ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor), EditText.class).clearFocus();
+        ContextUtils.hideSoftinput(this.bottomSheetDialog.getOwnerActivity());
 
         this.bottomSheetDialog.cancel();
     }
