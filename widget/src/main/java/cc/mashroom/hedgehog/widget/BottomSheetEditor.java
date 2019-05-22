@@ -97,7 +97,7 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
     public  void  cancel()
     {
-        ContextUtils.hideSoftinput(this.context );
+        ContextUtils.hideSoftinput( context,   this.bottomSheetDialog.getCurrentFocus() );
 
         this.bottomSheetDialog.cancel();
     }

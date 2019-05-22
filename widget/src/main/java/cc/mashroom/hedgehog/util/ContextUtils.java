@@ -13,24 +13,19 @@ import  cc.mashroom.util.ObjectUtils;
 
 public  class  ContextUtils
 {
-    public  static  void  hideSoftinput(      Activity  context )
+    public  static  void  hideSoftinput( Activity  context,View  currentFocus  )
     {
-        InputMethodManager  inputMethodManager = ObjectUtils.cast( context.getSystemService(Context.INPUT_METHOD_SERVICE) );
+        InputMethodManager  inputMethodManager = ObjectUtils.cast(context.getSystemService(Context.INPUT_METHOD_SERVICE) );
 
-        if( inputMethodManager.isActive()   && context.getCurrentFocus() != null && context.getCurrentFocus().getWindowToken() != null )
+        if( inputMethodManager.isActive()  && currentFocus != null  && currentFocus.getWindowToken() != null )
         {
-            inputMethodManager.hideSoftInputFromWindow( context.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS );
+            inputMethodManager.hideSoftInputFromWindow( currentFocus.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS );
         }
     }
 
-    public  static  void  showSoftinput(    Activity  context,View  view )
+    public  static  void  hideSoftinput(Activity  context )
     {
-        InputMethodManager  inputMethodManager = ObjectUtils.cast( context.getSystemService(Context.INPUT_METHOD_SERVICE) );
-
-        if( !inputMethodManager.isActive()  && context.getCurrentFocus() != null && context.getCurrentFocus().getWindowToken() != null )
-        {
-            inputMethodManager.showSoftInputFromInputMethod(context.getCurrentFocus().getWindowToken(),InputMethodManager.SHOW_FORCED );
-        }
+        hideSoftinput( context,context.getCurrentFocus() );
     }
 
     public  static  void  finish( Activity  context )
@@ -38,6 +33,16 @@ public  class  ContextUtils
         hideSoftinput( context );
 
         context.finish();
+    }
+
+    public  static  void  showSoftinput(  Activity  context,View  currentFocus )
+    {
+        InputMethodManager  inputMethodManager = ObjectUtils.cast(context.getSystemService(Context.INPUT_METHOD_SERVICE) );
+
+        if( !inputMethodManager.isActive() && currentFocus != null  && currentFocus.getWindowToken() != null )
+        {
+            inputMethodManager.showSoftInputFromInputMethod(currentFocus.getWindowToken(),InputMethodManager.SHOW_FORCED );
+        }
     }
 
     public  static  int   getStatusBarHeight( Activity  context )
@@ -48,7 +53,7 @@ public  class  ContextUtils
     }
 
 
-    public  static  boolean  isApplicationRunningBackground( Context  context )
+    public  static  boolean  isApplicationRunningBackground(  Context  context )
     {
         for( ActivityManager.RunningAppProcessInfo  processInfo : ObjectUtils.cast(context.getSystemService(Context.ACTIVITY_SERVICE),ActivityManager.class).getRunningAppProcesses() )
         {
