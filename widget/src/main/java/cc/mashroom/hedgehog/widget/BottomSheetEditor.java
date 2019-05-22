@@ -50,7 +50,7 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
         ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).addTextChangedListener( this );
 
-        this.bottomSheetDialog.findViewById(R.id.cancel_button).setOnClickListener( (button) -> this.bottomSheetDialog.cancel() );
+        this.bottomSheetDialog.findViewById(R.id.cancel_button).setOnClickListener( (cancelTextButton)-> this.cancel() );
 
         this.bottomSheetDialog.findViewById(R.id.finish_button).setOnClickListener(this );
 
