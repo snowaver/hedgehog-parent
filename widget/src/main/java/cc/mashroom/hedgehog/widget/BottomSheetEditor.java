@@ -46,7 +46,7 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
     public  BottomSheetEditor( Activity  activity,int  limitation )
     {
-        this.setLimitation(limitation).setBottomSheetDialog(new  BottomSheetDialog(activity,R.style.BottomSheetEditor)).getBottomSheetDialog().setContentView( R.layout.bottomsheet_editor );
+        this.setContext(activity).setLimitation(limitation).setBottomSheetDialog(new  BottomSheetDialog(activity,R.style.BottomSheetEditor)).getBottomSheetDialog().setContentView( R.layout.bottomsheet_editor );
 
         ObjectUtils.cast(this.bottomSheetDialog.findViewById(R.id.editor),EditText.class).addTextChangedListener( this );
 
@@ -84,6 +84,10 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
     @Setter( value=AccessLevel.PUBLIC  )
     @Getter
     @Accessors( chain = true )
+    private  Activity context;
+    @Setter( value=AccessLevel.PUBLIC  )
+    @Getter
+    @Accessors( chain = true )
     private  OnEditCompleteListener  onEditCompleteListener;
 
     public  void    show()
@@ -93,7 +97,7 @@ public  class  BottomSheetEditor  implements  View.OnClickListener,TextWatcher
 
     public  void  cancel()
     {
-        ContextUtils.hideSoftinput(this.bottomSheetDialog.getOwnerActivity());
+        ContextUtils.hideSoftinput(this.context );
 
         this.bottomSheetDialog.cancel();
     }
