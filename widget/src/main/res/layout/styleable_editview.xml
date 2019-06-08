@@ -11,7 +11,7 @@
 
             <TextView  android:id="@+id/text_inputor"  android:layout_width="0dp"   android:layout_height="match_parent"  android:layout_weight="1"  android:paddingLeft="10dp"  android:textColor="@color/darkgray"  android:textSize="18dp"  android:gravity="center"/>
 
-            <ImageView  android:id="@+id/right_arrow"  android:layout_width="28dp"  android:layout_height="18dp"  android:paddingStart="10dp"  android:layout_gravity="center_vertical"  android:src="@drawable/gt_alr"  android:tint="@color/darkgray"/><View  android:layout_width="10dp"  android:layout_height="match_parent"></View>
+            <ImageView  android:id="@+id/right_arrow"  android:layout_width="26dp"  android:layout_height="16dp"  android:paddingStart="10dp"  android:layout_gravity="center_vertical"  android:src="@drawable/gt_alr"  android:tint="@color/darkgray"/><View  android:layout_width="10dp"  android:layout_height="match_parent"></View>
 
         </LinearLayout>
 
