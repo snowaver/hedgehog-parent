@@ -10,6 +10,7 @@ import  android.view.Gravity;
 import  android.view.LayoutInflater;
 import  android.view.View;
 import  android.view.WindowManager;
+import android.widget.ImageView;
 import  android.widget.LinearLayout;
 import  android.widget.RelativeLayout;
 import  android.widget.TextView;
@@ -83,7 +84,7 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 		{
 			if( i % 2 == 0 )
 			{
-				items.add( this.addtionalDropdownContent.getChildAt( i) );
+				items.add( this.addtionalDropdownContent.getChildAt( i ) );
 			}
 		}
 
@@ -118,7 +119,7 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 	{
 		super( context,attributes );
 
-		LayoutInflater.from(context).inflate( R.layout.header_bar, this );
+		LayoutInflater.from(context).inflate( R.layout.header_bar,  this );
 
 		addtionalDropdownContent   = new  LinearLayout( context );
 
@@ -128,15 +129,15 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 		*/
 		addtionalDropdownContent.setBackground( new  ColorDrawable(ObjectUtils.cast(super.getBackground(),ColorDrawable.class).getColor()) );
 
-		addtionalDropdownContent.setOrientation(  LinearLayout.VERTICAL );
+		addtionalDropdownContent.setOrientation(   LinearLayout.VERTICAL );
 
 		this.dropdownMenu= new  TipWindow( context,this.addtionalDropdownContent,true );
 
-		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (addtionalText) -> dropdownMenu.showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,1 ) );
+		ObjectUtils.cast(super.findViewById(R.id.additional_switcher),ViewSwitcher.class).setOnClickListener( (addtionalText) -> dropdownMenu.showAsDropDown(this,context.getResources().getDisplayMetrics().widthPixels,1) );
 
 		TypedArray  typedArray    = context.obtainStyledAttributes( attributes,R.styleable.HeaderBar );
 
-		if( typedArray.getBoolean(R.styleable.HeaderBar_immersive,false) )
+		if( typedArray.getBoolean(R.styleable.HeaderBar_immersive, false) )
 		{
 			ObjectUtils.cast(context,Activity.class).getWindow().addFlags(    WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS );
 
@@ -147,12 +148,22 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 			ObjectUtils.cast(context,Activity.class).getWindow().setStatusBarColor( color.getColor() );
 		}
 
+		if( typedArray.hasValue(R.styleable.HeaderBar_backDrawable      ) )
+		{
+			ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.back_switcher),ViewSwitcher.class).setDisplayedChild(1).getDisplayedChild(),ImageView.class).setImageDrawable(             typedArray.getDrawable(R.styleable.HeaderBar_backDrawable) );
+		}
+
+		if( typedArray.hasValue(R.styleable.HeaderBar_additionalDrawable) )
+		{
+			ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.additional_switcher),ViewSwitcher.class).setDisplayedChild(1).getDisplayedChild(),ImageView.class).setImageDrawable( typedArray.getDrawable(R.styleable.HeaderBar_additionalDrawable) );
+		}
+
 		ObjectUtils.cast(super.findViewById(R.id.back_text),TextView.class).setText(  !typedArray.hasValue(R.styleable.HeaderBar_backText) ? "" : typedArray.getString(R.styleable.HeaderBar_backText) );
 
 		ObjectUtils.cast(super.findViewById(R.id.title),TextView.class).setText( !typedArray.hasValue(R.styleable.HeaderBar_android_title) ? "" : typedArray.getString(R.styleable.HeaderBar_android_title) );
 
-		ObjectUtils.cast(super.findViewById(R.id.back_text),TextView.class).setOnClickListener( (textview) -> ContextUtils.finish( ObjectUtils.cast(context ) ) );
+		ObjectUtils.cast(super.findViewById(R.id.back_switcher),ViewSwitcher.class).setOnClickListener( ( v ) -> ContextUtils.finish(ObjectUtils.cast(context)) );
 
-		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setText( !typedArray.hasValue(R.styleable.HeaderBar_additionalText) ? "" : typedArray.getString(R.styleable.HeaderBar_additionalText) );  typedArray.recycle();
+		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setText(     !typedArray.hasValue(R.styleable.HeaderBar_additionalText) ? "" : typedArray.getString(R.styleable.HeaderBar_additionalText) );  typedArray.recycle();
 	}
 }

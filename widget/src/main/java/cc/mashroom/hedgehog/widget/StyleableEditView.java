@@ -8,6 +8,7 @@ import  android.text.InputType;
 import  android.util.AttributeSet;
 import  android.view.LayoutInflater;
 import  android.view.View;
+import android.widget.ImageView;
 import  android.widget.RelativeLayout;
 import  android.widget.TextView;
 
@@ -51,24 +52,24 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		this.setContentSwitcher(ObjectUtils.cast(super.findViewById(R.id.content_switcher),ViewSwitcher.class).setDisplayedChild(typedArray.getInteger(R.styleable.StyleableEditView_mode,0))).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
 
-		if( typedArray.hasValue(    R.styleable.StyleableEditView_android_title) )
+		if( typedArray.hasValue(R.styleable.StyleableEditView_android_title    ) )
 		{
 			this.title.setVisibility(        View.VISIBLE );
 
 			this.title.setText( typedArray.getString(R.styleable.StyleableEditView_android_title) );
 		}
 
-		if( typedArray.hasValue(   R.styleable.StyleableEditView_titleTextColor) )
+		if( typedArray.hasValue(R.styleable.StyleableEditView_titleTextColor   ) )
 		{
 			this.title.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_titleTextColor,context.getResources().getColor(R.color.black)) );
 		}
 
-		if( typedArray.hasValue( R.styleable.StyleableEditView_showRightArrowAs) )
+		if( typedArray.hasValue(R.styleable.StyleableEditView_rightArrowDirection) && typedArray.getInteger(R.styleable.StyleableEditView_rightArrowDirection,0) == 1 )
 		{
-			ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setText( typedArray.getString(R.styleable.StyleableEditView_showRightArrowAs) );
+			ObjectUtils.cast(super.findViewById(R.id.right_arrow),ImageView.class).setImageResource( R.drawable.lt_alr );
 		}
 
-		ObjectUtils.cast(super.findViewById(R.id.right_arrow),TextView.class).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_showRightArrow,false) ? View.VISIBLE : View.GONE );
+		ObjectUtils.cast(super.findViewById(R.id.right_arrow),ImageView.class).setVisibility( typedArray.getBoolean(R.styleable.StyleableEditView_showRightArrow,false) ? View.VISIBLE : View.GONE );
 		
 		TextView  content = ObjectUtils.cast( contentSwitcher.getDisplayedChildPosition() == 0 ? contentSwitcher.getDisplayedChild() : contentSwitcher.getDisplayedChild().findViewById(R.id.text_inputor) );
 

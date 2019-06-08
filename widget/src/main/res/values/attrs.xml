@@ -1,8 +1,12 @@
-<?xml  version="1.0"  encoding="UTF-8"?>
+<?xml  version="1.0"   encoding="UTF-8"?>
 <resources >
-    <declare-styleable  name="HeaderBar"><attr  name="backText"  format="reference"></attr><attr  name="android:title"></attr><attr  name="additionalText"  format="reference"></attr><attr  name="immersive"  format="boolean"></attr></declare-styleable>
+    <declare-styleable  name="HeaderBar">
+        <attr  name="backText"  format="reference"></attr><attr  name="android:title"></attr><attr  name="additionalText"  format="reference"></attr><attr  name="immersive"  format="boolean"></attr>
+        <attr  name="backDrawable"  format="reference"></attr>
+        <attr  name="additionalDrawable"  format="reference"></attr>
+    </declare-styleable>
     <declare-styleable  name="StyleableEditView">
-        <attr  name="android:hint"></attr><attr  name="android:inputType"></attr><attr  name="android:title"></attr><attr  name="android:textColor"></attr><attr  name="textTypefacePath"  format="string"></attr><attr  name="android:textAlignment"></attr><attr  name="showRightArrow"  format="boolean"></attr><attr  name="showRightArrowAs"  format="string"></attr>
+        <attr  name="android:hint"></attr><attr  name="android:inputType"></attr><attr  name="android:title"></attr><attr  name="android:textColor"></attr><attr  name="textTypefacePath"  format="string"></attr><attr  name="android:textAlignment"></attr><attr  name="showRightArrow"  format="boolean"></attr><attr  name="rightArrowDirection"  format="enum"><enum  name="right"  value="0"></enum><enum  name="left"  value="1"></enum></attr>
         <attr  name="mode"  format="enum"><enum  name="INTERNAL"  value="0"></enum><enum  name="EXTERNAL"  value="1"></enum></attr><attr  name="titleTextColor" format="color"></attr>
     </declare-styleable>
     <declare-styleable  name="SlidingSidebarLayout"><attr  name="transformMode"><enum  name="translate"  value="0"></enum><enum  name="translateScale"  value="1"></enum></attr></declare-styleable>
