@@ -12,26 +12,32 @@ public  class  Stopwatch  extends  Chronometer
 {
 	public  Stopwatch( Context  context,AttributeSet  attributeSet )
 	{
-		super( context,attributeSet );
+		super( context,attributeSet  );
 	}
 
-	public  Stopwatch  start( String  showFormat )
+	public  Stopwatch( Context  context,AttributeSet  attributeSet,int  defaultStyleArray )
+	{
+		super( context,attributeSet,defaultStyleArray );
+	}
+
+	public  Stopwatch( Context  context,AttributeSet  attributeSet,int  defaultStyleArray,int  defaultStyleResource )
+	{
+		super( context,attributeSet,defaultStyleArray,defaultStyleResource );
+	}
+
+	public  Stopwatch  start( String  format )
 	{
 		super.setOnChronometerTickListener( (chronometer) -> chronometer.setText(new  DateTime(SystemClock.elapsedRealtime()-chronometer.getBase(),DateTimeZone.UTC).toString(chronometer.getFormat())) );
 
-		super.setFormat( showFormat );
+		super.setFormat( format );
 
-		super.setBase( SystemClock.elapsedRealtime() );
+		super.setBase(   SystemClock.elapsedRealtime() );
 		
-		super.start();
-		
-		return   this;
+		super.start();    return  this;
 	}
 
-	public  CharSequence stopForText()
+	public  CharSequence  stopForText()
 	{
-		super.stop( );
-
-		return  super.getText();
+		super.stop( );return  super.getText();
 	}
 }
