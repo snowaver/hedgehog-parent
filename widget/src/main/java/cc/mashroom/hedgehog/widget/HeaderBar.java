@@ -16,6 +16,7 @@ import  android.widget.RelativeLayout;
 import  android.widget.TextView;
 
 import  androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import  androidx.annotation.NonNull;
 import  androidx.annotation.StringRes;
 
@@ -90,6 +91,34 @@ public  class  HeaderBar       extends  RelativeLayout  implements  View.OnClick
 
 		return  items;
 	}
+
+    public  HeaderBar  setAdditionalText( String  additionalText )
+    {
+        ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.additional_switcher),ViewSwitcher.class).setDisplayedChild(0).getDisplayedChild(),TextView.class).setText(   additionalText );
+
+        return   this;
+    }
+
+    public  HeaderBar  setAdditionalDrawable(    @DrawableRes  int  additionalDrawable )
+    {
+        ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.additional_switcher),ViewSwitcher.class).setDisplayedChild(1).getDisplayedChild(),ImageView.class).setImageResource( additionalDrawable );
+
+        return   this;
+    }
+
+    public  HeaderBar  setBackText( String  backText )
+    {
+        ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.back_switcher),ViewSwitcher.class).setDisplayedChild(0).getDisplayedChild(),TextView.class).setText( backText );
+
+        return   this;
+    }
+
+	public  HeaderBar  setBackDrawable(   @DrawableRes  int  backDrawable )
+    {
+        ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.back_switcher),ViewSwitcher.class).setDisplayedChild(1).getDisplayedChild(),ImageView.class).setImageResource( backDrawable );
+
+        return   this;
+    }
 
 	public  interface  OnItemClickListener{public  void  onItemClick( View  itemView, int  position );}
 
