@@ -27,8 +27,9 @@ public  class  Stopwatch  extends  Chronometer
 
 	public  Stopwatch  start( String  format )
 	{
-		super.setOnChronometerTickListener( (chronometer) -> chronometer.fonchronometer.setText(new  DateTime(SystemClock.elapsedRealtime()-chronometer.getBase(),DateTimeZone.UTC).toString(chronometer.getFormat())) );
-
+		/*
+		super.setOnChronometerTickListener( (chronometer) -> chronometer.setText(new  DateTime(SystemClock.elapsedRealtime()-chronometer.getBase(),DateTimeZone.UTC).toString(chronometer.getFormat())) );
+		*/
 		super.setFormat( format );
 
 		super.setBase(   SystemClock.elapsedRealtime() );
