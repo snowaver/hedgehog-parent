@@ -83,11 +83,6 @@ public  class  StyleableEditView     extends  RelativeLayout
 		if( typedArray.hasValue(R.styleable.StyleableEditView_android_inputType) )
 		{
 			content.setInputType(    typedArray.getInt( R.styleable.StyleableEditView_android_inputType,0 ) );
-
-			if( typedArray.getInt(R.styleable.StyleableEditView_android_inputType,0) == InputType.TYPE_TEXT_VARIATION_PASSWORD+1 )
-			{
-				content.setTransformationMethod(      new  AsteriskPasswordTransformationMethod() );
-			}
 		}
 
 		content.setTextAlignment( typedArray.getInt(R.styleable.StyleableEditView_android_textAlignment,TextView.TEXT_ALIGNMENT_VIEW_START) );
