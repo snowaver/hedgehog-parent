@@ -42,24 +42,24 @@ public  class  StyleableEditView     extends  RelativeLayout
 	@Accessors( chain  = true )
 	private  TextView    title;
 
-	public  StyleableEditView(     Context  context , AttributeSet  attributeSet )
+	public  StyleableEditView(  Context  context , AttributeSet  attributeSet )
 	{
 		super( context, attributeSet );
 
-		LayoutInflater.from(context).inflate( R.layout.styleable_editview, this );
+		LayoutInflater.from(context).inflate(R.layout.styleable_editview,this);
 
 		TypedArray  typedArray = context.obtainStyledAttributes( attributeSet,R.styleable.StyleableEditView );
 
 		this.setContentSwitcher(ObjectUtils.cast(super.findViewById(R.id.content_switcher),ViewSwitcher.class).setDisplayedChild(typedArray.getInteger(R.styleable.StyleableEditView_mode,0))).setTitle( ObjectUtils.cast(super.findViewById(R.id.title),TextView.class) );
 
-		if( typedArray.hasValue(R.styleable.StyleableEditView_android_title    ) )
+		if( typedArray.hasValue(R.styleable.StyleableEditView_android_title ) )
 		{
 			this.title.setVisibility(        View.VISIBLE );
 
 			this.title.setText( typedArray.getString(R.styleable.StyleableEditView_android_title) );
 		}
 
-		if( typedArray.hasValue(R.styleable.StyleableEditView_titleTextColor   ) )
+		if( typedArray.hasValue(R.styleable.StyleableEditView_titleTextColor) )
 		{
 			this.title.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_titleTextColor,context.getResources().getColor(R.color.black)) );
 		}
@@ -75,12 +75,12 @@ public  class  StyleableEditView     extends  RelativeLayout
 
 		content.setTextColor( typedArray.getColor(R.styleable.StyleableEditView_android_textColor,context.getResources().getColor(    R.color.black)) );
 
-		if( typedArray.hasValue(     R.styleable.StyleableEditView_android_hint) )
+		if( typedArray.hasValue(  R.styleable.StyleableEditView_android_hint) )
 		{
 			content.setHint(    typedArray.getString(R.styleable.StyleableEditView_android_hint ) );
 		}
 
-		if( typedArray.hasValue(R.styleable.StyleableEditView_android_inputType) )
+		if( typedArray.hasValue(  R.styleable.StyleableEditView_android_inputType ) )
 		{
 			content.setInputType(    typedArray.getInt( R.styleable.StyleableEditView_android_inputType,0 ) );
 		}
