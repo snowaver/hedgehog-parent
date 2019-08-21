@@ -25,6 +25,7 @@ import  cc.mashroom.hedgehog.device.camera.ErrorStateCallback;
 import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
 import  cc.mashroom.hedgehog.util.ImageUtils;
+import cc.mashroom.hedgehog.widget.ViewSwitcher;
 import  cc.mashroom.util.ObjectUtils;
 
 import  cc.mashroom.util.collection.map.HashMap;
@@ -66,7 +67,7 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 		super.findViewById(R.id.header_bar).setLayoutParams(layoutParams);
 
-		ObjectUtils.cast(super.findViewById(R.id.additional_text),TextView.class).setOnClickListener( (view) -> {try{ camera.switchOrientation(); }catch(Exception  e){ e.printStackTrace(); }} );
+		ObjectUtils.cast(super.findViewById(R.id.additional_switcher),ViewSwitcher.class).setOnClickListener( (view) -> {try{camera.switchOrientation();}  catch(Exception  e)  { e.printStackTrace(); }} );
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.camera_take_photo).addEntry(2,R.string.camera_record_video).addEntry( 3,R.string.camera_take_photo_or_record_video );

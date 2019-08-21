@@ -11,7 +11,7 @@
 
     </cc.mashroom.hedgehog.widget.ViewSwitcher>
 
-    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backText="@string/cancel"  app:additionalText="@string/camera_switch_orientation"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  app:backDrawable="@drawable/lt_all"  app:additionalDrawable="@drawable/switzh"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
 
     <cc.mashroom.hedgehog.widget.ViewSwitcher  android:id="@+id/control_switcher"  android:layout_width="match_parent" android:layout_height="60dp"  android:background="@color/transparent"  android:layout_alignParentBottom="true"  android:layout_marginBottom="50dp">
 

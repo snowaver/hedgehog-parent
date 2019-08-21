@@ -4,7 +4,6 @@ import  android.content.Intent;
 import  android.net.Uri;
 import  android.view.MotionEvent;
 import  android.view.View;
-import  android.widget.TextView;
 import  android.widget.Toast;
 
 import  com.facebook.drawee.view.SimpleDraweeView;
@@ -99,9 +98,9 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 				captureMediaFiles.put( MediaType.VIDEO.getValue(), this.context.application().cache(-1, videoFile, 3) );
 
 				ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild( 1 );
-
+				/*
 				ObjectUtils.cast(context.findViewById(R.id.additional_text),TextView.class).setVisibility(  View.GONE );
-
+				*/
 				return  true;
 			}
 		}
@@ -134,7 +133,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 			{
 				ObjectUtils.cast(context.findViewById(R.id.preview_switcher),ViewSwitcher.class).setDisplayedChild( 0 );
 
-				context.findViewById(R.id.additional_text).setVisibility(View.VISIBLE );
+				this.context.findViewById(R.id.additional_switcher).setVisibility(    View.VISIBLE );
 
 				ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild( 0 );
 
@@ -176,6 +175,6 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 
 		captureMediaFiles.put(MediaType.IMAGE.getValue(),file);
 
-		context.application().getMainLooperHandler().post( () -> { ObjectUtils.cast(context.findViewById(R.id.preview_switcher),ViewSwitcher.class).setDisplayedChild(1);  context.findViewById(R.id.additional_text).setVisibility(View.GONE);  ObjectUtils.cast(context.findViewById(R.id.photo_viewer),PhotoDraweeView.class).setPhotoUri(Uri.fromFile(file));  ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild(1); } );
+		context.application().getMainLooperHandler().post( () -> { ObjectUtils.cast(context.findViewById(R.id.preview_switcher),ViewSwitcher.class).setDisplayedChild(1);  context.findViewById(R.id.additional_switcher).setVisibility( View.GONE );  ObjectUtils.cast(context.findViewById(R.id.photo_viewer),PhotoDraweeView.class).setPhotoUri(Uri.fromFile(file));  ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild(1); } );
 	}
 }

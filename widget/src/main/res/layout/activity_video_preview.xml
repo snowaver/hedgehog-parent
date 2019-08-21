@@ -3,7 +3,7 @@
 
     <SurfaceView  android:id="@+id/video_surface"  android:layout_width="match_parent"  android:layout_height="wrap_content"  android:layout_centerInParent="true"/>
 
-    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:title="@string/player"  app:backText="@string/goback"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
+    <cc.mashroom.hedgehog.widget.HeaderBar  android:id="@id/header_bar"  android:layout_width="match_parent"  android:layout_height="50dp"  android:title="@string/player"  app:backDrawable="@drawable/lt_all"  android:background="@color/halftransparentwhite"></cc.mashroom.hedgehog.widget.HeaderBar>
 
     <LinearLayout  android:layout_width="match_parent"  android:layout_height="50dp"  android:background="@color/halftransparentwhite"  android:layout_alignParentBottom="true"  android:paddingLeft="0dp"  android:paddingRight="0dp">
 
