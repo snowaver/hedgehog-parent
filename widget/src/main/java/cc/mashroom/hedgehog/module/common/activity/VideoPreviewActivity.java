@@ -8,7 +8,8 @@ import  android.view.ViewGroup;
 import  android.widget.ImageView;
 import  android.widget.RelativeLayout;
 import  android.widget.SeekBar;
-import  android.widget.Toast;
+
+import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
@@ -24,7 +25,6 @@ import  java.util.concurrent.TimeUnit;
 import  java.util.concurrent.atomic.AtomicBoolean;
 
 import  cc.mashroom.hedgehog.util.ContextUtils;
-import  es.dmoral.toasty.Toasty;
 import  lombok.Setter;
 import  lombok.SneakyThrows;
 import  lombok.experimental.Accessors;
@@ -52,6 +52,8 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		this.setVideoFile( new  File(getIntent().getStringExtra("PATH")));
 
 		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback(this);
+
+		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).setKeepScreenOn(       true );
 
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setOnClickListener( (bar ) -> {} );
 
@@ -134,25 +136,30 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	{
 		super.onPause();
 
-		if( this.player != null &&   this.player.getPlayer().isPlaying() )  player.pause();
+		if( this.player != null &&   this.player.getPlayer().isPlaying() )   player.pause();
 	}
 
 	@SneakyThrows
 	public  void  surfaceCreated(   final   SurfaceHolder  surfaceHolder )
 	{
+		if( application().getFileDownloadRetrofit()==null )
+		{
+			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
+		}
+
 		if( videoFile.exists() )
 		{
 			setPlayer( new  MediaPlayer().play(   videoFile.getPath(),surfaceHolder,this,this,this) );
 		}
 		else
 		{
-			application().getDefaultRetrofit().create(DynamicService.class).get(super.getIntent().getStringExtra("URL")).enqueue
+			application().getFileDownloadRetrofit().create(DynamicService.class).get( getIntent().getStringExtra("URL")).enqueue
 			(
 				new  Callback<ResponseBody>()
 				{
 					public  void  onFailure( Call<ResponseBody>  call,Throwable  throwable )
 					{
-						Toasty.error(VideoPreviewActivity.this,VideoPreviewActivity.this.getString(R.string.network_or_internal_server_error),Toast.LENGTH_LONG,false).show();
+						showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(VideoPreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.network_or_internal_server_error,R.color.white,R.color.red );
 					}
 
 					@SneakyThrows
@@ -164,7 +171,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 						}
 						else
 						{
-							Toasty.error(VideoPreviewActivity.this,VideoPreviewActivity.this.getString(R.string.file_not_found),Toast.LENGTH_LONG,false).show();
+							showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(VideoPreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.file_not_found,R.color.white,R.color.red );
 						}
 					}
 				}

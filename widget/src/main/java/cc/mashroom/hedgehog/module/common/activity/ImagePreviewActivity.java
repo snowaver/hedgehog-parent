@@ -2,7 +2,8 @@ package cc.mashroom.hedgehog.module.common.activity;
 
 import  android.net.Uri;
 import  android.os.Bundle;
-import  android.widget.Toast;
+
+import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
@@ -13,7 +14,6 @@ import  cc.mashroom.util.ObjectUtils;
 import  java.io.File;
 
 import  cc.mashroom.hedgehog.util.ContextUtils;
-import  es.dmoral.toasty.Toasty;
 import  lombok.SneakyThrows;
 import  me.relex.photodraweeview.PhotoDraweeView;
 import  okhttp3.ResponseBody;
@@ -21,7 +21,7 @@ import  retrofit2.Call;
 import  retrofit2.Callback;
 import  retrofit2.Response;
 
-public  class  ImagePreviewActivity  extends  AbstractActivity
+public  class  ImagePreviewActivity   extends    AbstractActivity
 {
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -41,25 +41,30 @@ public  class  ImagePreviewActivity  extends  AbstractActivity
 		}
 		else
 		{
-			application().getDefaultRetrofit().create(DynamicService.class).get(super.getIntent().getStringExtra("URL")).enqueue
+			if( application().getFileDownloadRetrofit() == null )
+			{
+				throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
+			}
+
+			application().getFileDownloadRetrofit().create(DynamicService.class).get(super.getIntent().getStringExtra("URL")).enqueue
 			(
 				new  Callback<ResponseBody>()
 				{
 					public  void  onFailure( Call<ResponseBody>  call,Throwable  t )
 					{
-						Toasty.error(ImagePreviewActivity.this,ImagePreviewActivity.this.getString(R.string.network_or_internal_server_error),Toast.LENGTH_LONG,false).show();
+						showSneakerWindow( Sneaker.with(ImagePreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(ImagePreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.network_or_internal_server_error,R.color.white,R.color.red );
 					}
 
 					@SneakyThrows
 					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>  retrofitResponse )
 					{
-						if( retrofitResponse.code()== 200 )
+						if( retrofitResponse.code()     ==  200 )
 						{
 							ObjectUtils.cast(ImagePreviewActivity.this.findViewById(R.id.picture),PhotoDraweeView.class).setPhotoUri( Uri.fromFile(FileUtils.createFileIfAbsent(imageFile,retrofitResponse.body().bytes())) );
 						}
 						else
 						{
-							Toasty.error(ImagePreviewActivity.this,ImagePreviewActivity.this.getString(R.string.file_not_found),Toast.LENGTH_LONG,false).show();
+							showSneakerWindow( Sneaker.with(ImagePreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(ImagePreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.file_not_found,R.color.white,R.color.red );
 						}
 					}
 				}

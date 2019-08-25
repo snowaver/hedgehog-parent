@@ -1,6 +1,5 @@
 package cc.mashroom.hedgehog.parent;
 
-import  android.content.Context;
 import  android.graphics.Bitmap;
 import  android.graphics.BitmapFactory;
 import  android.media.ThumbnailUtils;
@@ -11,13 +10,14 @@ import  android.provider.MediaStore;
 import  org.apache.commons.codec.binary.Hex;
 
 import  java.io.File;
+import  java.io.IOException;
 
 import  cc.mashroom.hedgehog.util.ImageUtils;
 import  cc.mashroom.util.DigestUtils;
 import  cc.mashroom.util.FileUtils;
 import  lombok.Getter;
 import  lombok.Setter;
-import  lombok.SneakyThrows;
+import  lombok.experimental.Accessors;
 import  retrofit2.Retrofit;
 
 public  class  Application   extends  android.app.Application
@@ -25,27 +25,31 @@ public  class  Application   extends  android.app.Application
 	public  void  onCreate()
 	{
 		super.onCreate();
-
-		this.setCacheDir( FileUtils.createDirectoryIfAbsent( super.getDir( ".hedgehog" , Context.MODE_PRIVATE ) ) );
 	}
 
+	@Accessors( chain=true )
 	@Setter
 	@Getter
 	private  File  cacheDir;
+	@Accessors( chain=true )
+	@Setter
 	@Getter
-	private  Retrofit defaultRetrofit = new  Retrofit.Builder().baseUrl("https://mashroom.cc/").build();
+	private  Retrofit fileDownloadRetrofit;
 	@Getter
 	private  Handler  mainLooperHandler = new  Handler( Looper.getMainLooper() );
 
-	@SneakyThrows
-	public  File  cache( int  imageId,File  cachingFile,int  contentType )
+	public  File  cache( int  imageId,File  cachingFile,int  contentType )  throws  IOException
 	{
 		return  cache( imageId,FileUtils.readFileToByteArray(cachingFile),contentType );
 	}
 
-	@SneakyThrows
-	public  File  cache( int  imageId,byte[]  cachingFileBytes,int  contentType )
+	public  File  cache( int  imageId,byte[]  cachingFileBytes,int  contentType )  throws  IOException
 	{
+		if( cacheDir==null )
+		{
+			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  cache  dir  in  application  should  be  set  first." );
+		}
+
 		Bitmap  bmp  = null;
 
 		File  cachedFile = FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+new  String(Hex.encodeHex(DigestUtils.md5(cachingFileBytes))).toUpperCase()),cachingFileBytes );
@@ -66,7 +70,7 @@ public  class  Application   extends  android.app.Application
 		}
 		else
 		{
-			throw  new  IllegalArgumentException( String.format("SQUIRREL-CLIENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported.",contentType) );
+			throw  new  IllegalArgumentException( String.format("HEDGEHOT-PARENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported.",contentType) );
 		}
 
 		FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+cachedFile.getName()+"$TMB").getPath(),ImageUtils.readBitmapToByteArray(bmp  /*ThumbnailUtils.extractThumbnail(bitmap,(int)  (((double)  bitmap.getWidth()/bitmap.getHeight())*DensityUtils.px(this,90)),DensityUtils.px(this,90))*/) );  return  cachedFile;
