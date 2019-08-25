@@ -8,6 +8,7 @@ import  android.widget.Toast;
 
 import  com.facebook.drawee.view.SimpleDraweeView;
 import  com.google.common.collect.Lists;
+import  com.irozon.sneaker.Sneaker;
 
 import  java.io.File;
 import  java.io.Serializable;
@@ -19,6 +20,7 @@ import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
 import  cc.mashroom.hedgehog.device.camera.PhotoTakenListener;
 import  cc.mashroom.hedgehog.system.Media;
 import  cc.mashroom.hedgehog.system.MediaType;
+import  cc.mashroom.hedgehog.util.ContextUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
 import  cc.mashroom.hedgehog.widget.ViewSwitcher;
 import  cc.mashroom.util.FileUtils;
@@ -62,7 +64,9 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		}
 		catch( Exception  e )
 		{
-			Toasty.error( this.context,context.getString( R.string.permission_denied ),Toast.LENGTH_LONG, false).show();
+		    context.error(e);
+
+            context.showSneakerWindow( Sneaker.with(context).setOnSneakerDismissListener(() -> context.application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(context),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 		}
 
 		return  false;
@@ -164,6 +168,8 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		catch( Exception  e )
 		{
 			context.error(e);
+
+            context.showSneakerWindow( Sneaker.with(context).setOnSneakerDismissListener(() -> context.application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(context),500)),    com.irozon.sneaker.R.drawable.ic_error,R.string.unknown_error,R.color.white,R.color.red );
 		}
 	}
 
@@ -181,7 +187,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		{
 			context.error(e);
 
-			throw  new  IllegalStateException( "HEDGEHOG-PARENT:  ** CAMCORDER  LISTENER **  io  exception  while  caching  the  picture,  it  is  not  often  except  for  extremely  situations.",e );
+            context.showSneakerWindow( Sneaker.with(context).setOnSneakerDismissListener(() -> context.application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(context),500)),    com.irozon.sneaker.R.drawable.ic_error,R.string.io_exception, R.color.white,R.color.red );
 		}
 	}
 }

@@ -13,6 +13,8 @@
     <string  name="player">播放器</string>
     <string  name="close">关闭</string>
     <string  name="filter">筛选</string>
+    <string  name="io_exception">输入输出异常</string>
+    <string  name="unknown_error">未知错误</string>
     <string  name="content_length_out_of_limitation">内容长度超出限制</string>
     <string  name="permission_denied">权限不足</string>
     <string  name="file_not_found">文件未找到</string>
