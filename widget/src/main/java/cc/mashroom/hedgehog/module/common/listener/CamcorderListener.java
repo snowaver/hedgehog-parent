@@ -179,6 +179,8 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		}
 		catch( Exception  e )
 		{
+			context.error(e);
+
 			throw  new  IllegalStateException( "HEDGEHOG-PARENT:  ** CAMCORDER  LISTENER **  io  exception  while  caching  the  picture,  it  is  not  often  except  for  extremely  situations.",e );
 		}
 	}
