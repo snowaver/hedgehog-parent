@@ -184,6 +184,8 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 						videoDownloadProgressDialog.show();
 
 							DownloadHelper.download(      retrofitResponse.body(),FileUtils.createFileIfAbsent(videoFile,null),VideoPreviewActivity.this );
+
+                            setPlayer(       new  MediaPlayer().play(videoFile.getPath(),ObjectUtils.cast(VideoPreviewActivity.this.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),VideoPreviewActivity.this,VideoPreviewActivity.this,VideoPreviewActivity.this) );
 						}
 						else
 						{
@@ -236,15 +238,6 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		if( isCompleted)
 		{
 		videoDownloadProgressDialog.cancel();
-
-			try
-			{
-				this.setPlayer(new  MediaPlayer().play(this.videoFile.getPath(),ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),this,this,this) );
-			}
-			catch( IOException ioe )
-			{
-				super.showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(VideoPreviewActivity.this),500)),        com.irozon.sneaker.R.drawable.ic_error,R.string.io_exception,R.color.white,R.color.red );
-			}
 
 			return;
 		}
