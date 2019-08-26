@@ -11,7 +11,7 @@ import  okhttp3.ResponseBody;
 
 public  class  DownloadHelper
 {
-	public  static  void  download( ResponseBody  responseBody,File  writeToFile,DownloadProgressListener  downloadProgressListener )
+	public  static  File  write( ResponseBody  responseBody,File  writeToFile,DownloadProgressListener  downloadProgressListener )  throws  IOException
 	{
 		try( InputStream  is = responseBody.byteStream();OutputStream  os = new  FileOutputStream(FileUtils.createFileIfAbsent(writeToFile.getPath(),null)) )
 		{
@@ -31,12 +31,8 @@ public  class  DownloadHelper
 			os.flush();
 
 			downloadProgressListener.onProgress( contentLength,readByteCount,contentLength == readByteCount );
-		}
-		catch( IOException   ioex )
-		{
-			ioex.printStackTrace();
 
-			downloadProgressListener.onError(ioex );
+			return     writeToFile;
 		}
 	}
 }

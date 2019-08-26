@@ -70,7 +70,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( ( controlPanel ) -> {} );
 
-		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
+		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setBackgroundColor(super.getResources().getColor(R.color.halftransparentwhite)).setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
 	}
 
 	private  AtomicBoolean  isTrackingTouch  = new AtomicBoolean( false );
@@ -156,13 +156,14 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	@SneakyThrows
 	public  void  surfaceCreated(   final   SurfaceHolder  surfaceHolder )
 	{
-		if( application().getFileDownloadRetrofit()==null )
-		{
-			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
-		}
+//		if( application().getFileDownloadRetrofit()==null )
+//		{
+//			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
+//		}
 
 		if( videoFile.exists() )
 		{
+			videoDownloadProgressDialog.show();
 			setPlayer( new  MediaPlayer().play(   videoFile.getPath(),surfaceHolder,this,this,this) );
 		}
 		else
@@ -176,16 +177,21 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 						showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(VideoPreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.network_or_internal_server_error,R.color.white,R.color.red );
 					}
 
-					@SneakyThrows
 					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>   retrofitResponse )
 					{
 						if( retrofitResponse.code()== 200 )
 						{
 						videoDownloadProgressDialog.show();
+							try
+							{
+								setPlayer( new  MediaPlayer().play(DownloadHelper.write(retrofitResponse.body(),FileUtils.createFileIfAbsent(videoFile,null),VideoPreviewActivity.this).getPath(),ObjectUtils.cast(VideoPreviewActivity.this.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),VideoPreviewActivity.this,VideoPreviewActivity.this,VideoPreviewActivity.this) );
+							}
+							catch(     IOException  error )
+							{
+								error(error);
 
-							DownloadHelper.download(      retrofitResponse.body(),FileUtils.createFileIfAbsent(videoFile,null),VideoPreviewActivity.this );
-
-                            setPlayer(       new  MediaPlayer().play(videoFile.getPath(),ObjectUtils.cast(VideoPreviewActivity.this.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),VideoPreviewActivity.this,VideoPreviewActivity.this,VideoPreviewActivity.this) );
+								showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(()->ContextUtils.finish(VideoPreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.io_exception,R.color.white,R.color.red );
+							}
 						}
 						else
 						{
@@ -227,12 +233,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	{
 
 	}
-	@Override
-	public  void  onError( Throwable  error )
-	{
-		showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(VideoPreviewActivity.this),500)),  com.irozon.sneaker.R.drawable.ic_error,R.string.network_or_internal_server_error,R.color.white,R.color.red );
-	}
-	@Override
+
 	public  void  onProgress(long  contentLength,long  readBytesCount,boolean  isCompleted )
 	{
 		if( isCompleted)
@@ -242,6 +243,6 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 			return;
 		}
 
-		this.videoDownloadProgressDialog.getMessage().setText( new  BigDecimal(readBytesCount).divide(new  BigDecimal(contentLength),2,RoundingMode.HALF_UP).toEngineeringString()+"%" );
+		this.videoDownloadProgressDialog.getMessage().setText( new  BigDecimal(readBytesCount).divide(new  BigDecimal(contentLength),2,RoundingMode.HALF_UP).toString()+"%" );
 	}
 }
