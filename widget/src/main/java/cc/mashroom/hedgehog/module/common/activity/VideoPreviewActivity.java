@@ -70,7 +70,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( ( controlPanel ) -> {} );
 
-		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
+		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
 	}
 
 	private  AtomicBoolean  isTrackingTouch  = new AtomicBoolean( false );
