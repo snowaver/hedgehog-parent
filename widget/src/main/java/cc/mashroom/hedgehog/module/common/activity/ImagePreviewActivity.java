@@ -7,7 +7,7 @@ import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
-import  cc.mashroom.hedgehog.webkit.DynamicService;
+import cc.mashroom.hedgehog.okhttp.extend.DynamicService;
 import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
