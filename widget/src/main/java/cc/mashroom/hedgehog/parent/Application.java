@@ -1,5 +1,6 @@
 package cc.mashroom.hedgehog.parent;
 
+import android.content.Context;
 import  android.graphics.Bitmap;
 import  android.graphics.BitmapFactory;
 import  android.media.ThumbnailUtils;
@@ -25,6 +26,8 @@ public  class  Application   extends  android.app.Application
 	public  void  onCreate()
 	{
 		super.onCreate();
+
+		this.setCacheDir( super.getDir(".hedgehog",Context.MODE_PRIVATE) ).setFileDownloadRetrofit( new  Retrofit.Builder().baseUrl("https://mashroom.cc/").build() );
 	}
 
 	@Accessors( chain=true )
@@ -70,7 +73,7 @@ public  class  Application   extends  android.app.Application
 		}
 		else
 		{
-			throw  new  IllegalArgumentException( String.format("HEDGEHOT-PARENT:  ** APPLICATION **  content  type  ( %d )  is  not  supported.",contentType) );
+			throw  new  IllegalArgumentException( String.format("HEDGEHOT-PARENT:  ** APPLICATION **  the  content  type  ( %d )  is  not  supported.",contentType) );
 		}
 
 		FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+cachedFile.getName()+"$TMB").getPath(),ImageUtils.readBitmapToByteArray(bmp  /*ThumbnailUtils.extractThumbnail(bitmap,(int)  (((double)  bitmap.getWidth()/bitmap.getHeight())*DensityUtils.px(this,90)),DensityUtils.px(this,90))*/) );  return  cachedFile;

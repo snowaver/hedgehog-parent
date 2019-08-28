@@ -7,6 +7,7 @@ import  android.os.Build;
 import  com.facebook.drawee.backends.pipeline.Fresco;
 
 import  java.util.Locale;
+import  retrofit2.Retrofit;
 
 public  class  SampleApplication  extends  cc.mashroom.hedgehog.parent.Application
 {
@@ -30,5 +31,7 @@ public  class  SampleApplication  extends  cc.mashroom.hedgehog.parent.Applicati
         }
 
         super.getResources().updateConfiguration( configuration,getResources().getDisplayMetrics() );
+
+        super.setFileDownloadRetrofit( new  Retrofit.Builder().baseUrl("http://192.168.1.114:8011").build() );
     }
 }

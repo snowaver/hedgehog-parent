@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha09'
     implementation 'com.facebook.fresco:fresco:1.13.0'
     implementation 'com.irozon.sneaker:sneaker:2.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'cc.mashroom:mashroom-util:v1.0.1'
     implementation project(':widget')
     annotationProcessor 'org.permissionsdispatcher:permissionsdispatcher-processor:4.3.0'

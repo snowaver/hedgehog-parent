@@ -1,6 +1,6 @@
 package cc.mashroom.hedgehog.module.common.activity;
 
-import android.graphics.Typeface;
+import  android.graphics.Typeface;
 import  android.os.Bundle;
 import  android.view.SurfaceHolder;
 import  android.view.SurfaceView;
@@ -10,27 +10,23 @@ import  android.widget.ImageView;
 import  android.widget.RelativeLayout;
 import  android.widget.SeekBar;
 
-import androidx.core.content.res.ResourcesCompat;
-
-import com.aries.ui.widget.progress.UIProgressDialog;
+import  com.aries.ui.widget.progress.UIProgressDialog;
 import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
-import cc.mashroom.hedgehog.okhttp.extend.DownloadHelper;
-import cc.mashroom.hedgehog.okhttp.extend.DownloadProgressListener;
+import  cc.mashroom.hedgehog.okhttp.extend.DownloadHelper;
+import  cc.mashroom.hedgehog.okhttp.extend.DownloadProgressListener;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.device.MediaPlayer;
-import cc.mashroom.hedgehog.okhttp.extend.DynamicService;
-import cc.mashroom.hedgehog.util.DensityUtils;
-import cc.mashroom.hedgehog.util.ExtviewsAdapter;
+import  cc.mashroom.hedgehog.okhttp.extend.DynamicService;
+import  cc.mashroom.hedgehog.util.DensityUtils;
+import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
-import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
 import  java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import  java.math.BigDecimal;
+import  java.math.RoundingMode;
 import  java.util.concurrent.ScheduledThreadPoolExecutor;
 import  java.util.concurrent.TimeUnit;
 import  java.util.concurrent.atomic.AtomicBoolean;
@@ -54,7 +50,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		setContentView( R.layout.activity_video_preview  );
 
-		RelativeLayout.LayoutParams  layoutParams = ObjectUtils.cast( super.findViewById( R.id.header_bar ).getLayoutParams() );
+		RelativeLayout.LayoutParams  layoutParams = ObjectUtils.cast(  super.findViewById(R.id.header_bar).getLayoutParams() );
 
 		layoutParams.topMargin = ContextUtils.getStatusBarHeight(  this );
 
@@ -68,7 +64,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setOnClickListener( (bar ) -> {} );
 
-		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( ( controlPanel ) -> {} );
+		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( (controlPanel ) -> {} );
 
 		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setBackgroundColor(super.getResources().getColor(R.color.halftransparentwhite)).setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
 	}
@@ -156,19 +152,13 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 	@SneakyThrows
 	public  void  surfaceCreated(   final   SurfaceHolder  surfaceHolder )
 	{
-//		if( application().getFileDownloadRetrofit()==null )
-//		{
-//			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
-//		}
-
 		if( videoFile.exists() )
 		{
-			videoDownloadProgressDialog.show();
-			setPlayer( new  MediaPlayer().play(   videoFile.getPath(),surfaceHolder,this,this,this) );
+			this.setPlayer(   new  MediaPlayer().play( this.videoFile.getPath(),surfaceHolder,this,this,this ) );
 		}
 		else
 		{
-			application().getFileDownloadRetrofit().create(DynamicService.class).get( getIntent().getStringExtra("URL")).enqueue
+			super.application().getFileDownloadRetrofit().create(      DynamicService.class).download(super.getIntent().getStringExtra("URL")).enqueue
 			(
 				new  Callback<ResponseBody>()
 				{
@@ -182,16 +172,8 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 						if( retrofitResponse.code()== 200 )
 						{
 						videoDownloadProgressDialog.show();
-							try
-							{
-								setPlayer( new  MediaPlayer().play(DownloadHelper.write(retrofitResponse.body(),FileUtils.createFileIfAbsent(videoFile,null),VideoPreviewActivity.this).getPath(),ObjectUtils.cast(VideoPreviewActivity.this.findViewById(R.id.video_surface),SurfaceView.class).getHolder(),VideoPreviewActivity.this,VideoPreviewActivity.this,VideoPreviewActivity.this) );
-							}
-							catch(     IOException  error )
-							{
-								error(error);
 
-								showSneakerWindow( Sneaker.with(VideoPreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(()->ContextUtils.finish(VideoPreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.io_exception,R.color.white,R.color.red );
-							}
+							DownloadHelper.writeInNewThread(     retrofitResponse.body(),videoFile,VideoPreviewActivity.this );
 						}
 						else
 						{
@@ -203,7 +185,6 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 		}
 	}
 
-	@SneakyThrows
 	public  void  onCompletion(   android.media.MediaPlayer  mediaPlayer )
 	{
 		this.player.getPlayer().seekTo(  0 );
@@ -236,13 +217,33 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 	public  void  onProgress(long  contentLength,long  readBytesCount,boolean  isCompleted )
 	{
-		if( isCompleted)
+		application().getMainLooperHandler().post( () -> onProgressInUiThread( contentLength ,readBytesCount , isCompleted ) );
+	}
+
+	public  void  onError( Throwable  error )
+	{
+		error(  error );
+
+		application().getMainLooperHandler().post( () -> super.showSneakerWindow(Sneaker.with(this).setOnSneakerDismissListener(   () ->   application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(this),500)),    com.irozon.sneaker.R.drawable.ic_error,R.string.io_exception,R.color.white,R.color.red) );
+	}
+
+	public  void  onProgressInUiThread( long  contentLength, long  readBytesCount, boolean  isDownloadCompleted )
+	{
+		if( isDownloadCompleted)
 		{
 		videoDownloadProgressDialog.cancel();
+			try
+			{
+				setPlayer(  new  MediaPlayer().play(videoFile.getPath(),ObjectUtils.cast(super.findViewById(R.id.video_surface) ,SurfaceView.class).getHolder(),this,this,this) );
+			}
+			catch( Throwable e )
+			{
+				this.onError(e);
+			}
 
 			return;
 		}
 
-		this.videoDownloadProgressDialog.getMessage().setText( new  BigDecimal(readBytesCount).divide(new  BigDecimal(contentLength),2,RoundingMode.HALF_UP).toString()+"%" );
+		this.videoDownloadProgressDialog.getMessage().setText( new  BigDecimal(readBytesCount*100).divide(new  BigDecimal(contentLength),2,RoundingMode.HALF_UP).toString()+"%" );
 	}
 }

@@ -25,4 +25,8 @@
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
+    <Button  android:id="@+id/download_and_preview_video_button"  style="?android:attr/borderlessButtonStyle"  android:layout_width="match_parent"  android:layout_height="50dp"  android:text="@string/download_and_preview"  android:background="@color/lightgray"  android:textColor="@color/darkgray"  android:textSize="18dp"/>
+
+    <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
+
 </LinearLayout>

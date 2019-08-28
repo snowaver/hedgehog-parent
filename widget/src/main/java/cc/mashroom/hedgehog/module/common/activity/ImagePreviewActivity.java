@@ -7,7 +7,7 @@ import  com.irozon.sneaker.Sneaker;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
-import cc.mashroom.hedgehog.okhttp.extend.DynamicService;
+import  cc.mashroom.hedgehog.okhttp.extend.DynamicService;
 import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
@@ -41,12 +41,7 @@ public  class  ImagePreviewActivity   extends    AbstractActivity
 		}
 		else
 		{
-			if( application().getFileDownloadRetrofit() == null )
-			{
-				throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  file  download  retrofit  in  application  should  be  set  first." );
-			}
-
-			application().getFileDownloadRetrofit().create(DynamicService.class).get(super.getIntent().getStringExtra("URL")).enqueue
+			application().getFileDownloadRetrofit().create(DynamicService.class).download(super.getIntent().getStringExtra("URL")).enqueue
 			(
 				new  Callback<ResponseBody>()
 				{
@@ -58,7 +53,7 @@ public  class  ImagePreviewActivity   extends    AbstractActivity
 					@SneakyThrows
 					public  void  onResponse(Call<ResponseBody>  call,Response<ResponseBody>  retrofitResponse )
 					{
-						if( retrofitResponse.code()     ==  200 )
+						if( retrofitResponse.code()== 200 )
 						{
 							ObjectUtils.cast(ImagePreviewActivity.this.findViewById(R.id.picture),PhotoDraweeView.class).setPhotoUri( Uri.fromFile(FileUtils.createFileIfAbsent(imageFile,retrofitResponse.body().bytes())) );
 						}

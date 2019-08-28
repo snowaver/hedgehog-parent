@@ -8,10 +8,15 @@ import  android.widget.Toast;
 import  com.irozon.sneaker.Sneaker;
 
 import  androidx.core.app.ActivityCompat;
+
+import  java.io.File;
+import  java.util.UUID;
+
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.module.common.activity.CamcorderActivity;
 import  cc.mashroom.hedgehog.module.common.activity.ImageCropingActivity;
+import  cc.mashroom.hedgehog.module.common.activity.VideoPreviewActivity;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
@@ -43,6 +48,8 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
         super.findViewById(R.id.to_album_multimedia_choice_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,AlbumMediaMultichoiceActivity.class),null) );
 
         super.findViewById(R.id.show_sneaker_window_button).setOnClickListener( (button) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.registration_form_error,R.color.white,R.color.red) );
+
+        super.findViewById(R.id.download_and_preview_video_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,VideoPreviewActivity.class).putExtra("PATH",new  File(application().getCacheDir(),UUID.randomUUID().toString().toUpperCase()).getPath()).putExtra("URL","http://192.168.1.114:8011/file/AF5A303C404511C8746A4511AA1CD9AD"),null) );
     }
 
     public  void  onItemClick( View itemView,int position )
