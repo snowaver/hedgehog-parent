@@ -9,7 +9,6 @@ import  android.os.Bundle;
 import  androidx.annotation.NonNull;
 import  android.view.TextureView;
 import  android.widget.RelativeLayout;
-import  android.widget.TextView;
 
 import  com.aries.ui.widget.alert.UIAlertDialog;
 import  com.facebook.drawee.view.SimpleDraweeView;
@@ -23,9 +22,9 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.module.common.listener.CamcorderListener;
 import  cc.mashroom.hedgehog.device.camera.ErrorStateCallback;
 import  cc.mashroom.hedgehog.util.ContextUtils;
-import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
+import  cc.mashroom.hedgehog.util.StyleUnifier;
 import  cc.mashroom.hedgehog.util.ImageUtils;
-import cc.mashroom.hedgehog.widget.ViewSwitcher;
+import  cc.mashroom.hedgehog.widget.ViewSwitcher;
 import  cc.mashroom.util.ObjectUtils;
 
 import  cc.mashroom.util.collection.map.HashMap;
@@ -43,7 +42,7 @@ import  permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 
-public  class  CamcorderActivity  extends  AbstractActivity      implements  TextureView.SurfaceTextureListener,ErrorStateCallback
+public  class  CamcorderActivity  extends   AbstractActivity    implements   TextureView.SurfaceTextureListener,ErrorStateCallback
 {
 	protected  void  onCreate(  Bundle  savedInstanceState )
 	{
@@ -172,6 +171,6 @@ public  class  CamcorderActivity  extends  AbstractActivity      implements  Tex
 
 	public  void  showPermissionRationale(     PermissionRequest  permissionRequest )
 	{
-		application().getMainLooperHandler().post( () -> ExtviewsAdapter.adapter(new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show() );
+		application().getMainLooperHandler().post( () -> StyleUnifier.unify(new  UIAlertDialog.DividerIOSBuilder(this).setBackgroundRadius(15).setTitle(R.string.notice).setTitleTextSize(18).setMessage(R.string.camera_require_camera_and_audio_record_permission).setMessageTextSize(18).setCancelable(false).setCanceledOnTouchOutside(false).setNegativeButtonTextSize(18).setNegativeButton(R.string.close,(dialog, which) -> {permissionRequest.cancel();  ContextUtils.finish(this);}).setPositiveButtonTextSize(18).setPositiveButton(R.string.ok,(dialog,which) -> permissionRequest.proceed()).create().setWidth((int)  (CamcorderActivity.this.getResources().getDisplayMetrics().widthPixels*0.9)),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show() );
 	}
 }

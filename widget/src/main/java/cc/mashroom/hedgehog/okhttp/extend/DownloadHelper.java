@@ -17,7 +17,7 @@ public  class  DownloadHelper
 		{
 			long  contentLength = responseBody.contentLength();
 
-			byte[]  cache = new  byte[ 128 ];
+			byte[]  cache = new  byte[ 256 ];
 
 			long  readByteCount = 0;
 

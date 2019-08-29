@@ -20,7 +20,7 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.device.MediaPlayer;
 import  cc.mashroom.hedgehog.okhttp.extend.DynamicService;
 import  cc.mashroom.hedgehog.util.DensityUtils;
-import  cc.mashroom.hedgehog.util.ExtviewsAdapter;
+import  cc.mashroom.hedgehog.util.StyleUnifier;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.util.ObjectUtils;
 
@@ -66,7 +66,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		ObjectUtils.cast(super.findViewById(R.id.seek_bar).getParent(),View.class).setOnClickListener( (controlPanel ) -> {} );
 
-		this.videoDownloadProgressDialog = ExtviewsAdapter.adapter(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setBackgroundColor(super.getResources().getColor(R.color.halftransparentwhite)).setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
+		this.videoDownloadProgressDialog = StyleUnifier.unify(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage("0%").setBackgroundColor(super.getResources().getColor(R.color.one_third_transparentwhite)).setCancelable(false).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
 	}
 
 	private  AtomicBoolean  isTrackingTouch  = new AtomicBoolean( false );

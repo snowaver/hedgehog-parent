@@ -9,7 +9,8 @@
     <color  name="gainsboro">#dcdcdc</color>
     <color  name="red">#ff0000</color>
     <color  name="transparent">#00000000</color>
-    <color  name="halftransparentwhite">#50ffffff</color>
+    <color  name="halftransparentwhite">#60ffffff</color>
+    <color  name="one_third_transparentwhite">#20ffffff</color>
     <color  name="blue">#0000ff</color>
     <color  name="skyblue">#87CEEB</color>
     <color  name="darkslategrey">#292929</color>
