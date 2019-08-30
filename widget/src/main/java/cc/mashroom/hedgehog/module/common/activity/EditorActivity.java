@@ -15,9 +15,11 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.util.ObjectUtils;
 import  cc.mashroom.util.StringUtils;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
+import  lombok.Setter;
+import  lombok.experimental.Accessors;
 
 /**
- *  edit  the  content  and  returns  edit  content  (intent  parameters:  CONTENT)  as  result  data.  intent  parameters:  TITLE  (title  on  headbar),  CONTENT  (content  to  be  edited)  AND  MAX_COUNT  (max  character  count,  zero  is  illegal  and  negative  for  no  limitation).
+ *  edit  the  content  and  return  edit  content  (intent  parameters:  CONTENT)  by  result  data.  intent  parameters:  TITLE  (title  on  headbar),  CONTENT  (content  to  be  edited)  AND  MAX_COUNT  (max  character  count,  zero  is  illegal  and  negative  for  no  limitation).
  */
 public  class  EditorActivity  extends  AbstractActivity  implements  View.OnClickListener,TextWatcher
 {
@@ -41,11 +43,19 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 		}
 		else
 		{
-			super.showSneakerWindow( Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.content_empty,R.color.white,R.color.red );
+			super.showSneakerWindow(    Sneaker.with(this),  com.irozon.sneaker.R.drawable.ic_error,R.string.content_empty,R.color.white,R.color.red );
 		}
 	}
 
-	private  int  maxCount = -1;
+	@Accessors( chain = true )
+	@Setter
+	private  String     title;
+	@Accessors( chain = true )
+	@Setter
+	private  String   content;
+	@Accessors( chain = true )
+	@Setter
+	private  int  maxCount=-1;
 
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -53,11 +63,14 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 
 		super.setContentView(   R.layout.activity_editor );
 
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(    super.getIntent().hasExtra("TITLE") ? super.getIntent().getStringExtra("TITLE") : super.getString(R.string.edit) );
+		this.setTitle(super.getIntent().hasExtra("TITLE") ? super.getIntent().getStringExtra("TITLE") : super.getString(R.string.edit)).setContent(super.getIntent().hasExtra("CONTENT") ? super.getIntent().getStringExtra("CONTENT") : "").setMaxCount( super.getIntent().getIntExtra("MAX_COUNT",-1) );
 
-		this.maxCount = super.getIntent().getIntExtra("MAX_COUNT",-1 );
+		if( maxCount    == 0 )
+		{
+			throw  new  IllegalArgumentException( String.format("HEDGEHOG-PARENT:  ** EDITOR  ACTIVITY **  max  count  (%d)  is  illegal.",maxCount) );
+		}
 
-		String  content = !super.getIntent().hasExtra("CONTENT") ? "" : super.getIntent().getStringExtra( "CONTENT" );
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(  this.title );
 
 		ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).addTextChangedListener( this );
 
