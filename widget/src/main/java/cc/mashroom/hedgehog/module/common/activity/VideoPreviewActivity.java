@@ -56,7 +56,7 @@ public  class  VideoPreviewActivity  extends  AbstractActivity  implements  Surf
 
 		super.findViewById(R.id.header_bar).setLayoutParams(layoutParams);
 
-		this.setVideoFile( new  File(getIntent().getStringExtra("PATH")));
+		this.setVideoFile( new  File(super.getIntent().getStringExtra("CACHE_FILE_PATH")) );
 
 		ObjectUtils.cast(super.findViewById(R.id.video_surface),SurfaceView.class).getHolder().addCallback(this);
 

@@ -4,7 +4,6 @@ import  android.content.Intent;
 import  android.net.Uri;
 import  androidx.core.app.ActivityCompat;
 import  android.view.View;
-import  android.widget.CompoundButton;
 import  android.widget.ImageView;
 
 import  com.facebook.drawee.view.SimpleDraweeView;
@@ -12,6 +11,7 @@ import  com.facebook.drawee.view.SimpleDraweeView;
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.module.common.activity.ImagePreviewActivity;
 import  cc.mashroom.hedgehog.module.common.activity.VideoPreviewActivity;
+import  cc.mashroom.hedgehog.module.common.listener.MediaMultichoicesListener;
 import  cc.mashroom.hedgehog.module.common.listener.MultichoicesListener;
 import  cc.mashroom.hedgehog.module.common.activity.AlbumMediaMultichoiceActivity;
 import  cc.mashroom.hedgehog.parent.BaseMulticolumnAdapter;
@@ -30,15 +30,15 @@ import  java.io.File;
 import  java.util.ArrayList;
 import  java.util.List;
 
-public  class  AlbumMediaMultichoiceListviewAdapter      extends  BaseMulticolumnAdapter<Media>
+public  class     AlbumMediaMultichoiceListviewAdapter   extends  BaseMulticolumnAdapter<Media>
 {
-	private  final  static  Map<Integer,Uri[]>  CAPTURE_FLAGS = new  HashMap<Integer,Uri[]>().addEntry(1,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI}).addEntry(2,new  Uri[]{android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI}).addEntry(3,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI});
+	private  final  static  Map<Integer,Uri[]>  MEDIA_TYPE_URIS = new  HashMap<Integer,Uri[]>().addEntry(1,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI}).addEntry(2,new  Uri[]{android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI}).addEntry(3,new  Uri[]{android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI});
 
-	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  captureFlag,int  columnSize,int  limitation,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
+	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  mediaType,int  columnSize,int  maxCount,long  maxFileSize,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
 	{
-		super( context, MediaStore.get( context,CAPTURE_FLAGS.get(captureFlag)), columnSize, R.layout.activity_album_media_multichoice_line );
+		super( context, MediaStore.get( context,MEDIA_TYPE_URIS.get(mediaType)), columnSize,R.layout.activity_album_media_multichoice_line );
 
-		this.setContext(context).setLimitation(limitation).setMeidas(items).setMultichoicesListener( new  MultichoicesListener<Media>(this,limitation,checkedChangeListener) );
+		this.setContext(context).setMeidas(items).setMultichoicesListener( new  MediaMultichoicesListener(context,this,maxCount,maxFileSize,checkedChangeListener) );
 	}
 
 	@Setter( value=AccessLevel.PROTECTED )
@@ -49,25 +49,25 @@ public  class  AlbumMediaMultichoiceListviewAdapter      extends  BaseMulticolum
 	protected  AlbumMediaMultichoiceActivity  context;
 	@Setter( value=AccessLevel.PROTECTED )
 	@Accessors( chain=true )
-	protected  int  limitation;
+	protected  int maxCount;
 	@Setter( value=AccessLevel.PROTECTED )
 	@Accessors( chain=true )
 	protected  List<Media>  meidas;
 
-	public  List<Media> getChoosedMedias()
+	public  List<Media>  getChosenMedias()
 	{
-		return  new  ArrayList<Media>( multichoicesListener.getChoicesMapper() );
+		return  new  ArrayList<Media>(multichoicesListener.getChoicesMapper() );
 	}
 
 	public  void  getChildView( int  rowIndex,int  columnIndex,Media  media,View  convertView )
 	{
-		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setImageURI( Uri.fromFile(new  File(media.getPath())) );
+		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setImageURI(Uri.fromFile(new  File(media.getPath())) );
 
-		ObjectUtils.cast(convertView.findViewById(R.id.play_button),ImageView.class).setVisibility( media.getType() == MediaType.VIDEO ? View.VISIBLE : View.GONE );
+		ObjectUtils.cast(convertView.findViewById(R.id.play_button),ImageView.class).setVisibility( media.getType() ==  MediaType.VIDEO ? View.VISIBLE : View.GONE );
 
 		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setTag( media );
 
-		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setOnCheckedChangeListener( multichoicesListener );
+		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setOnCheckedChangeListener(   multichoicesListener );
 
 		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setChecked(  this.multichoicesListener.getChoicesMapper().contains(media) );
 

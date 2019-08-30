@@ -34,22 +34,22 @@ import  me.relex.photodraweeview.PhotoDraweeView;
 
 public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongClickListener,View.OnClickListener,PhotoTakenListener
 {
-	public  CamcorderListener(CamcorderActivity context,/*Lollipop*/Camera  camera,int  captureFlag )
+	public  CamcorderListener(  CamcorderActivity context,/*Lollipop*/Camera  camera,int  mediaType )
 	{
-		this.setContext(context).setCamera(camera).setCaptureFlag( captureFlag );
+		this.setContext(context).setCamera(camera).setMediaType(   mediaType );
 	}
 
-	private  Map<Integer,File>  captureMediaFiles = new  HashMap<Integer,File>();
+	private  Map<Integer,File>  takenMediaFiles = new  HashMap<Integer,File>();
 
 	@Accessors( chain= true )
 	@Setter
-	private  CamcorderActivity    context;
+	private  CamcorderActivity   context;
 	@Accessors( chain= true )
 	@Setter
 	private  Camera   camera;
 	@Accessors( chain= true )
 	@Setter
-	private  int captureFlag;
+	private  int   mediaType;
 
 	private  AtomicBoolean  recordVideo = new  AtomicBoolean();
 
@@ -57,7 +57,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 	{
 		try
 		{
-			if( this.captureFlag >= 2 && recordVideo.compareAndSet( false,true) )
+			if( mediaType>= 2   && this.recordVideo.compareAndSet(false,true) )
 			{
 				camera.recordVideo(FileUtils.createFileIfAbsent(new File(context.getCacheDir(),"video.mp4.tmp"),null) );
 			}
@@ -77,11 +77,11 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		try
 		{
 			//  when  touching  down  to  record  video  and  record  audio  permission  not  granted  yet,  grant  permission  dialog  pop  up,  so  {@link  MotionEvent.ACTION_CANCEL}  event  comes  after  granting  permission  on  vivo  (y66).
-			if( event.getAction() == MotionEvent.ACTION_CANCEL && this.recordVideo.compareAndSet(true,false) )
+			if( event.getAction() == MotionEvent.ACTION_CANCEL && this.recordVideo.compareAndSet(          true,false) )
 			{
-				camera.stopRecordVideo( );
+				camera.stopRecordVideo();
 
-				camera.continuePreview( );
+				camera.continuePreview();
 
 				return  true;
 			}
@@ -90,16 +90,16 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 			{
 				File  videoFile= this.camera.stopRecordVideo();
 				//  touch  event  sometimes  changes  to  {@link  MotionEvent.ACTION_UP}  but  {@link  MotionEvent.ACTION_CANCEL}  after  denial  of  record  audio  permission  on  vivo  (y66).
-				if( ! videoFile.exists() )
+				if( !videoFile.exists() )
 				{
 					Toasty.error(this.context,this.context.getString( R.string.permission_denied ),Toast.LENGTH_LONG,false).show();
 
-				camera.continuePreview( );
+				camera.continuePreview();
 
 				return  true;
 				}
 
-				captureMediaFiles.put( MediaType.VIDEO.getValue(), this.context.application().cache(-1, videoFile, 3) );
+				takenMediaFiles.put( MediaType.VIDEO.getValue(), this.context.application().cache( -1, videoFile, 3 ) );
 
 				ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild( 1 );
 
@@ -112,11 +112,11 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 
             try
             {
-                camera.continuePreview( );
+                camera.continuePreview();
             }
-            catch(    Throwable  unknown )
+            catch(     Throwable  error )
             {
-                unknown.printStackTrace();
+                context.error(   error );
             }
             finally
             {
@@ -127,7 +127,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		return  false;
 	}
 
-	public  void  onClick(  View  button )
+	public  void  onClick( View  button )
 	{
 		try
 		{
@@ -143,26 +143,26 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 
 				ObjectUtils.cast(ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).getDisplayedChild(),SimpleDraweeView.class).setImageURI( ImageUtils.toUri(context,      R.drawable.red_placeholder) );
 
-				captureMediaFiles.clear();
+				takenMediaFiles.clear( );
 
-				camera.continuePreview( );
+				camera.continuePreview();
 			}
 			else
-			if( button.getId() == R.id.take_picture_or_record_video_button && ( captureFlag == 1 || captureFlag == 3 ) )
+			if( button.getId() == R.id.take_picture_or_record_video_button && (this.mediaType == 1 || mediaType == 3 ) )
 			{
 				/*
 				FileUtils.createFileIfAbsent( new File(context.getCacheDir(),"photo.jpg.tmp"),null );
 				*/
-				camera.takePicture(this );
+				camera.takePicture(this);
 
 				ObjectUtils.cast(ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).getDisplayedChild(),SimpleDraweeView.class).setImageURI( ImageUtils.toUri(context,R.drawable.lightgray_placeholder) );
 			}
 			else
 			if( button.getId() == R.id.confirm_button )
 			{
-				java.util.Map.Entry<Integer,File>  dataEntry = captureMediaFiles.entrySet().iterator().next();
+				java.util.Map.Entry<Integer,File>  takenMediaFile   = this.takenMediaFiles.entrySet().iterator().next();
 
-				context.putResultDataAndFinish( context,0,new  Intent().putExtra("CAPTURED_MEDIAS",ObjectUtils.cast(Lists.newArrayList(new  Media(MediaType.valueOf(dataEntry.getKey()),-1,dataEntry.getValue().getPath(),0)),Serializable.class)) );
+				context.putResultDataAndFinish( context,0,new  Intent().putExtra("MEDIAS",ObjectUtils.cast(Lists.newArrayList(new  Media(MediaType.valueOf(takenMediaFile.getKey()),-1,takenMediaFile.getValue().getPath(),0)),Serializable.class)) );
 			}
 		}
 		catch( Exception  e )
@@ -179,7 +179,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 		{
 			File  file = context.application().cache( -1,pictureBytes,1/* ChatContentType.IMAGE */ );
 
-			this.captureMediaFiles.put(  MediaType.IMAGE.getValue(),      file );
+			this.takenMediaFiles.put(  MediaType.IMAGE.getValue(),      file );
 
 			context.application().getMainLooperHandler().post( () -> { ObjectUtils.cast(context.findViewById(R.id.preview_switcher),ViewSwitcher.class).setDisplayedChild(1);context.findViewById(R.id.additional_switcher).setVisibility(View.GONE);  ObjectUtils.cast(context.findViewById(R.id.photo_viewer),PhotoDraweeView.class).setPhotoUri(Uri.fromFile(file));  ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild(1); } );
 		}

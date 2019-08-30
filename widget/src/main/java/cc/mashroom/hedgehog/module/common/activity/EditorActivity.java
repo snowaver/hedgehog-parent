@@ -23,7 +23,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 
 	}
 
-	public  void  onClick(  View  finishBtn )
+	public  void  onClick(  View  finishbtn )
 	{
 		if( StringUtils.isNotBlank(ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).getText().toString().trim()) )
 		{
@@ -33,7 +33,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 			}
 			else
 			{
-				super.putResultDataAndFinish( this,0,new  Intent().putExtra("EDIT_CONTENT",ObjectUtils.cast(super.findViewById(R.id.edit), EditText.class).getText().toString().trim()) );
+				super.putResultDataAndFinish( this,0,new  Intent().putExtra("CONTENT",ObjectUtils.cast(super.findViewById(R.id.edit), EditText.class).getText().toString().trim()) );
 			}
 		}
 		else
@@ -54,7 +54,7 @@ public  class  EditorActivity  extends  AbstractActivity  implements  View.OnCli
 
 		this.limitation = super.getIntent().getIntExtra( "LIMITATION",-1 );
 
-		String  content = !super.getIntent().hasExtra("EDIT_CONTENT") ? "" : super.getIntent().getStringExtra( "EDIT_CONTENT" );
+		String  content = !super.getIntent().hasExtra("CONTENT") ? "" : super.getIntent().getStringExtra( "CONTENT" );
 
 		ObjectUtils.cast(super.findViewById(R.id.edit),EditText.class).addTextChangedListener( this );
 

@@ -38,9 +38,12 @@ import  permissions.dispatcher.RuntimePermissions;
 import  java.io.Serializable;
 import  java.util.List;
 
+/**
+ *  choose  album  medias.  intent  parameters:  MEDIA_TYPE  (1.photo,  2.video,  3.photo  and  video.  NOTE:  any  one  is  optional  if  absent) ,  MAX_COUNT  (max  count  limitation  of  optional  medias,  no  limitation  if  absent  (default:  -1),  equals  or  less  than  -1.  NOTE:  0  is  illegal.)  and  MAX_FILE_SIZE  (max  file  size,  no  limitation  if  absent  (default:  -1),  equals  or  less  than  -1.  NOTE:  0  is  illegal.).  returns  chosen  medias  (intent  parameters:  MEDIAS)  as  result  data.
+ */
 @RuntimePermissions
 
-public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  implements  UIActionSheetDialog.OnItemClickListener,SmoothCheckBox.OnCheckedChangeListener
+public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  implements  UIActionSheetDialog.OnItemClickListener,SmoothCheckBox.OnCheckedChangeListener
 {
 	@OnShowRationale( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 
@@ -50,17 +53,17 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	}
 
 	@Setter
-	protected  boolean  initialized= false;
+	protected  boolean  initialized = false;
 
 	protected  void  onCreate(      Bundle  savedInstanceState )
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState );
 
 		super.setContentView(R.layout.activity_album_media_multichoice );
 
 		super.findViewById(R.id.additional_switcher).setOnClickListener( (view) -> StyleUnifier.unify(new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setCancel(R.string.close).setCancelTextColorResource(R.color.red).setCancelTextSize(18).setItemsMinHeight(DensityUtils.px(this,50)).setPadding(DensityUtils.px(this,10)).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show() );
 
-		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("CAPTURED_MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias(),Serializable.class))) );
+		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChosenMedias(),Serializable.class))) );
 	}
 
 	protected  void  onStart()
@@ -75,7 +78,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 	@NeedsPermission( value={Manifest.permission.READ_EXTERNAL_STORAGE} )
 
-	public  void  afterPermissionsGranted()
+	public  void   afterPermissionsGranted()
 	{
 		application().getMainLooperHandler().post(  () -> initialize() );
 	}
@@ -84,11 +87,11 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	{
 		initialized    = true;
 
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(  titles.get(super.getIntent().getIntExtra("CAPTURE_FLAG",3))) );
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(titles.get(super.getIntent().getIntExtra("MEDIA_TYPE",3))) );
 
-		super.findViewById(R.id.additional_switcher).setVisibility(super.getIntent().hasExtra("CAPTURE_FLAG") ? View.GONE : View.VISIBLE );
+		super.findViewById(R.id.additional_switcher).setVisibility(  super.getIntent().hasExtra("MEDIA_TYPE") ? View.GONE : View.VISIBLE );
 
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this, super.getIntent().getIntExtra("CAPTURE_FLAG",3), 3, super.getIntent().getIntExtra("LIMITATION",3), this ) );
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this, super.getIntent().getIntExtra("MEDIA_TYPE",3) , 3, super.getIntent().getIntExtra("MAX_COUNT",-1) , this ) );
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3 , R.string.album_photo_and_video );
@@ -102,7 +105,7 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 
 		if( !PermissionUtils.verifyPermissions(grantedResults) )
 		{
-			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
+			super.showSneakerWindow( Sneaker.with(this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed( () -> ContextUtils.finish(this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.permission_denied,R.color.white,R.color.red );
 		}
 	}
 
@@ -117,9 +120,9 @@ public  class  AlbumMediaMultichoiceActivity        extends  AbstractActivity  i
 	{
 		ListView  listview = ObjectUtils.cast( super.findViewById(R.id.album_media_list),ListView.class );
 
-		List<Media>  choosedMedias = ObjectUtils.cast(listview.getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChoosedMedias();
+		List<Media>  choosedMedias  = ObjectUtils.cast(listview.getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChosenMedias();
 
-		if( super.getIntent().getIntExtra("LIMITATION",3)==1 && checked )
+		if( super.getIntent().getIntExtra("MAX_COUNT",-1) == 1&&checked )
 		{
 			int  firstVisiblePosition=listview.getFirstVisiblePosition();
 

@@ -52,9 +52,9 @@ public  class  CamcorderActivity  extends   AbstractActivity    implements   Tex
 
 		super.setContentView( R.layout.activity_camcorder );
 
-		setCaptureFlag( super.getIntent().getIntExtra("CAPTURE_FLAG",3) );
+		this.mediaType = super.getIntent().getIntExtra( "MEDIA_TYPE", 3 );
 
-		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(super.getString(titles.get(captureFlag)) );
+		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(  super.getString(titles.get(mediaType)) );
 
 		ObjectUtils.cast(super.findViewById(R.id.take_picture_or_record_video_button),SimpleDraweeView.class).setImageURI( ImageUtils.toUri(this,R.drawable.red_placeholder) );
 
@@ -79,7 +79,7 @@ public  class  CamcorderActivity  extends   AbstractActivity    implements   Tex
 	private  Camera    camera;
 	@Accessors( chain = true )
 	@Setter
-	private  int  captureFlag   = 3;
+	private  int    mediaType;
 	@Accessors( chain = true )
 	@Setter
 	@Getter
@@ -145,7 +145,7 @@ public  class  CamcorderActivity  extends   AbstractActivity    implements   Tex
 		//  lollipop  camera  (camera2)  do  not  work  well  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )  but  no  way  to  resolve  it  for  xiaomi  customized  android  system,  so  use  eclair  camera  (camera1)  instead.
 		try
 		{
-			this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),captureFlag) );
+			this.setCamcorderListener( new  CamcorderListener(this,camera = new  EclairCamera(this).preview(String.valueOf(CameraCharacteristics.LENS_FACING_FRONT),ObjectUtils.cast(super.findViewById(R.id.texture_view),TextureView.class),this),mediaType) );
 		}
 		catch( IllegalStateException  ise )
 		{

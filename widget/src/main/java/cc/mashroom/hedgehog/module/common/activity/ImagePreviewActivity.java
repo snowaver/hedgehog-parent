@@ -44,7 +44,7 @@ public  class  ImagePreviewActivity   extends   AbstractActivity     implements 
 
 		ObjectUtils.cast(super.findViewById(R.id.picture),PhotoDraweeView.class).setOnViewTapListener((view,x,y)     -> ContextUtils.finish(this) );
 
-		this.imageFile = new  File(  super.getIntent().getStringExtra("PATH") );
+		this.imageFile = new  File(   super.getIntent().getStringExtra("CACHE_FILE_PATH") );
 
 		if( imageFile.exists() )
 		{
@@ -56,7 +56,7 @@ public  class  ImagePreviewActivity   extends   AbstractActivity     implements 
 			(
 				new  Callback<ResponseBody>()
 				{
-					public  void  onFailure( Call<ResponseBody>  call,Throwable  error     )
+					public  void  onFailure( Call<ResponseBody>  call,Throwable  throwable )
 					{
 						showSneakerWindow( Sneaker.with(ImagePreviewActivity.this).setOnSneakerDismissListener(() -> application().getMainLooperHandler().postDelayed(() -> ContextUtils.finish(ImagePreviewActivity.this),500)),com.irozon.sneaker.R.drawable.ic_error,R.string.network_or_internal_server_error,R.color.white,R.color.red );
 					}
