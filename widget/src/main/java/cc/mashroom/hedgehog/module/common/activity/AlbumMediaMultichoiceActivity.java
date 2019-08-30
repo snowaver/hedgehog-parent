@@ -71,7 +71,7 @@ public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  imple
 
 		super.setContentView(R.layout.activity_album_media_multichoice );
 
-		this.setMediaType(super.getIntent().getIntExtra("MEDIA_TYPE",-1)).setMaxCount(super.getIntent().getIntExtra("MAX_COUNT",-1)).setMaxFileSize( super.getIntent().getLongExtra("MAX_FILE_SIZE", -1) );
+		this.setMediaType(super.getIntent().getIntExtra("MEDIA_TYPE",3)).setMaxCount(super.getIntent().getIntExtra("MAX_COUNT",-1)).setMaxFileSize( super.getIntent().getLongExtra("MAX_FILE_SIZE", -1) );
 
 		if( mediaType != 1 && mediaType != 2 && mediaType != 3 )
         {
@@ -130,7 +130,7 @@ public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  imple
 	{
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle(     super.getString(this.titles.get(position+1)) );
 
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter(          new  AlbumMediaMultichoiceListviewAdapter(this,position+1,3,this.maxCount,this.maxFileSize,this) );
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter(         new  AlbumMediaMultichoiceListviewAdapter(this,position+1,3,this.maxCount,this.maxFileSize,this) );
 	}
 
 	public  void  onCheckedChanged( SmoothCheckBox compoundButton,boolean checked )
