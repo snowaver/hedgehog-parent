@@ -40,6 +40,9 @@ import  retrofit2.Call;
 import  retrofit2.Callback;
 import  retrofit2.Response;
 
+/**
+ *  preview  video.  intent  parameters:  CACHE_FILE_PATH  (cache  file  path)  and  URL.  download,  then  write  to  cache  file  and  preview  if  cache  file  absent,  else  preview  cache  file  only.
+ */
 public  class  VideoPreviewActivity  extends  AbstractActivity  implements  SurfaceHolder.Callback,android.media.MediaPlayer.OnPreparedListener,android.media.MediaPlayer.OnCompletionListener,android.media.MediaPlayer.OnSeekCompleteListener,SeekBar.OnSeekBarChangeListener,Runnable,DownloadProgressListener
 {
 	protected  void  onCreate( Bundle  savedInstanceState )

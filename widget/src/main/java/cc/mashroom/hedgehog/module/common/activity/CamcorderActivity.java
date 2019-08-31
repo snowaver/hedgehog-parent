@@ -40,6 +40,9 @@ import  permissions.dispatcher.PermissionRequest;
 import  permissions.dispatcher.PermissionUtils;
 import  permissions.dispatcher.RuntimePermissions;
 
+/**
+ *  take  photo  or  record  video  and  return  medias  (intent  parameters:  MEDIAS)  by  result  data.  intent  parameters:  MEDIA_TYPE  (1.photo  2.video  3.photo  or  video.  NOTE:  click  to  take  photo  but  long  press  to  record  video).  .
+ */
 @RuntimePermissions
 
 public  class  CamcorderActivity  extends   AbstractActivity    implements   TextureView.SurfaceTextureListener,ErrorStateCallback

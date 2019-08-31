@@ -26,6 +26,9 @@ import  retrofit2.Call;
 import  retrofit2.Callback;
 import  retrofit2.Response;
 
+/**
+ *  preview  image.  intent  parameters:  CACHE_FILE_PATH  (cache  file  path)  and  URL.  download,  then  write  to  cache  file  and  preview  if  cache  file  absent,  else  preview  cache  file  only.
+ */
 public  class  ImagePreviewActivity   extends   AbstractActivity     implements   cc.mashroom.hedgehog.okhttp.extend.DownloadProgressListener
 {
 	private  UIProgressDialog  imageDownloadProgressDialog;
