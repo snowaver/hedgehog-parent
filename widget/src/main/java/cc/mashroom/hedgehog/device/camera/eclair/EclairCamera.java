@@ -92,7 +92,7 @@ public  class  EclairCamera  implements  cc.mashroom.hedgehog.device.camera.Came
 			throw  new  IllegalStateException( "SQUIRREL-WIDGET:  ** ECLAIR  CAMERA **  camera  permission  is  required,  but  it  is  not  granted." );
 		}
 
-		optimalSizes.addEntry(0,CameraCaptureUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedPreviewSizes())).addEntry(1,CameraCaptureUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedPictureSizes())).addEntry( 2,CameraCaptureUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedVideoSizes()) );
+		optimalSizes.addEntry(0, CameraOptionalUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedPreviewSizes())).addEntry(1, CameraOptionalUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedPictureSizes())).addEntry( 2, CameraOptionalUtils.getOptimalSize(context.getWindowManager().getDefaultDisplay(),camera.getParameters().getSupportedVideoSizes()) );
 
 		camera.setDisplayOrientation(  90 );
 
@@ -170,6 +170,6 @@ public  class  EclairCamera  implements  cc.mashroom.hedgehog.device.camera.Came
 
 	public  void  recordVideo( File  outputFile )throws  Exception
 	{
-		setVideoOutputFile(outputFile).setVideoRecorder(new  MediaRecorder()).getVideoRecorder().prepare(camera,AudioSource.MIC,VideoSource.CAMERA,CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH),videoOutputFile,CAMERA_INFOS.get(position).facing == CameraInfo.CAMERA_FACING_FRONT ? 270 : 90).wrapped().start();
+		setVideoOutputFile(outputFile).setVideoRecorder(new  MediaRecorder()).getVideoRecorder().prepare(camera,AudioSource.MIC,VideoSource.CAMERA,CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH),videoOutputFile,CAMERA_INFOS.get(position).facing == CameraInfo.CAMERA_FACING_FRONT ? 270 : 90).unwrap().start();
 	}
 }

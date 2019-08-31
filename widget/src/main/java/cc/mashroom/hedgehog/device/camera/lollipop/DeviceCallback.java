@@ -27,7 +27,7 @@ public  class  DeviceCallback  extends  CameraDevice.StateCallback
         {
             Surface  surface = new  Surface( context.getTextureView().getSurfaceTexture() );
 
-            context.setPreviewBuilder( CameraCaptureUtils.configCaptureRequestBuilder(context.setCurrentCameraDevice(device).getCurrentCameraDevice().createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW),Lists.newArrayList(surface),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) );
+            context.setPreviewBuilder( CameraOptionalUtils.configCaptureRequestBuilder(context.setCurrentCameraDevice(device).getCurrentCameraDevice().createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW),Lists.newArrayList(surface),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) );
 
             device.createCaptureSession( Lists.newArrayList(surface,context.getImageReader().getSurface()),context.getCaptureSessionStateCallback(),context.getLoopHandler() );
         }

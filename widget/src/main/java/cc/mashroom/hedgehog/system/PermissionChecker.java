@@ -17,7 +17,7 @@ public  class  PermissionChecker
 		return  (T)  field.get( object );
 	}
 
-	public  static  boolean  checkAudioRecordPermission( MediaRecorder  mediaRecorder )
+	public  static  boolean  checkAudioRecordPermission(    MediaRecorder  mediaRecorder )
 	{
 		if( "vivo".equalsIgnoreCase(Build.BRAND) || "oppo".equalsIgnoreCase(Build.BRAND) )
 		{
@@ -34,7 +34,7 @@ public  class  PermissionChecker
 		return  true;
 	}
 
-	public  static  boolean  checkVideoRecordPermission( MediaRecorder  mediaRecorder )
+	public  static  boolean  checkVideoRecordPermission(    MediaRecorder  mediaRecorder )
 	{
 		if( "vivo".equalsIgnoreCase(Build.BRAND) || "oppo".equalsIgnoreCase(Build.BRAND) )
 		{

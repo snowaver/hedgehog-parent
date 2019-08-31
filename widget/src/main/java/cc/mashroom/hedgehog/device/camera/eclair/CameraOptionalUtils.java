@@ -7,7 +7,7 @@ import  com.google.common.collect.TreeMultimap;
 
 import  java.util.List;
 
-public  class  CameraCaptureUtils
+public  class  CameraOptionalUtils
 {
     public  static  Camera.Size  getOptimalSize( Display  display,List<Camera.Size>  supportSizes )
     {

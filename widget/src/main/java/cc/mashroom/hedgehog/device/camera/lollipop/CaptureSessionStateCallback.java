@@ -17,15 +17,15 @@ public  class  CaptureSessionStateCallback  extends  CameraCaptureSession.StateC
         context.getErrorStateCallback().onError(  session == null ? null : session.getDevice(),0,null );
     }
 
-    public  void  onConfigured(  CameraCaptureSession  session )
+    public  void  onConfigured(       CameraCaptureSession  session )
     {
         try
         {
-            context.setCaptureSession(session).getCaptureSession().setRepeatingRequest( context.getPreviewBuilder().build(),null,context.getLoopHandler() );
+            this.context.setCaptureSession(session).getCaptureSession().setRepeatingRequest( context.getPreviewBuilder().build(),null,context.getLoopHandler() );
 
-            if( context.getState() == CameraState.RECORD_VIDEO )
+            if( this.context.getState() == CameraState.RECORD_VIDEO )
             {
-                context.getVideoRecorder().wrapped().start();
+                this.context.getVideoRecorder().unwrap().start();
             }
         }
         catch( CameraAccessException  e )

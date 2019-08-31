@@ -14,7 +14,7 @@ import  lombok.experimental.Accessors;
 
 public  class  MediaRecorder  implements  AutoCloseable
 {
-	public  android.media.MediaRecorder wrapped()
+	public  android.media.MediaRecorder  unwrap()
 	{
 		return    recorder;
 	}

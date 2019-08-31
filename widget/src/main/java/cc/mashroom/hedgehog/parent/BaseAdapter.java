@@ -13,7 +13,7 @@ import  lombok.experimental.Accessors;
 public  abstract  class  BaseAdapter<I>  extends  android.widget.BaseAdapter
 {
 	@Setter( value = AccessLevel.PROTECTED )
-	@Accessors( chain=true )
+	@Accessors(chain=true )
 	protected  List<I>  items;
 
 	public  int  getCount()  { return  items.size(); }

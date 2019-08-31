@@ -13,7 +13,7 @@ import  java.util.Collection;
 import  cc.mashroom.util.IOUtils;
 import  cc.mashroom.util.collection.map.Map;
 
-public  class  CameraCaptureUtils
+public  class      CameraOptionalUtils
 {
     public  static  CaptureRequest.Builder  configCaptureRequestBuilder( CaptureRequest.Builder  captureRequestBuilder,Collection<Surface>  surfaces,Map<CaptureRequest.Key<Integer>,Integer>  captureFeatures )
     {

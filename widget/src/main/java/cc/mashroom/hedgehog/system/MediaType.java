@@ -21,6 +21,6 @@ public  enum   MediaType
 			}
 		}
 		
-		throw  new  IllegalArgumentException( String.format("MASHROOM-WIDGET:  ** MEDIA  TYPE **  no  media  type  defined  for  %d",value) );
+		throw  new  IllegalArgumentException( String.format("MASHROOM-PARENT:  ** MEDIA  TYPE **  no  media  type  defined  for  %d",value) );
 	}
 }

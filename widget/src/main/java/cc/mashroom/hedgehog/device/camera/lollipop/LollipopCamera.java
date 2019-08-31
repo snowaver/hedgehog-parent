@@ -45,13 +45,13 @@ import  lombok.Getter;
 import  lombok.Setter;
 import  lombok.experimental.Accessors;
 
-public  class  LollipopCamera     implements  Camera
+public  class  LollipopCamera   implements    Camera
 {
 	public  static  Map<Integer,Integer>  REVERSE_ORIENTATIONS = new  HashMap<Integer,Integer>().addEntry(Surface.ROTATION_0,270).addEntry(Surface.ROTATION_90,180).addEntry(Surface.ROTATION_180,90).addEntry( Surface.ROTATION_270,0 );
 
 	public  static  Map<Integer,Integer>  ORIENTATIONS = new  HashMap<Integer,Integer>().addEntry(Surface.ROTATION_0,90).addEntry(Surface.ROTATION_90,0).addEntry(Surface.ROTATION_180,270).addEntry( Surface.ROTATION_270,180 );
 
-	public  LollipopCamera( Activity context )  throws  CameraAccessException
+	public  LollipopCamera(       Activity context )           throws  CameraAccessException
 	{
 		this.setContext(context).setCameraManager(ObjectUtils.cast(context.getSystemService(Context.CAMERA_SERVICE))).setDeviceStateCallback(new  DeviceCallback(this)).setCaptureSessionStateCallback(new  CaptureSessionStateCallback(this)).setCameraIds( Lists.newArrayList(cameraManager.getCameraIdList()) );
 	}
@@ -149,18 +149,18 @@ public  class  LollipopCamera     implements  Camera
 	{
 		if( context.checkCallingOrSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || context.checkCallingOrSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED )
 		{
-			throw  new  IllegalStateException( "MASHROOM-WIDGET:  ** LOLLIPOP  CAMERA **  camera  and  recoding  audio  permissions  are  needed" );
+			throw  new  IllegalStateException( "MASHROOM-PARENT:  ** LOLLIPOP  CAMERA **  camera  and  recoding  audio  permissions  are  needed" );
 		}
 
 		setHandler().setErrorStateCallback(errorStateCallback).setTextureView(textureView).setState(CameraState.PREVIEW).setCurrentCameraId(cameraId).setSensorOrientation( cameraManager.getCameraCharacteristics(cameraId).get(CameraCharacteristics.SENSOR_ORIENTATION) );
 
         StreamConfigurationMap  configuation = cameraManager.getCameraCharacteristics(cameraId).get( CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP );
 
-        optimalSizes.addEntry(0,CameraCaptureUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(SurfaceTexture.class))).addEntry(1,CameraCaptureUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(ImageFormat.JPEG))).addEntry( 2,CameraCaptureUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(android.media.MediaRecorder.class)) );
+        optimalSizes.addEntry(0, CameraOptionalUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(SurfaceTexture.class))).addEntry(1, CameraOptionalUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(ImageFormat.JPEG))).addEntry( 2, CameraOptionalUtils.getOptimalSize(new  Size(textureView.getWidth(),textureView.getHeight()),configuation.getOutputSizes(android.media.MediaRecorder.class)) );
 
         textureView.getSurfaceTexture().setDefaultBufferSize( optimalSizes.get(0).getWidth(),optimalSizes.get(0).getHeight() );
 
-        setImageReader(ImageReader.newInstance(optimalSizes.get(1).getWidth(),optimalSizes.get(1).getHeight(),ImageFormat.JPEG,2)).getImageReader().setOnImageAvailableListener( (reader) -> photoTakenListener.onPhotoTaken(CameraCaptureUtils.getImageReaderBytes(reader)),loopHandler );
+        setImageReader(ImageReader.newInstance(optimalSizes.get(1).getWidth(),optimalSizes.get(1).getHeight(),ImageFormat.JPEG,2)).getImageReader().setOnImageAvailableListener( (reader) -> photoTakenListener.onPhotoTaken(CameraOptionalUtils.getImageReaderBytes(reader)),loopHandler );
 
 		cameraManager.openCamera( currentCameraId,deviceStateCallback,null );
 		
@@ -175,9 +175,9 @@ public  class  LollipopCamera     implements  Camera
 
         Surface  surface   = new  Surface( textureView.getSurfaceTexture() );
 
-        setState(CameraState.RECORD_VIDEO).setVideoOutputFile(outputFile).setVideoRecorder(new  MediaRecorder().prepare(AudioSource.MIC,AudioEncoder.AAC,VideoSource.SURFACE,VideoEncoder.H264,OutputFormat.MPEG_4,outputFile,CameraCaptureUtils.getOrientationHint(sensorOrientation,context.getWindowManager().getDefaultDisplay().getRotation()),optimalSizes.get(2))).setPreviewBuilder( CameraCaptureUtils.configCaptureRequestBuilder(currentCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW),Lists.newArrayList(surface,videoRecorder.wrapped().getSurface()),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) );
+        setState(CameraState.RECORD_VIDEO).setVideoOutputFile(outputFile).setVideoRecorder(new  MediaRecorder().prepare(AudioSource.MIC,AudioEncoder.AAC,VideoSource.SURFACE,VideoEncoder.H264,OutputFormat.MPEG_4,outputFile, CameraOptionalUtils.getOrientationHint(sensorOrientation,context.getWindowManager().getDefaultDisplay().getRotation()),optimalSizes.get(2))).setPreviewBuilder( CameraOptionalUtils.configCaptureRequestBuilder(currentCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW),Lists.newArrayList(surface,videoRecorder.unwrap().getSurface()),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) );
 
-        currentCameraDevice.createCaptureSession( Lists.newArrayList(surface,videoRecorder.wrapped().getSurface()),captureSessionStateCallback,loopHandler );
+        currentCameraDevice.createCaptureSession( Lists.newArrayList(surface,videoRecorder.unwrap().getSurface()),captureSessionStateCallback,loopHandler );
 	}
 
     public  void  continuePreview()  throws  CameraAccessException
@@ -193,7 +193,7 @@ public  class  LollipopCamera     implements  Camera
 
         captureSession.abortCaptures();
 		//  do  not  work  on  xiaomi  4a  for  runtime  exception  ( stop  failed:  -1007 )
-	    videoRecorder.wrapped().stop();
+	    videoRecorder.unwrap().stop( );
 
         return  videoOutputFile;
     }
@@ -227,6 +227,6 @@ public  class  LollipopCamera     implements  Camera
 
         captureSession.abortCaptures();
 
-        captureSession.capture( CameraCaptureUtils.configCaptureRequestBuilder(currentCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE),Lists.newArrayList(imageReader.getSurface()),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH).addEntry(CaptureRequest.JPEG_ORIENTATION,(ORIENTATIONS.get(context.getWindowManager().getDefaultDisplay().getRotation())+sensorOrientation+270)%360)).build(),captureCallback,loopHandler );
+        captureSession.capture( CameraOptionalUtils.configCaptureRequestBuilder(currentCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE),Lists.newArrayList(imageReader.getSurface()),new  HashMap<CaptureRequest.Key<Integer>,Integer>().addEntry(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE).addEntry(CaptureRequest.CONTROL_AE_MODE,CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH).addEntry(CaptureRequest.JPEG_ORIENTATION,(ORIENTATIONS.get(context.getWindowManager().getDefaultDisplay().getRotation())+sensorOrientation+270)%360)).build(),captureCallback,loopHandler );
     }
 }
