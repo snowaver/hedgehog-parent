@@ -99,7 +99,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 				return  true;
 				}
 
-				takenMediaFiles.put( MediaType.VIDEO.getValue(), this.context.application().cache( -1, videoFile, 3 ) );
+				takenMediaFiles.put( MediaType.VIDEO.getValue(), this.context.application().cache( -1, videoFile, 4 ) );
 
 				ObjectUtils.cast(context.findViewById(R.id.control_switcher),ViewSwitcher.class).setDisplayedChild( 1 );
 
@@ -177,7 +177,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 	{
 		try
 		{
-			File  file = context.application().cache( -1,pictureBytes,1/* ChatContentType.IMAGE */ );
+			File  file = context.application().cache( -1,pictureBytes,2/* ChatContentType.IMAGE */ );
 
 			this.takenMediaFiles.put(  MediaType.IMAGE.getValue(),      file );
 
