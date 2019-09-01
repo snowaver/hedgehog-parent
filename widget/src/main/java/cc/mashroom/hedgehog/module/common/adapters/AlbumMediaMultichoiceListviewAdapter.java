@@ -71,8 +71,8 @@ public  class     AlbumMediaMultichoiceListviewAdapter   extends  BaseMulticolum
 
 		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setChecked(  this.multichoicesListener.getChoicesMapper().contains(media) );
 
-		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setOnClickListener( (view) -> ActivityCompat.startActivity(context,new  Intent(context,media.getType() == MediaType.IMAGE ? ImagePreviewActivity.class : VideoPreviewActivity.class).putExtra("PATH",media.getPath()),null) );
+		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setOnClickListener( (view) -> ActivityCompat.startActivity(context,new  Intent(context,media.getType() == MediaType.IMAGE ? ImagePreviewActivity.class : VideoPreviewActivity.class).putExtra("CACHE_FILE_PATH",media.getPath()),null) );
 
-		ObjectUtils.cast(convertView.findViewById(R.id.play_button), ImageView.class).setOnClickListener( (view) -> ActivityCompat.startActivity(context,new  Intent(context,VideoPreviewActivity.class).putExtra("PATH",media.getPath()),null) );
+		ObjectUtils.cast(convertView.findViewById(R.id.play_button), ImageView.class).setOnClickListener( (view) -> ActivityCompat.startActivity(context,new  Intent(context,VideoPreviewActivity.class).putExtra("CACHE_FILE_PATH",media.getPath()),null) );
 	}
 }

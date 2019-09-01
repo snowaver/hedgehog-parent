@@ -26,7 +26,7 @@ public  class  MediaMultichoicesListener  extends  MultichoicesListener<Media>
     {
         File   mediaFile   = new  File( media.getPath() );
 
-        if( !  mediaFile.exists() || mediaFile.length()  >  this.maxFileSize )
+        if( maxFileSize> 0 && (!mediaFile.exists() || mediaFile.length() > this.maxFileSize) )
         {
             Toasty.warning(context,context.getString(R.string.album_multichoice_out_of_file_size_limitation_error),Toast.LENGTH_LONG,false).show();
 

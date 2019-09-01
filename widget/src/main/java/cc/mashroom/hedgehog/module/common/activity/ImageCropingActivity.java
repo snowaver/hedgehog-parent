@@ -23,7 +23,7 @@ import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 
 /**
- *  crop  image  and  return  medias   (intent  parameters:  MEDIAS)  by  result  data.  intent  parameters:  IMAGE_FILE_PATH  (local  image  path  or  network  image  uri).
+ *  crop  image  and  return  medias  ( intent  parameters:  MEDIAS)  by  result  data.  intent  parameters:  IMAGE_FILE_PATH  (local  image  path  or  network  image  uri).
  */
 public  class  ImageCropingActivity   extends  AbstractActivity   implements  CropIwaView.CropSaveCompleteListener
 {
