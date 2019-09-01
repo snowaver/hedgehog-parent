@@ -1,6 +1,6 @@
 package cc.mashroom.hedgehog.parent;
 
-import android.content.Context;
+import  android.content.Context;
 import  android.graphics.Bitmap;
 import  android.graphics.BitmapFactory;
 import  android.media.ThumbnailUtils;
@@ -40,34 +40,33 @@ public  class  Application   extends  android.app.Application
 	private  Retrofit fileDownloadRetrofit;
 	@Getter
 	private  Handler  mainLooperHandler = new  Handler( Looper.getMainLooper() );
-
-	public  File  cache( int  imageId,File  cachingFile,int  contentType )  throws  IOException
+	/**
+	 * @see  #cache(  int  , byte[] , int )
+	 */
+	public  File  cache( int  imageId,       File  cachingFile,int  contentType )  throws  IOException
 	{
 		return  cache( imageId,FileUtils.readFileToByteArray(cachingFile),contentType );
 	}
-
+	/**
+	 *  cache  the  file  named  by  file  md5  and  return  the  cached  file,  then  cache  the  thumbnail  (path:  cache  file  path  +  $TMB)  if  the  content  type  is  image  or  video.  content  types:  2  (image),  3  (audio)  and  4  (video).
+	 */
 	public  File  cache( int  imageId,byte[]  cachingFileBytes,int  contentType )  throws  IOException
 	{
-		if( cacheDir==null )
-		{
-			throw  new  IllegalStateException( "HEDGEHOT-PARENT:  ** APPLICATION **  cache  dir  in  application  should  be  set  first." );
-		}
-
 		Bitmap  bmp  = null;
 
 		File  cachedFile = FileUtils.createFileIfAbsent( new  File(cacheDir,"file/"+new  String(Hex.encodeHex(DigestUtils.md5(cachingFileBytes))).toUpperCase()),cachingFileBytes );
 
-		if( contentType==3 )
+		if( contentType==4 )
 		{
             bmp = ThumbnailUtils.createVideoThumbnail( cachedFile.getPath(),MediaStore.Video.Thumbnails.MINI_KIND );
 		}
 		else
-		if( contentType==1 )
+		if( contentType==2 )
 		{
             bmp = imageId != -1 ? MediaStore.Images.Thumbnails.getThumbnail(super.getContentResolver(),imageId,MediaStore.Images.Thumbnails.MINI_KIND,null) : BitmapFactory.decodeByteArray( cachingFileBytes,0,cachingFileBytes.length );
 		}
 		else
-		if( contentType==2 )
+		if( contentType==3 )
 		{
 			return  cachedFile;
 		}
