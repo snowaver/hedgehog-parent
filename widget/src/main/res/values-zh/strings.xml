@@ -25,8 +25,8 @@
     <string  name="camera_switch_orientation">切换</string>
     <string  name="camera_record_video">视频</string>
     <string  name="camera_take_photo_or_record_video">照片或视频</string>
-    <string  name="album_multichoice_out_of_count_limitation_error">选择数量已超过最大限制</string>
-    <string  name="album_multichoice_out_of_file_size_limitation_error">选择媒体文件超过文件大小限制</string>
+    <string  name="album_multichoice_exceed_max_count_error">超过最大个数（%d）</string>
+    <string  name="album_multichoice_exceed_max_file_size_error">超过最大文件大小（%s）</string>
     <string  name="album_photo_and_video">照片和视频</string>
     <string  name="camera_require_camera_and_audio_record_permission">需要摄像头以及录音权限</string>
     <string  name="album_require_album_permission">需要读取您的相册</string>

@@ -53,19 +53,18 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 			throw  new  IllegalArgumentException("HEDGEHOG-PARENT:  ** MULTICHOICES  LISTENER **  tag  missing  error" );
 		}
 
-		if( !validateCheckedObject(     checkedObject) )
-		{
-			smoothCheckBox.setChecked(  false  /* revert  the  smoothcheckbox  state */ );
-
-			return;
-		}
-
 		if( !isChecked )
 		{
 			this.choicesMapper.remove(  checkedObject );
 		}
 		else
 		{
+			if( !validateCheckedObject( checkedObject) )
+			{
+				smoothCheckBox.setChecked(   false  /* revert  smoothcheckbox  state */ );
+
+				return ;
+			}
 			//  replace  the  previous  choice  if  the  max  count  is  one,  so  it  is  not  necessary  that  deselect  the  previous  choice  manually  if  select  one  but  want  a  new  choice.  notify  data  set  changed  event  may  lead  to  coruscating,  so  remove  it  and  need  a  manually  state  switching.
 			if( this.maxCount == 1 )
 			{
@@ -80,7 +79,7 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 
 				if( isChecked !=  smoothCheckBox.isChecked() )
 				{
-					Toasty.warning(smoothCheckBox.getContext(),smoothCheckBox.getContext().getString(R.string.album_multichoice_out_of_count_limitation_error),Toast.LENGTH_LONG,false).show();
+					Toasty.warning(smoothCheckBox.getContext(),smoothCheckBox.getContext().getString(R.string.album_multichoice_exceed_max_count_error,this.maxCount),Toast.LENGTH_LONG,false).show();
 				}
 			}
 		}

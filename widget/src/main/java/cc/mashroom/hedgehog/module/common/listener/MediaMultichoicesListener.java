@@ -5,6 +5,8 @@ import  android.widget.BaseAdapter;
 import  android.widget.Toast;
 
 import  java.io.File;
+import  java.math.BigDecimal;
+import  java.math.RoundingMode;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.system.Media;
@@ -28,7 +30,7 @@ public  class  MediaMultichoicesListener  extends  MultichoicesListener<Media>
 
         if( maxFileSize> 0 && (!mediaFile.exists() || mediaFile.length() > this.maxFileSize) )
         {
-            Toasty.warning(context,context.getString(R.string.album_multichoice_out_of_file_size_limitation_error),Toast.LENGTH_LONG,false).show();
+            Toasty.warning(context,context.getString(R.string.album_multichoice_exceed_max_file_size_error,new  BigDecimal(maxFileSize).divide(new  BigDecimal(1024*1024),2,RoundingMode.HALF_UP).toPlainString()+"MB"),Toast.LENGTH_LONG,false).show();
 
             return  false;
         }

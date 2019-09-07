@@ -45,7 +45,7 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
 
         super.findViewById(R.id.to_camcorder_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,CamcorderActivity.class),null) );
 
-        super.findViewById(R.id.to_album_multimedia_choice_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,AlbumMediaMultichoiceActivity.class).putExtra("MAX_COUNT",4),null) );
+        super.findViewById(R.id.to_album_multimedia_choice_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,AlbumMediaMultichoiceActivity.class).putExtra("MAX_COUNT",4).putExtra("MAX_FILE_SIZE",10*1024*1024L),null) );
 
         super.findViewById(R.id.show_sneaker_window_button).setOnClickListener( (button) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.registration_form_error,R.color.white,R.color.red) );
 
