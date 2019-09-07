@@ -55,6 +55,8 @@ public  class  MultichoicesListener<T>  implements  SmoothCheckBox.OnCheckedChan
 
 		if( !validateCheckedObject(     checkedObject) )
 		{
+			smoothCheckBox.setChecked(  false  /* revert  the  smoothcheckbox  state */ );
+
 			return;
 		}
 
