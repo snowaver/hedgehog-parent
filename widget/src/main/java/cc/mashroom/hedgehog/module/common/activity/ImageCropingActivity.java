@@ -52,7 +52,7 @@ public  class  ImageCropingActivity   extends  AbstractActivity   implements  Cr
 	{
 		try
 		{
-			super.putResultDataAndFinish( this,1,new  Intent().putExtra("MEDIAS",Lists.newArrayList(new  Media(MediaType.IMAGE,0,new  File(URI.create(bitmapUri.toString())).getPath(),0))) );
+			super.putResultDataAndFinish( this,1,new  Intent().putExtra("MEDIAS",Lists.newArrayList(new  Media(MediaType.IMAGE,-1,null,null,-1,-1,-1,new  File(URI.create(bitmapUri.toString())).getPath(),null,-1,-1))) );
 		}
 		catch( Throwable  e )
 		{

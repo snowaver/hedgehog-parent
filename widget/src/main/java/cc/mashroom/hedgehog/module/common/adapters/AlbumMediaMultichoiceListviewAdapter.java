@@ -19,6 +19,7 @@ import  cc.mashroom.hedgehog.system.Media;
 import  cc.mashroom.hedgehog.system.MediaStore;
 import  cc.mashroom.hedgehog.system.MediaType;
 import  cc.mashroom.util.ObjectUtils;
+import  cc.mashroom.util.StringUtils;
 import  cc.mashroom.util.collection.map.HashMap;
 import  cc.mashroom.util.collection.map.Map;
 import  cn.refactor.library.SmoothCheckBox;
@@ -36,7 +37,7 @@ public  class     AlbumMediaMultichoiceListviewAdapter   extends  BaseMulticolum
 
 	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  mediaType,int  columnSize,int  maxCount,long  maxFileSize,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
 	{
-		super( context, MediaStore.get( context,MEDIA_TYPE_URIS.get(mediaType)), columnSize,R.layout.activity_album_media_multichoice_line );
+		super( context,MediaStore.get(context,MEDIA_TYPE_URIS.get(mediaType)),columnSize,R.layout.activity_album_media_multichoice_line );
 
 		this.setContext(context).setMeidas(items).setMultichoicesListener( new  MediaMultichoicesListener(context,this,maxCount,maxFileSize,checkedChangeListener) );
 	}
@@ -56,18 +57,20 @@ public  class     AlbumMediaMultichoiceListviewAdapter   extends  BaseMulticolum
 
 	public  List<Media>  getChosenMedias()
 	{
-		return  new  ArrayList<Media>(multichoicesListener.getChoicesMapper() );
+		return  new  ArrayList<Media>( multichoicesListener.getChoicesMapper() );
 	}
 
 	public  void  getChildView( int  rowIndex,int  columnIndex,Media  media,View  convertView )
 	{
-		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setImageURI(Uri.fromFile(new  File(media.getPath())) );
+		String  thumbnailPath = media.getThumbnailPath( this.context );
+
+		ObjectUtils.cast(convertView.findViewById(R.id.image),SimpleDraweeView.class).setImageURI( Uri.fromFile(new  File(StringUtils.isBlank(thumbnailPath) ? media.getPath() : thumbnailPath)) );
 
 		ObjectUtils.cast(convertView.findViewById(R.id.play_button),ImageView.class).setVisibility( media.getType() ==  MediaType.VIDEO ? View.VISIBLE : View.GONE );
 
 		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setTag( media );
 
-		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setOnCheckedChangeListener(   multichoicesListener );
+		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setOnCheckedChangeListener( this.multichoicesListener );
 
 		ObjectUtils.cast(convertView.findViewById(R.id.multichoice_checkbox),SmoothCheckBox.class).setChecked(  this.multichoicesListener.getChoicesMapper().contains(media) );
 

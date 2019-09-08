@@ -162,7 +162,7 @@ public  class  CamcorderListener  implements  View.OnTouchListener,View.OnLongCl
 			{
 				java.util.Map.Entry<Integer,File>  takenMediaFile   = this.takenMediaFiles.entrySet().iterator().next();
 
-				context.putResultDataAndFinish( context,0,new  Intent().putExtra("MEDIAS",ObjectUtils.cast(Lists.newArrayList(new  Media(MediaType.valueOf(takenMediaFile.getKey()),-1,takenMediaFile.getValue().getPath(),0)),Serializable.class)) );
+				context.putResultDataAndFinish( context,0,new  Intent().putExtra("MEDIAS",ObjectUtils.cast(Lists.newArrayList(new  Media(MediaType.valueOf(takenMediaFile.getKey()),-1,null,null,-1,-1,-1,takenMediaFile.getValue().getPath(),null,-1,-1)),Serializable.class)) );
 			}
 		}
 		catch( Exception  e )

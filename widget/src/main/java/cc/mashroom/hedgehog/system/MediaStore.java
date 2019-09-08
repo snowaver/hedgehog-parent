@@ -27,7 +27,7 @@ public  class  MediaStore
 				{
 					do
 					{
-						medias.add( new  Media(MEDIA_TYPES.get(uri),resultCursor.getInt(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns._ID)),resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.Images.Media.DATA)),Long.parseLong(resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.Images.Media.DATE_MODIFIED)))*1000) );
+						medias.add( new  Media(MEDIA_TYPES.get(uri),resultCursor.getInt(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns._ID)),resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.MIME_TYPE)),resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.TITLE)),resultCursor.getInt(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.WIDTH)),resultCursor.getInt(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.HEIGHT)),resultCursor.getLong(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.SIZE)),resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATA)),null,resultCursor.getLong(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATE_ADDED))*1000,resultCursor.getLong(resultCursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATE_MODIFIED))*1000) );
 					}
 					while( resultCursor.moveToNext() );
 				}
