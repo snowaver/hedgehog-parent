@@ -23,7 +23,7 @@ public  class  Media      implements       Serializable
 	@Setter( AccessLevel.PROTECTED )
 	@Accessors( chain = true )
 	@Getter
-	private  int  id;
+	private  long    id;
 	@Setter( AccessLevel.PROTECTED )
 	@Accessors( chain = true )
 	@Getter
@@ -84,7 +84,7 @@ public  class  Media      implements       Serializable
 		else
 		if( type== MediaType.VIDEO )
 		{
-			try(Cursor  resultCursor = context.getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI ,new  String[]{MediaStore.Video.Thumbnails.DATA },MediaStore.Video.Thumbnails.VIDEO_ID +"="+id,null,null) )
+			try(Cursor  resultCursor = context.getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI ,new  String[]{MediaStore.Video.Thumbnails.DATA },MediaStore.Video.Thumbnails.VIDEO_ID +"=?",new  String[]{String.valueOf(id)},null) )
 			{
 				if( resultCursor.moveToFirst() )
 				{

@@ -13,9 +13,11 @@ import  android.widget.TextView;
 import  com.aries.ui.widget.BasisDialog;
 import  com.aries.ui.widget.action.sheet.UIActionSheetDialog;
 import  com.aries.ui.widget.alert.UIAlertDialog;
+import  com.aries.ui.widget.progress.UIProgressDialog;
 import  com.irozon.sneaker.Sneaker;
 
 import  androidx.annotation.UiThread;
+
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.module.common.adapters.AlbumMediaMultichoiceListviewAdapter;
@@ -61,6 +63,7 @@ public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  imple
     @Accessors( chain = true )
     @Setter
     protected  int   maxCount    = -1;
+	protected  UIProgressDialog  progressDialog;
     @Accessors( chain = true )
     @Setter
     protected  long  maxFileSize = -1;
@@ -81,6 +84,8 @@ public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  imple
 		super.findViewById(R.id.additional_switcher).setOnClickListener( (view) -> StyleUnifier.unify(new  UIActionSheetDialog.ListIOSBuilder(this).setBackgroundRadius(15).addItem(R.string.photo).addItem(R.string.video).addItem(R.string.album_photo_and_video).setItemsTextSize(18).setCancel(R.string.close).setCancelTextColorResource(R.color.red).setCancelTextSize(18).setItemsMinHeight(DensityUtils.px(this,50)).setPadding(DensityUtils.px(this,10)).setCanceledOnTouchOutside(true).setOnItemClickListener(this).create(),Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf")).show() );
 
 		super.findViewById(R.id.ok_button).setOnClickListener( (view) -> super.putResultDataAndFinish(this,0,new  Intent().putExtra("MEDIAS",ObjectUtils.cast(ObjectUtils.cast(ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).getAdapter(),AlbumMediaMultichoiceListviewAdapter.class).getChosenMedias(),Serializable.class))) );
+
+		this.progressDialog = StyleUnifier.unify(new  UIProgressDialog.WeBoBuilder(this).setTextSize(18).setMessage(R.string.waiting).setCanceledOnTouchOutside(false).create(),Typeface.createFromAsset(this.getAssets(),"font/droid_sans_mono.ttf")).setWidth(DensityUtils.px(this,220)).setHeight( DensityUtils.px(this,150) );
 	}
 
 	protected  void  onStart()
@@ -102,13 +107,15 @@ public  class  AlbumMediaMultichoiceActivity    extends  AbstractActivity  imple
 
 	public  void  initialize()
 	{
+		progressDialog.show();
+
 		initialized    = true;
 
 		ObjectUtils.cast(super.findViewById(R.id.header_bar),HeaderBar.class).setTitle( super.getString(this.titles.get(this.mediaType)) );
 
 		super.findViewById(R.id.additional_switcher).setVisibility( mediaType == 1 || mediaType == 2 ? View.GONE : View.VISIBLE );
 
-		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this, mediaType,3,maxCount,maxFileSize,this) );
+		ObjectUtils.cast(super.findViewById(R.id.album_media_list),ListView.class).setAdapter( new  AlbumMediaMultichoiceListviewAdapter( this,mediaType,3,maxCount,maxFileSize,this) );  this.progressDialog.cancel();
 	}
 
 	private  Map<Integer,Integer>  titles = new  HashMap<Integer,Integer>().addEntry(1,R.string.photo).addEntry(2,R.string.video).addEntry( 3,R.string.album_photo_and_video );

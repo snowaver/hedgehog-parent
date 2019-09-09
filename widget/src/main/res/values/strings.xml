@@ -13,6 +13,7 @@
     <string  name="player">PLAYER</string>
     <string  name="close">CLOSE</string>
     <string  name="filter">FILTER</string>
+    <string  name="waiting">WAITING</string>
     <string  name="io_exception">IO EXCEPTION</string>
     <string  name="unknown_error">UNKNOWN ERROR</string>
     <string  name="content_length_out_of_limitation">OUT OF THE CONTENT LENGTH LIMITATION</string>

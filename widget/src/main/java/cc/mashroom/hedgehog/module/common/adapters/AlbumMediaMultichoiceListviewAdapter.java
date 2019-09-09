@@ -37,7 +37,7 @@ public  class     AlbumMediaMultichoiceListviewAdapter   extends  BaseMulticolum
 
 	public  AlbumMediaMultichoiceListviewAdapter( AlbumMediaMultichoiceActivity  context,int  mediaType,int  columnSize,int  maxCount,long  maxFileSize,SmoothCheckBox.OnCheckedChangeListener  checkedChangeListener )
 	{
-		super( context,MediaStore.get(context,MEDIA_TYPE_URIS.get(mediaType)),columnSize,R.layout.activity_album_media_multichoice_line );
+		super( context,MediaStore.get(context,false,MEDIA_TYPE_URIS.get(mediaType)),columnSize,R.layout.activity_album_media_multichoice_line );
 
 		this.setContext(context).setMeidas(items).setMultichoicesListener( new  MediaMultichoicesListener(context,this,maxCount,maxFileSize,checkedChangeListener) );
 	}
