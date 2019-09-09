@@ -1,5 +1,5 @@
 <resources >
-    <string  name="app_name">hedgehog-widget</string>
+    <string  name="app_name">hedgehog-parent</string>
     <string  name="camcorder"  translatable="false">CAMCORDER</string>
     <string  name="sneaker"  translatable="false">SHOW SNEAKER WINDOW</string>
     <string  name="samples"  translatable="false">SAMPLES</string>

@@ -7,7 +7,7 @@ import  lombok.Getter;
 
 public  enum   MediaType
 {
-	IMAGE(0),VIDEO(1);
+	IMAGE(1),VIDEO(2);
 	@Getter
 	private  int  value;
 
