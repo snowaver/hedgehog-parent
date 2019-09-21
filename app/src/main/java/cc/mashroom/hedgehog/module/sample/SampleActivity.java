@@ -21,6 +21,7 @@ import  cc.mashroom.hedgehog.parent.AbstractActivity;
 import  cc.mashroom.hedgehog.util.DensityUtils;
 import  cc.mashroom.hedgehog.util.ImageUtils;
 import  cc.mashroom.hedgehog.widget.BottomSheetEditor;
+import  cc.mashroom.hedgehog.widget.FlexibleSimpleDraweeView;
 import  cc.mashroom.hedgehog.widget.HeaderBar;
 import  cc.mashroom.hedgehog.widget.StyleableEditView;
 import  cc.mashroom.util.ObjectUtils;
@@ -50,6 +51,8 @@ public  class  SampleActivity  extends  AbstractActivity  implements  HeaderBar.
         super.findViewById(R.id.show_sneaker_window_button).setOnClickListener( (button) -> super.showSneakerWindow(Sneaker.with(this),com.irozon.sneaker.R.drawable.ic_error,R.string.registration_form_error,R.color.white,R.color.red) );
 
         super.findViewById(R.id.download_and_preview_video_button).setOnClickListener( (button) -> ActivityCompat.startActivity(this,new  Intent(this,VideoPreviewActivity.class).putExtra("CACHE_FILE_PATH",new  File(application().getCacheDir(),UUID.randomUUID().toString().toUpperCase()).getPath()).putExtra("URL","http://192.168.1.114:8011/file/AF5A303C404511C8746A4511AA1CD9AD"),null) );
+
+        ObjectUtils.cast(super.findViewById(R.id.drawee),FlexibleSimpleDraweeView.class).setImageURI( ImageUtils.toUri(this,R.drawable.lavender),this );
     }
 
     public  void  onItemClick( View itemView,int position )

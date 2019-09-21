@@ -13,38 +13,48 @@ import  com.facebook.drawee.controller.ControllerListener;
 import  com.facebook.drawee.generic.GenericDraweeHierarchy;
 import  com.facebook.imagepipeline.image.ImageInfo;
 
+import java.io.File;
+
 import  cc.mashroom.util.ObjectUtils;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.SimpleDraweeView
 {
-    private  final  ControllerListener  listener = new  BaseControllerListener<ImageInfo>()
+    private  final   ControllerListener  controllerListener   = new  BaseControllerListener<ImageInfo>()
     {
         public  void  onFinalImageSet( String  id,@Nullable  ImageInfo  imageInfo,@Nullable  Animatable  animatable )
         {
-	        updateFlexibleLayout( imageInfo );
+	        updateFlexibleLayout(    imageInfo );
         }
 
         public  void  onIntermediateImageSet( String  id, @Nullable  ImageInfo  imageInfo )
         {
-	        updateFlexibleLayout( imageInfo );
+	        updateFlexibleLayout(    imageInfo );
         }
     };
 
     private  void  updateFlexibleLayout( ImageInfo  imageInfo )
     {
-        if( imageInfo != null )
+        if(      imageInfo != null )
         {
-            ViewGroup.LayoutParams  draweeLayoutParams = super.getLayoutParams();
+            ViewGroup.LayoutParams   draweeviewLayoutParameters =  super.getLayoutParams();
+            System.err.println( super.getWidth()+"/"+super.getHeight());
+            draweeviewLayoutParameters.width = (int)   ((float)  imageInfo.getWidth()*super.getWidth() / imageInfo.getHeight() );
 
-	        draweeLayoutParams.width = (int)  ((float)  imageInfo.getWidth()*/*DensityUtils.px(super.getContext(),*/super.getMaxHeight()/*)*//imageInfo.getHeight() );
-
-            super.setLayoutParams( draweeLayoutParams );
+            super.setLayoutParams(draweeviewLayoutParameters );
         }
+    }
+
+    public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes ,    int  defaultStyle )
+    {
+        super( context,attributes,defaultStyle );
     }
 
     public  FlexibleSimpleDraweeView( Context  context )
     {
-        super( context );
+        super(       context );
     }
 
     public  FlexibleSimpleDraweeView( Context  context,GenericDraweeHierarchy   hierarchy )
@@ -57,18 +67,17 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
         super( context,attributes );
     }
 
-    public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes,int  defaultStyle )
-    {
-        super( context,attributes,defaultStyle );
-    }
-
     public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes,int  defaultStyleAttribute,int  defaultStyleResource )
     {
         super( context,attributes,defaultStyleAttribute,  defaultStyleResource );
     }
+    @Accessors(  chain = true )
+    @Setter
+    @Getter
+    protected  File  cacheFile;
 
     public  void  setImageURI( Uri  uri,Object  callerContext )
     {
-        super.setController( ObjectUtils.cast(super.getControllerBuilder(),PipelineDraweeControllerBuilder.class).setControllerListener(listener).setCallerContext(callerContext).setUri(uri).setOldController(getController()).build() );
+        super.setController( ObjectUtils.cast(super.getControllerBuilder(),PipelineDraweeControllerBuilder.class).setControllerListener(controllerListener).setCallerContext(callerContext).setUri(uri).setOldController(getController()).build() );
     }
 }

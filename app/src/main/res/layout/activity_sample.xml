@@ -29,4 +29,6 @@
 
     <View  android:layout_width="match_parent"  android:layout_height="1px"  android:background="@color/gainsboro"></View>
 
+    <cc.mashroom.hedgehog.widget.FlexibleSimpleDraweeView  android:id="@+id/drawee"  android:layout_width="match_parent"  android:layout_height="90dp"/>
+
 </LinearLayout>
