@@ -29,7 +29,7 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
 {
     private  final   ControllerListener  controllerListener= new  BaseControllerListener<ImageInfo>()
     {
-        public  void  onFinalImageSet( String  id,@Nullable  ImageInfo  imageInfo,@Nullable  Animatable  animatable )
+        public  void  onFinalImageSet( String  id,@Nullable  ImageInfo  imageInfo,@Nullable     Animatable  animatable )
         {
 	        updateFlexibleLayout( true   ,  imageInfo );
         }
@@ -79,13 +79,13 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
     {
         if( imageInfo!= null       )
         {
-            float  widthScaleRatio = ((float)  super.getWidth()-(float)  imageInfo.getWidth())/ imageInfo.getWidth();
+            float  widthScaleRatio = ((float)  super.getMaxWidth()-(float)  imageInfo.getWidth())/ imageInfo.getWidth();
 
-            float  heightScaleRatio= ((float) super.getHeight()-(float) imageInfo.getHeight())/imageInfo.getHeight();
+            float  heightScaleRatio= ((float) super.getMaxHeight()-(float) imageInfo.getHeight())/imageInfo.getHeight();
 
             float  scaleRatio = 1+(Math.abs(widthScaleRatio)< Math.abs(heightScaleRatio) ? widthScaleRatio : heightScaleRatio );
 
-            LayoutParamsUtils.update( this,    (int)  (imageInfo.getWidth()*scaleRatio), (int)(imageInfo.getHeight()*   scaleRatio) );
+            LayoutParamsUtils.update( this,    (int)  (imageInfo.getWidth()*scaleRatio), (int)   (imageInfo.getHeight()*scaleRatio) );
         }
 
         if( cache&&cacheFile != null   && !cacheFile.exists() )
