@@ -60,7 +60,7 @@ public  class  MediaStore
 							{
 								thumbnailPathJoiner.put( resultCursor.getLong(resultCursor.getColumnIndex(android.provider.MediaStore.Images.Thumbnails.IMAGE_ID)),resultCursor.getString(resultCursor.getColumnIndex(android.provider.MediaStore.Images.Thumbnails.DATA)) );
 							}
-							while(  resultCursor.moveToNext() );
+							while(   resultCursor.moveToNext() );
 						}
 					}
 				}
@@ -75,7 +75,7 @@ public  class  MediaStore
 							{
 								thumbnailPathJoiner.put( resultCursor.getLong(resultCursor.getColumnIndex( android.provider.MediaStore.Video.Thumbnails.VIDEO_ID)),resultCursor.getString(resultCursor.getColumnIndex( android.provider.MediaStore.Video.Thumbnails.DATA)) );
 							}
-							while(  resultCursor.moveToNext() );
+							while(   resultCursor.moveToNext() );
 						}
 					}
 				}
