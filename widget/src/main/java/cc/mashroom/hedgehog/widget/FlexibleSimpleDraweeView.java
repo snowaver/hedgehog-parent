@@ -16,13 +16,13 @@ import  com.facebook.drawee.generic.GenericDraweeHierarchy;
 import  com.facebook.imagepipeline.image.ImageInfo;
 
 import  java.io.File;
+import java.io.IOException;
 
 import  cc.mashroom.hedgehog.util.LayoutParamsUtils;
 import  cc.mashroom.util.FileUtils;
 import  cc.mashroom.util.ObjectUtils;
 import  lombok.Getter;
 import  lombok.Setter;
-import  lombok.SneakyThrows;
 import  lombok.experimental.Accessors;
 
 public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.SimpleDraweeView
@@ -64,17 +64,11 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
         super( context, hierarchy );
     }
 
-    public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes )
-    {
-        super( context,attributes );
-    }
-
     public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes,int  defaultStyleAttribute,int  defaultStyleResource )
     {
         super( context,attributes,defaultStyleAttribute,  defaultStyleResource );
     }
 
-    @SneakyThrows
     private  void  updateFlexibleLayout( boolean  cache,  ImageInfo  imageInfo  )
     {
         if( imageInfo!= null       )
@@ -90,8 +84,20 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
 
         if( cache&&cacheFile != null   && !cacheFile.exists() )
         {
-            FileUtils.copyFile( ObjectUtils.cast(Fresco.getImagePipelineFactory().getMainFileCache().getResource(new  SimpleCacheKey(uri.toString())),FileBinaryResource.class).getFile(),cacheFile );
+            try
+            {
+                FileUtils.copyFile( ObjectUtils.cast(Fresco.getImagePipelineFactory().getMainFileCache().getResource(new  SimpleCacheKey(uri.toString())),FileBinaryResource.class).getFile(),cacheFile );
+            }
+            catch(  IOException  e )
+            {
+                e.printStackTrace();
+            }
         }
+    }
+
+    public  FlexibleSimpleDraweeView( Context  context,AttributeSet  attributes )
+    {
+        super( context,attributes );
     }
 
     public  void  setImageURI( Uri  uri,Object  callerContext )
