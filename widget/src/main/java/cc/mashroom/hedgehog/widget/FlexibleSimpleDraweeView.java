@@ -83,7 +83,7 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
 
             float  heightScaleRatio= ((float) super.getMaxHeight()-(float) imageInfo.getHeight())/imageInfo.getHeight();
 
-            float  scaleRatio = 1+(Math.abs(widthScaleRatio)< Math.abs(heightScaleRatio) ? widthScaleRatio : heightScaleRatio );
+            float  scaleRatio = 1+(Math.abs(widthScaleRatio)> Math.abs(heightScaleRatio) ? widthScaleRatio : heightScaleRatio );
 
             LayoutParamsUtils.update( this,    (int)  (imageInfo.getWidth()*scaleRatio), (int)   (imageInfo.getHeight()*scaleRatio) );
         }
