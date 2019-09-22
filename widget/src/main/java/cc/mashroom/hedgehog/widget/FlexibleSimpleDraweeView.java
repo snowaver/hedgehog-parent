@@ -73,13 +73,9 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
     {
         if( imageInfo!= null       )
         {
-            float  widthScaleRatio = ((float)  super.getMaxWidth()-(float)  imageInfo.getWidth())/ imageInfo.getWidth();
+            double  scale = (double)  imageInfo.getWidth()/ imageInfo.getHeight() > (double)  super.getMaxWidth()/super.getMaxHeight() ? (double)  super.getMaxWidth()/imageInfo.getWidth() : (double)  super.getMaxHeight()/imageInfo.getHeight();
 
-            float  heightScaleRatio= ((float) super.getMaxHeight()-(float) imageInfo.getHeight())/imageInfo.getHeight();
-
-            float  scaleRatio = 1+(Math.abs(widthScaleRatio)> Math.abs(heightScaleRatio) ? widthScaleRatio : heightScaleRatio );
-
-            LayoutParamsUtils.update( this,    (int)  (imageInfo.getWidth()*scaleRatio), (int)   (imageInfo.getHeight()*scaleRatio) );
+            LayoutParamsUtils.update( this,(int)  (imageInfo.getWidth()*scale)  ,(int)  (imageInfo.getHeight()*scale) );
         }
 
         if( cache&&cacheFile != null   && !cacheFile.exists() )
