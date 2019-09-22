@@ -16,7 +16,7 @@ import  com.facebook.drawee.generic.GenericDraweeHierarchy;
 import  com.facebook.imagepipeline.image.ImageInfo;
 
 import  java.io.File;
-import java.io.IOException;
+import  java.io.IOException;
 
 import  cc.mashroom.hedgehog.util.LayoutParamsUtils;
 import  cc.mashroom.util.FileUtils;
