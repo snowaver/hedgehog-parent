@@ -82,7 +82,9 @@ public  class  FlexibleSimpleDraweeView  extends  com.facebook.drawee.view.Simpl
         {
             try
             {
-                FileUtils.copyFile( ObjectUtils.cast(Fresco.getImagePipelineFactory().getMainFileCache().getResource(new  SimpleCacheKey(uri.toString())),FileBinaryResource.class).getFile(),cacheFile );
+                FileBinaryResource fileBinaryResource = ObjectUtils.cast( Fresco.getImagePipelineFactory().getMainFileCache().getResource(new  SimpleCacheKey(uri.toString())),FileBinaryResource.class );
+
+                if( fileBinaryResource != null )  FileUtils.copyFile( fileBinaryResource.getFile(),cacheFile );
             }
             catch(  IOException  e )
             {
