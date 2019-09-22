@@ -13,8 +13,7 @@ import  com.irozon.sneaker.Sneaker;
 
 import  androidx.appcompat.app.AppCompatActivity;
 
-import  java.util.List;
-import  java.util.concurrent.CopyOnWriteArrayList;
+import  java.util.LinkedList;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.util.ContextUtils;
@@ -23,8 +22,6 @@ import  cc.mashroom.util.ObjectUtils;
 
 public  abstract  class  AbstractActivity  extends  AppCompatActivity
 {
-	public  final  static  List<Activity>  STACK =        new  CopyOnWriteArrayList<Activity>();
-
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
@@ -32,12 +29,14 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 		STACK.add( this );
 	}
 
-	public  void  putResultDataAndFinish( Activity  context,int  resultCode,Intent  resultData )
+	public  void  putResultDataAndFinish(Activity  context, int  resultCode,Intent  resultData )
 	{
-		context.setResult( resultCode,resultData );
+		context.setResult(resultCode,resultData );
 
 		context.finish( );
 	}
+
+    public  final  static  LinkedList<Activity>  STACK = new  LinkedList<Activity>();
 
 	public  Application   application()
 	{
@@ -60,7 +59,7 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 	{
 		View  sneakerView  = LayoutInflater.from(this).inflate( R.layout.sliding_sneaker,sneaker.getView() , false );
 
-		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon ),ImageView.class).setImageResource( iconResId );
+		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.icon),ImageView.class).setImageResource( iconResId );
 
 		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifiedTextView.class).setText( super.getResources().getString(titleResId) );
 
@@ -70,7 +69,7 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 
 		sneaker.autoHide(true).setDuration(3000 );
 
-		LayoutParamsUtils.update( sneakerView.findViewById(R.id.head_content), null, ContextUtils.getStatusBarHeight(     this) );
+		LayoutParamsUtils.update( sneakerView.findViewById(R.id.head_content),null, ContextUtils.getStatusBarHeight(     this) );
 
 		sneakerView.setBackgroundColor( super.getResources().getColor( backgroundColorResId ) );      sneaker.sneakCustom( sneakerView );
 	}
