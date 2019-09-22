@@ -6,7 +6,6 @@ import  android.graphics.Typeface;
 import  android.os.Bundle;
 import  android.view.LayoutInflater;
 import  android.view.View;
-import  android.view.ViewGroup;
 import  android.widget.ImageView;
 
 import  com.codesgood.views.JustifiedTextView;
@@ -14,15 +13,17 @@ import  com.irozon.sneaker.Sneaker;
 
 import  androidx.appcompat.app.AppCompatActivity;
 
-import  java.util.LinkedList;
+import  java.util.List;
+import  java.util.concurrent.CopyOnWriteArrayList;
 
 import  cc.mashroom.hedgehog.R;
 import  cc.mashroom.hedgehog.util.ContextUtils;
+import  cc.mashroom.hedgehog.util.LayoutParamsUtils;
 import  cc.mashroom.util.ObjectUtils;
 
 public  abstract  class  AbstractActivity  extends  AppCompatActivity
 {
-	public  final  static  LinkedList<Activity>  STACK = new  LinkedList<Activity>();
+	public  final  static  List<Activity>  STACK =        new  CopyOnWriteArrayList<Activity>();
 
 	protected  void  onCreate( Bundle  savedInstanceState )
 	{
@@ -67,13 +68,9 @@ public  abstract  class  AbstractActivity  extends  AppCompatActivity
 
 		ObjectUtils.cast(sneakerView.findViewById(cc.mashroom.hedgehog.R.id.title),JustifiedTextView.class).setTypeface( Typeface.createFromAsset(super.getAssets(),"font/droid_sans_mono.ttf") );
 
-		sneaker.autoHide(true).setDuration( 3000 );
+		sneaker.autoHide(true).setDuration(3000 );
 
-		ViewGroup.LayoutParams  layoutParams = sneakerView.findViewById(R.id.head_content).getLayoutParams();
-
-		layoutParams.height = ContextUtils.getStatusBarHeight(this );
-
-        sneakerView.findViewById(R.id.head_content).setLayoutParams(  layoutParams );
+		LayoutParamsUtils.update( sneakerView.findViewById(R.id.head_content), null, ContextUtils.getStatusBarHeight(     this) );
 
 		sneakerView.setBackgroundColor( super.getResources().getColor( backgroundColorResId ) );      sneaker.sneakCustom( sneakerView );
 	}
