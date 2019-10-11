@@ -78,6 +78,11 @@ public  class  ContextUtils
         return  false;
     }
 
+    public  static  void  setVisibility(  int  visibility,View...  views )
+    {
+        for( View  view : views )view.setVisibility(visibility );
+    }
+
     public  static  boolean  isServiceRunning(Context  context,Class<?>  serviceClass )
     {
         return  ObjectUtils.cast(context.getSystemService(Context.ACTIVITY_SERVICE),ActivityManager.class).getRunningServiceControlPanel(new  ComponentName(context,serviceClass)) != null;
